@@ -1,0 +1,110 @@
+---
+title: Installation
+description: Wire the theme into a Next.js app.
+---
+
+Until the CLI lands in Phase 3, add the theme to an existing App Router project
+by hand. Four files change.
+
+## Set up the project
+
+The theme expects an App Router project on Next 16 with Tailwind CSS 4. Two
+pieces of configuration make it work.
+
+### Next config
+
+`withDocsTheme` transpiles the theme, which is published as TypeScript source:
+
+```ts
+// next.config.ts
+import { withDocsTheme } from 'docs-theme/next'
+
+export default withDocsTheme({})
+```
+
+### Styles
+
+The theme stylesheet carries the design tokens and points Tailwind at the
+theme's own sources, so its classes survive the content scan:
+
+```css
+/* app/globals.css */
+@import "tailwindcss";
+@import "docs-theme/styles.css";
+```
+
+Import it after Tailwind — the theme redefines tokens that Tailwind sets first.
+
+## Mount the theme
+
+### Root layout
+
+`DocsRoot` owns `<html>` and `<body>`, loads Public Sans, and mounts both the
+colour-mode and configuration providers:
+
+```tsx
+// app/layout.tsx
+import { DocsRoot } from 'docs-theme'
+import docsConfig from '../docs.config'
+
+import './globals.css'
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return <DocsRoot config={docsConfig}>{children}</DocsRoot>
+}
+```
+
+### Site configuration
+
+`docs.config.ts` drives the header, sidebar, socials and footer. The smallest
+version that renders something useful:
+
+```ts
+import { defineDocsConfig } from 'docs-theme'
+
+export default defineDocsConfig({
+  site: { name: 'Acme' },
+  navigation: [{ label: 'Introduction', href: '/docs', icon: 'house' }],
+})
+```
+
+## Render a page
+
+### Compile the document
+
+Compile a document and hand the headings to the layout:
+
+```tsx
+// app/docs/page.tsx
+import { DocsLayout, DocsPage, compileMdxFile } from 'docs-theme'
+
+export default async function Page() {
+  const { content, frontmatter, toc } = await compileMdxFile('content/docs/index.mdx')
+
+  return (
+    <DocsLayout toc={toc}>
+      <DocsPage title={frontmatter.title} description={frontmatter.description}>
+        {content}
+      </DocsPage>
+    </DocsLayout>
+  )
+}
+```
+
+### Check the result
+
+You should see the header, the sidebar tree, the table of contents on the right
+and a working colour-mode toggle. If the page renders unstyled, the theme
+stylesheet import is missing or ordered before Tailwind.
+
+## What you get
+
+### On every page
+
+Header, sidebar, table of contents, mobile drawer and colour-mode toggle, all
+driven by the configuration file.
+
+### Still to come
+
+Search is a stub until Phase 4, and every page still needs its own route file
+until the catch-all route arrives in Phase 2.

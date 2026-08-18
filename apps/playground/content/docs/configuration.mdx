@@ -1,0 +1,131 @@
+---
+title: Configuration
+description: Every option the theme reads, and what it controls.
+---
+
+`defineDocsConfig` is an identity function that types the object. Pass the
+result to `DocsRoot`.
+
+```ts
+// docs.config.ts
+import { defineDocsConfig } from 'docs-theme'
+
+export default defineDocsConfig({
+  site: { name: 'Acme', description: 'Acme documentation' },
+})
+```
+
+## site
+
+`name` is the fallback header title and `locale` becomes `<html lang>`.
+`description` and `url` feed the metadata work in Phase 4.
+
+## header
+
+`title` overrides `site.name`. `logo.light` and `logo.dark` swap with the colour
+mode. `links` are the top-level links beside the logo. Set `search: false` to
+drop the search trigger.
+
+## navigation
+
+The sidebar tree. A node with `children` and no `href` is a section heading; a
+node with an `href` is a link.
+
+```ts
+navigation: [
+  {
+    label: 'Getting started',
+    children: [{ label: 'Installation', href: '/docs/getting-started' }],
+  },
+]
+```
+
+## socials
+
+A map of network to profile URL. `github`, `x`, `discord`, `linkedin`,
+`youtube` and `bluesky` get brand marks; anything else falls back to a generic
+link icon.
+
+## toc
+
+`title` renames the heading list, `enabled: false` removes it, and
+`bottom.links` adds a community block underneath.
+
+## github
+
+`url`, `branch` and `rootDir` describe the repository. The "edit this page"
+links that use them arrive in Phase 8.
+
+## footer
+
+`credits` on the left, `links` on the right. Omit both and the footer does not
+render.
+
+## colorMode
+
+`default` picks the initial mode for a visitor with no stored preference.
+`forced` pins the site to `light` or `dark` and hides the toggle.
+
+## Palette and typography
+
+The theme ships the same design tokens Docus uses: a zinc neutral ramp with an
+emerald primary, in the semantic roles Nuxt UI exposes.
+
+| Token          | Light    | Dark      |
+| -------------- | -------- | --------- |
+| `background`   | white    | zinc-900  |
+| `foreground`   | zinc-700 | zinc-200  |
+| `highlighted`  | zinc-900 | white     |
+| `muted`        | zinc-50  | zinc-800  |
+| `elevated`     | zinc-100 | zinc-800  |
+| `border`       | zinc-200 | zinc-800  |
+| `primary`      | emerald-500 | emerald-400 |
+
+Override any of them in your own stylesheet, after the theme import:
+
+```css
+@import "tailwindcss";
+@import "docs-theme/styles.css";
+
+:root {
+  --primary: var(--color-blue-500);
+}
+
+.dark {
+  --primary: var(--color-blue-400);
+}
+```
+
+`DocsRoot` loads **Public Sans** through `next/font` and binds it to
+`--docs-font-sans`. Point that variable at another font to replace it.
+
+## Icons
+
+`icon` on a navigation item or TOC link takes a lucide name in kebab-case:
+
+```ts
+navigation: [
+  { label: 'Getting Started', icon: 'rocket', children: [
+    { label: 'Introduction', href: '/docs', icon: 'house' },
+  ] },
+]
+```
+
+Around thirty common documentation icons are bundled and render on the server;
+any other name is loaded lazily on the client.
+
+## loadingIndicator
+
+The progress bar across the top of the page during navigation. It is on by
+default; `enabled: false` removes it.
+
+```ts
+loadingIndicator: {
+  color: 'var(--primary)',
+  height: 3,
+}
+```
+
+It starts on a click that will actually navigate — hash links, external links,
+downloads and modifier-clicks are ignored — and completes when the pathname
+changes. A 200ms throttle means instant navigations never flash it.

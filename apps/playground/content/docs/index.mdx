@@ -1,0 +1,63 @@
+---
+title: Introduction
+description: What the theme gives you, and what is still being built.
+---
+
+The theme package ships the chrome around your content: the page shell, the
+header, the navigation tree, the table of contents and the colour-mode toggle.
+Your app supplies MDX files and a `docs.config.ts`.
+
+## Layouts
+
+Three layouts cover the whole surface:
+
+- `DocsRoot` — the `<html>` / `<body>` shell, mounting the colour-mode and
+  configuration providers
+- `DocsLayout` — header, sidebar, content column, table of contents, footer
+- `LandingLayout` — header and footer only, for the home page
+
+`DocsPage` renders the title block above the compiled MDX.
+
+## Navigation
+
+The sidebar reads `navigation` from the site configuration.
+
+### Sections and pages
+
+Sections are nodes with `children` and no `href`; pages are nodes with an
+`href`. The active page is matched against the current pathname.
+
+### Icons
+
+Both take an `icon`, a lucide name in kebab-case. Common documentation icons
+are bundled and render on the server; anything else loads lazily.
+
+## Table of contents
+
+### How headings are collected
+
+Headings are collected while the document compiles. `rehype-slug` assigns each
+one an `id`, a small rehype plugin records them, and `compileMdx` returns them
+alongside the rendered content:
+
+```ts
+const { content, frontmatter, toc } = await compileMdxFile('content/docs/index.mdx')
+```
+
+### How the list is rendered
+
+`buildTocTree` nests `###` headings under the `##` they follow, and every
+heading currently on screen is highlighted — including the parent of an active
+subheading.
+
+## Colour mode
+
+`next-themes` drives a `class` on `<html>`, and the design tokens flip under
+`.dark`. Pin the site to one mode with `colorMode.forced` — the toggle hides
+itself when you do.
+
+## Still to come
+
+Search is a stub until Phase 4, and every page here still has its own route
+file. Phase 2 replaces those with a single catch-all route that walks the
+content directory.

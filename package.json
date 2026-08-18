@@ -1,0 +1,25 @@
+{
+  "name": "next-docs-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Documentation framework for Next.js — theme package, CLI and starters",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm run playground:dev",
+    "playground:dev": "pnpm --filter playground dev",
+    "playground:build": "pnpm --filter playground build",
+    "playground:start": "pnpm --filter playground start",
+    "typecheck": "pnpm -r --parallel typecheck",
+    "clean": "rimraf --glob \"**/node_modules\" \"**/.next\" \"**/dist\""
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "packageManager": "pnpm@9.15.1"
+}
