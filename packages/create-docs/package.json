@@ -24,5 +24,25 @@
   },
   "engines": {
     "node": ">=20.9.0"
+  },
+  "homepage": "https://github.com/Arifulislam5577/next-docs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arifulislam5577/next-docs.git",
+    "directory": "packages/create-docs"
+  },
+  "bugs": {
+    "url": "https://github.com/Arifulislam5577/next-docs/issues"
+  },
+  "keywords": [
+    "nextjs",
+    "documentation",
+    "docs",
+    "scaffold",
+    "cli",
+    "create"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }

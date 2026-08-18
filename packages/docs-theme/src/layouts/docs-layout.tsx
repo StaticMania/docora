@@ -16,11 +16,15 @@ export interface DocsLayoutProps {
   toc?: TocEntry[]
   /** Replaces the default header entirely. */
   header?: ReactNode
+  /** Replaces the default footer entirely. */
+  footer?: ReactNode
+  /** The page being rendered, for the edit and issue links. */
+  page?: { relativePath?: string; title?: string }
   className?: string
 }
 
 /** Documentation chrome: header, sidebar, content column, table of contents, footer. */
-export function DocsLayout({ children, toc = [], header, className }: DocsLayoutProps) {
+export function DocsLayout({ children, toc = [], header, footer, page, className }: DocsLayoutProps) {
   const config = useDocsConfig()
 
   const navigation = config.navigation ?? []
@@ -42,12 +46,12 @@ export function DocsLayout({ children, toc = [], header, className }: DocsLayout
 
         {hasToc && (
           <aside className="sticky top-16 hidden h-[calc(100svh-4rem)] w-60 shrink-0 overflow-y-auto py-10 xl:block">
-            <TableOfContents items={toc} />
+            <TableOfContents items={toc} relativePath={page?.relativePath} title={page?.title} />
           </aside>
         )}
       </div>
 
-      <SiteFooter />
+      {footer ?? <SiteFooter />}
     </div>
   )
 }

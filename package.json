@@ -2,15 +2,21 @@
   "name": "next-docs-workspace",
   "version": "0.0.0",
   "private": true,
-  "description": "Documentation framework for Next.js — theme package, CLI and starters",
+  "description": "Documentation framework for Next.js \u2014 theme package, CLI and starters",
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "pnpm run playground:dev",
+    "dev": "pnpm run docs:dev",
+    "docs:dev": "pnpm --filter docs dev",
+    "docs:build": "pnpm --filter docs build",
+    "docs:start": "pnpm --filter docs start",
     "playground:dev": "pnpm --filter playground dev",
     "playground:build": "pnpm --filter playground build",
-    "playground:start": "pnpm --filter playground start",
+    "build": "pnpm --filter create-docs build && pnpm run docs:build",
     "typecheck": "pnpm -r --parallel typecheck",
+    "verify": "pnpm run typecheck && pnpm run build",
+    "release:theme": "pnpm --filter docs-theme publish --access public",
+    "release:cli": "pnpm --filter create-docs publish --access public",
     "clean": "rimraf --glob \"**/node_modules\" \"**/.next\" \"**/dist\""
   },
   "devDependencies": {
@@ -21,5 +27,9 @@
   "engines": {
     "node": ">=20.9.0"
   },
-  "packageManager": "pnpm@9.15.1"
+  "packageManager": "pnpm@9.15.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arifulislam5577/next-docs.git"
+  }
 }

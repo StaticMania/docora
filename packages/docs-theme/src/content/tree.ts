@@ -32,7 +32,12 @@ async function readDirectoryMeta(dir: string): Promise<DirectoryMeta> {
   }
 }
 
-async function readPage(filePath: string, slug: string[], order: number): Promise<ContentPage> {
+async function readPage(
+  contentDir: string,
+  filePath: string,
+  slug: string[],
+  order: number,
+): Promise<ContentPage> {
   const source = await readFile(filePath, 'utf8')
   const { data } = splitFrontmatter<PageFrontmatter>(source)
   const fallback = slug.at(-1)
@@ -41,6 +46,7 @@ async function readPage(filePath: string, slug: string[], order: number): Promis
     slug,
     path: slugToPath(slug),
     filePath,
+    relativePath: path.relative(contentDir, filePath).split(path.sep).join('/'),
     frontmatter: data,
     order,
     title: data.title ?? (fallback ? humanize(fallback) : 'Home'),
@@ -90,11 +96,11 @@ export async function readContentTree(
     const filePath = path.join(dir, entry.name)
 
     if (name === 'index') {
-      directory.index = await readPage(filePath, parentSlug, order)
+      directory.index = await readPage(contentDir, filePath, parentSlug, order)
       continue
     }
 
-    directory.pages.push(await readPage(filePath, [...parentSlug, name], order))
+    directory.pages.push(await readPage(contentDir, filePath, [...parentSlug, name], order))
   }
 
   const byOrder = <T extends { order: number; name?: string }>(a: T, b: T) =>

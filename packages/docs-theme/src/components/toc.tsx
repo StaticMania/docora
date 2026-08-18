@@ -10,11 +10,16 @@ import { useActiveHeadings } from '../hooks/use-active-heading'
 import { buildTocTree, type TocEntry, type TocNode } from '../mdx/toc'
 import { cn } from '../utils/cn'
 import { ExplainWithAi } from './assistant-trigger'
+import { PageLinks } from './edit-link'
 import { Icon } from './icon'
 import { circuitRailStyle, TOC_LINK_HEIGHT_REM } from './toc-rail'
 
 export interface TableOfContentsProps {
   items: TocEntry[]
+  /** Page path relative to the content directory, for the edit link. */
+  relativePath?: string
+  /** Page title, used to pre-fill a reported issue. */
+  title?: string
   className?: string
 }
 
@@ -63,7 +68,7 @@ function TocList({
   )
 }
 
-export function TableOfContents({ items, className }: TableOfContentsProps) {
+export function TableOfContents({ items, relativePath, title, className }: TableOfContentsProps) {
   const config = useDocsConfig()
   const messages = useMessages()
   const activeIds = useActiveHeadings(items.map(item => item.id))
@@ -105,11 +110,10 @@ export function TableOfContents({ items, className }: TableOfContentsProps) {
         </nav>
       )}
 
-      {config.assistant?.explainWithAi !== false && (
-        <div className={cn(tree.length > 0 && 'border-t border-dashed border-border pt-6')}>
-          <ExplainWithAi />
-        </div>
-      )}
+      <div className={cn('flex flex-col gap-3', tree.length > 0 && 'border-t border-dashed border-border pt-6')}>
+        <PageLinks relativePath={relativePath} title={title} />
+        {config.assistant?.explainWithAi !== false && <ExplainWithAi />}
+      </div>
 
       {bottom?.links && bottom.links.length > 0 && (
         <div className={cn('flex flex-col gap-6', tree.length > 0 && 'border-t border-dashed border-border pt-6')}>

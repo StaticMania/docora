@@ -1,0 +1,131 @@
+---
+title: Kitchen sink
+description: Every component on one page, for eyeballing changes to the theme.
+icon: blocks
+---
+
+## Callouts
+
+::note
+Note.
+::
+
+::tip
+Tip.
+::
+
+::warning
+Warning.
+::
+
+::caution
+Caution.
+::
+
+## Cards
+
+::card-group
+  :::card{title="With icon" icon="i-lucide-rocket"}
+  Body text.
+  :::
+
+  :::card{title="As a link" icon="i-lucide-link" to="/docs/kitchen-sink"}
+  Body text.
+  :::
+::
+
+## Accordion
+
+::accordion
+  :::accordion-item{label="First" icon="i-lucide-circle-help"}
+  Answer one.
+  :::
+
+  :::accordion-item{label="Second" icon="i-lucide-circle-help"}
+  Answer two.
+  :::
+::
+
+## Tabs
+
+::tabs
+  :::tabs-item{label="Preview" icon="i-lucide-eye"}
+  Panel one.
+  :::
+
+  :::tabs-item{label="Code" icon="i-lucide-code"}
+  Panel two.
+  :::
+::
+
+## Fields
+
+::field-group
+  :::field{name="site.name" type="string" required}
+  Required field.
+  :::
+
+  :::field{name="site.url" type="string"}
+  Optional field.
+  :::
+::
+
+## Steps
+
+::steps{level="3"}
+
+### First
+
+Do a thing.
+
+### Second
+
+Do another.
+
+::
+
+## Code
+
+```ts [example.ts]{2}
+export function example() {
+  return 'highlighted line'
+}
+```
+
+::code-group
+
+```bash [npm]
+npm install
+```
+
+```bash [pnpm]
+pnpm install
+```
+
+::
+
+::code-collapse
+
+```css [long.css]
+:root { --a: 1; }
+:root { --b: 2; }
+:root { --c: 3; }
+:root { --d: 4; }
+:root { --e: 5; }
+:root { --f: 6; }
+```
+
+::
+
+## Inline
+
+Badge :badge{label="v1"}, key :kbd{value="K"}, icon :icon{name="i-lucide-star"},
+[styled span]{.text-primary}, `inline code`, and a [link](/).
+
+## Table
+
+| Column | Column |
+| ------ | ------ |
+| One    | Two    |
+
+> A blockquote.

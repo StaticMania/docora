@@ -1,5 +1,5 @@
 {
-  "name": "playground",
+  "name": "docs",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -23,5 +23,5 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   },
-  "description": "Scratch app used to develop the theme."
+  "description": "The next-docs documentation site, built with next-docs."
 }

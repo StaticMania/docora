@@ -13,6 +13,7 @@ export { MobileNav } from './components/mobile-nav'
 export { Icon, type IconProps } from './components/icon'
 export { RouteProgress, type RouteProgressProps } from './components/route-progress'
 export { DocsPager } from './components/docs-pager'
+export { PageLinks, createEditUrl, createIssueUrl, type PageLinksProps } from './components/edit-link'
 export { docsFont } from './font'
 
 export { defineDocsConfig, fallbackDocsConfig } from './config/define'

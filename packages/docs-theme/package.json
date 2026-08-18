@@ -1,7 +1,7 @@
 {
   "name": "docs-theme",
   "version": "0.1.0",
-  "description": "Next.js documentation theme — layouts, MDX rendering and configuration",
+  "description": "Next.js documentation theme \u2014 layouts, MDX rendering and configuration",
   "license": "MIT",
   "type": "module",
   "sideEffects": [
@@ -24,7 +24,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm typecheck"
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.69",
@@ -59,5 +60,26 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.0"
+  },
+  "homepage": "https://github.com/Arifulislam5577/next-docs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arifulislam5577/next-docs.git",
+    "directory": "packages/docs-theme"
+  },
+  "bugs": {
+    "url": "https://github.com/Arifulislam5577/next-docs/issues"
+  },
+  "keywords": [
+    "nextjs",
+    "documentation",
+    "docs",
+    "mdx",
+    "mdc",
+    "theme",
+    "tailwindcss"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }

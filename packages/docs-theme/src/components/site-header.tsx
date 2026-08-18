@@ -13,8 +13,12 @@ import { SocialIcon, socialLabels } from './social-icon'
 import { ThemeToggle } from './theme-toggle'
 
 export interface SiteHeaderProps {
-  /** Rendered at the far right, before the theme toggle. */
+  /** Rendered at the far right, before the language and theme controls. */
   children?: ReactNode
+  /** Replaces the default logo and site name. */
+  logo?: ReactNode
+  /** Rendered after the navigation links — a call to action, say. */
+  cta?: ReactNode
   className?: string
 }
 
@@ -46,7 +50,7 @@ function Logo() {
   )
 }
 
-export function SiteHeader({ children, className }: SiteHeaderProps) {
+export function SiteHeader({ children, logo, cta, className }: SiteHeaderProps) {
   const config = useDocsConfig()
   const pathname = usePathname()
 
@@ -65,7 +69,7 @@ export function SiteHeader({ children, className }: SiteHeaderProps) {
     >
       <div className="mx-auto flex h-full w-full max-w-8xl items-center gap-3 px-4 sm:px-6">
         <MobileNav />
-        <Logo />
+        {logo ?? <Logo />}
 
         {links.length > 0 && (
           <nav aria-label="Main" className="ml-4 hidden items-center gap-4 lg:flex">
@@ -89,6 +93,8 @@ export function SiteHeader({ children, className }: SiteHeaderProps) {
             })}
           </nav>
         )}
+
+        {cta}
 
         {showSearch && (
           <div className="mx-auto hidden w-full max-w-md px-4 md:block">

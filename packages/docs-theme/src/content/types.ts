@@ -23,6 +23,8 @@ export interface ContentPage {
   path: string
   /** Absolute path on disk. */
   filePath: string
+  /** Path relative to the content directory, POSIX separators. */
+  relativePath: string
   frontmatter: PageFrontmatter
   /** Sort key from a numeric filename prefix. */
   order: number

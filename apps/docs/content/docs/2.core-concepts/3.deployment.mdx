@@ -1,0 +1,69 @@
+---
+title: Deployment
+description: Building, hosting and pointing the site at your repository.
+icon: rocket
+---
+
+## Build
+
+```bash [Terminal]
+npm run build
+```
+
+Every content route is prerendered as static HTML. Routes that must run per
+request — the assistant and the OG image — stay dynamic; everything else is a
+file.
+
+## Set the site URL
+
+```ts [docs.config.ts]
+site: {
+  name: 'My Docs',
+  url: 'https://docs.example.com',
+}
+```
+
+Without it, canonical links, sitemap entries, hreflang and social images are
+omitted rather than emitted as relative URLs — which would be worse than absent.
+
+## Link back to the repository
+
+```ts [docs.config.ts]
+github: {
+  url: 'https://github.com/your-org/your-repo',
+  branch: 'main',
+  rootDir: 'apps/docs',
+}
+```
+
+`rootDir` is where the app sits inside the repository, so "Edit this page"
+resolves to the real file. Both links appear under the table of contents.
+
+## Hosting
+
+::tabs
+
+  :::tabs-item{label="Vercel" icon="i-lucide-triangle"}
+  Import the repository and deploy — the framework is detected automatically.
+  Set `AI_GATEWAY_API_KEY` only if you want the assistant; deployments
+  authenticate through OIDC, so it is mainly a local concern.
+  :::
+
+  :::tabs-item{label="Node" icon="i-lucide-server"}
+  ```bash [Terminal]
+  npm run build
+  npm run start
+  ```
+  :::
+
+::
+
+## Environment
+
+::field-group
+  :::field{name="AI_GATEWAY_API_KEY" type="string"}
+  Enables the AI assistant. Without it the chat is not rendered.
+  :::
+::
+
+Keep it in `.env.local`, which the starters already gitignore.

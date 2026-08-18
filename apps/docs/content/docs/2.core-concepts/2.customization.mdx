@@ -1,0 +1,152 @@
+---
+title: Customization
+description: Reskin the theme, swap its parts, or replace them entirely.
+icon: palette
+---
+
+Three levels, from changing a colour to replacing a component.
+
+## Design tokens
+
+Every colour, radius and font is a CSS variable. Redefine any of them after the
+theme import — no configuration, no build step:
+
+```css [app/globals.css]
+@import "tailwindcss";
+@import "docs-theme/styles.css";
+
+:root {
+  --primary: var(--color-blue-500);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --primary: var(--color-blue-400);
+}
+```
+
+The palette mirrors Docus: a zinc neutral ramp with an emerald primary, in the
+semantic roles Nuxt UI exposes.
+
+::field-group
+  :::field{name="--background / --foreground" type="colour"}
+  Page background and body text.
+  :::
+
+  :::field{name="--highlighted / --toned / --dimmed" type="colour"}
+  Headings, secondary text and the quietest text.
+  :::
+
+  :::field{name="--muted / --elevated / --accented" type="colour"}
+  Surfaces, in increasing contrast.
+  :::
+
+  :::field{name="--border / --border-accented" type="colour"}
+  Rules, and rules on hover.
+  :::
+
+  :::field{name="--primary / --primary-foreground" type="colour"}
+  Accent colour and text placed on it.
+  :::
+::
+
+## Typography
+
+`DocsRoot` loads Public Sans through `next/font` and binds it to
+`--docs-font-sans`. Point that variable at another font to replace it:
+
+```tsx [app/layout.tsx]
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'], variable: '--docs-font-sans' })
+
+export default function RootLayout({ children }) {
+  return (
+    <DocsRoot config={docsConfig} className={inter.variable}>
+      {children}
+    </DocsRoot>
+  )
+}
+```
+
+## Component slots
+
+Layouts take React nodes for the parts most sites want to change:
+
+::field-group
+  :::field{name="header" type="ReactNode"}
+  Replaces the whole header, on both `DocsLayout` and `LandingLayout`.
+  :::
+
+  :::field{name="footer" type="ReactNode"}
+  Replaces the whole footer.
+  :::
+::
+
+`SiteHeader` itself takes narrower slots, so you can keep the search, language
+and colour-mode controls while changing the rest:
+
+::field-group
+  :::field{name="logo" type="ReactNode"}
+  Replaces the logo and site name.
+  :::
+
+  :::field{name="cta" type="ReactNode"}
+  Rendered after the navigation links.
+  :::
+
+  :::field{name="children" type="ReactNode"}
+  Rendered at the far right, before the language and colour-mode controls.
+  :::
+::
+
+```tsx
+import { DocsLayout, SiteHeader } from 'docs-theme'
+
+<DocsLayout
+  toc={toc}
+  header={
+    <SiteHeader
+      logo={<MyWordmark />}
+      cta={<a href="/pricing">Pricing</a>}
+    />
+  }
+>
+  {content}
+</DocsLayout>
+```
+
+## Extra MDX components
+
+Pass your own components to `compileMdxFile`. They are merged over the theme's,
+so you can add to the set or override a built-in:
+
+```tsx
+const { content } = await compileMdxFile(page.filePath, {
+  components: { Pricing: MyPricingTable },
+})
+```
+
+They become available in every document by name:
+
+```mdc
+::pricing
+::
+```
+
+::note
+MDC lowercases component names, so register both spellings — `Pricing` and
+`pricing` — if you want JSX and MDC to reach the same component.
+::
+
+## Replacing a layout entirely
+
+The layouts are ordinary components. If none of the slots fit, import the pieces
+and assemble your own:
+
+```tsx
+import { SidebarNav, SiteHeader, TableOfContents, useDocsConfig } from 'docs-theme'
+```
+
+`useDocsConfig()` gives any client component the site configuration, so a
+replacement can read the same settings the built-in one does.

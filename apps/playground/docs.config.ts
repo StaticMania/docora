@@ -1,57 +1,18 @@
 import { defineDocsConfig } from 'docs-theme'
 
+/** Minimal config — the playground exists to exercise the theme, not to be a site. */
 export default defineDocsConfig({
   site: {
-    name: 'next-docs',
-    description: 'A documentation framework for Next.js.',
-    url: 'https://next-docs.example.com',
+    name: 'Playground',
+    description: 'Scratch app for developing the theme.',
     locale: 'en',
   },
 
   header: {
-    links: [
-      { label: 'Docs', href: '/docs/getting-started/introduction' },
-      { label: 'Roadmap', href: '/#roadmap' },
-    ],
-  },
-
-  // Placeholder repository — swap once the project has a public home.
-  socials: {
-    github: 'https://github.com/Arifulislam5577/next-docs',
-  },
-
-  assistant: {
-    suggestions: [
-      'How do I add a new page?',
-      'How does the sidebar order work?',
-      'What MDC components are available?',
-    ],
-  },
-
-  toc: {
-    title: 'On this page',
-    bottom: {
-      title: 'Community',
-      links: [
-        {
-          label: 'Report an issue',
-          href: 'https://github.com/Arifulislam5577/next-docs/issues',
-          icon: 'book-open',
-        },
-      ],
-    },
-  },
-
-  github: {
-    url: 'https://github.com/Arifulislam5577/next-docs',
-    branch: 'main',
+    links: [{ label: 'Kitchen sink', href: '/docs/kitchen-sink' }],
   },
 
   footer: {
-    credits: 'Built with next-docs',
-    links: [
-      { label: 'Docs', href: '/docs/getting-started/introduction' },
-      { label: 'GitHub', href: 'https://github.com/Arifulislam5577/next-docs' },
-    ],
+    credits: 'docs-theme playground',
   },
 })
