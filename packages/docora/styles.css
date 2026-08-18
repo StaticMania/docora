@@ -155,6 +155,10 @@
   /*
    * `::steps` numbers the headings it contains. The level is a data attribute
    * so the same rule serves `##` and `###` steps.
+   *
+   * The container uses `ps-8` (2rem) and a 1px `border-s`. The marker is
+   * 1.75rem, so its centre sits on the line at:
+   *   -(padding + (size - line) / 2)
    */
   .docs-steps {
     counter-reset: docs-step;
@@ -167,26 +171,34 @@
     border-bottom: 0;
     padding-bottom: 0;
     font-size: 1rem;
+    line-height: 1.75rem;
   }
 
   .docs-steps > :is(h2, h3, h4)::before {
     content: counter(docs-step);
     position: absolute;
-    inset-inline-start: -3.25rem;
-    display: flex;
+    inset-inline-start: calc(-2rem - (1.75rem - 1px) / 2);
+    inset-block-start: 0;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 9999px;
     background-color: var(--color-elevated);
+    box-shadow: 0 0 0 4px var(--color-background);
     color: var(--color-highlighted);
     font-size: 0.75rem;
     font-weight: 600;
+    font-variant-numeric: tabular-nums;
   }
 
   .docs-steps > :first-child {
     margin-top: 0;
+  }
+
+  .docs-steps > :is(h2, h3, h4) a[href^="#"] {
+    display: none;
   }
 
   * {

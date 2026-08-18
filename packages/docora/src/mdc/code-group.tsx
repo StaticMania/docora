@@ -50,8 +50,10 @@ export function CodeGroup({ children, className }: { children?: ReactNode; class
         })}
       </div>
 
-      {/* The nested blocks bring their own chrome, which would double up here. */}
-      <div className="[&_>div]:my-0 [&_>div]:rounded-none [&_>div]:border-0">{blocks[active]}</div>
+      {/* Nested blocks keep their copy button; the group already owns the chrome. */}
+      <div className="[&_.docs-code]:my-0 [&_.docs-code-header]:hidden [&_.docs-code_pre]:rounded-none [&_.docs-code_pre]:border-0">
+        {blocks[active]}
+      </div>
     </div>
   )
 }
@@ -72,7 +74,7 @@ export function CodeCollapse({
     <div className={cn('my-5 overflow-hidden rounded-md border border-border bg-muted', className)}>
       <div
         className={cn(
-          'relative [&_>div]:my-0 [&_>div]:rounded-none [&_>div]:border-0',
+          'relative [&_.docs-code]:my-0 [&_.docs-code-header]:rounded-none [&_.docs-code-header]:border-0 [&_.docs-code-header]:border-b [&_.docs-code_pre]:rounded-none [&_.docs-code_pre]:border-0',
           !open && 'max-h-48 overflow-hidden',
         )}
       >
@@ -94,39 +96,81 @@ export function CodeCollapse({
   )
 }
 
+function slotName(element: ReactElement): string | undefined {
+  const props = element.props as Record<string, unknown>
+  if (typeof props['data-slot'] === 'string') return props['data-slot']
+  if (typeof props.dataSlot === 'string') return props.dataSlot
+  if (typeof props.slot === 'string') return props.slot
+  return undefined
+}
+
 /** Rendered output on one tab, its source on the other. */
-export function CodePreview({ children, className }: { children?: ReactNode; className?: string }) {
+export function CodePreview({
+  children,
+  className,
+  label = 'Preview',
+  icon = 'i-lucide-eye',
+}: {
+  children?: ReactNode
+  className?: string
+  label?: string
+  icon?: string
+}) {
   const parts = Children.toArray(children).filter(isValidElement)
   const [tab, setTab] = useState<'preview' | 'code'>('preview')
 
-  // A `#code` slot holds the source; everything else is the preview.
-  const code = parts.find(part => (part.props as { slot?: string }).slot === 'code')
-  const preview = parts.filter(part => part !== code)
+  // A `#code` slot holds the source. If remark-mdc leaves it as a heading,
+  // everything after that heading is still the source.
+  const slotted = parts.find(part => slotName(part) === 'code') ?? parts.find(part => slotName(part))
+  const headingIndex = parts.findIndex(part => part.type === 'h1' && (part.props as { id?: string }).id === 'code')
+
+  const code = slotted ?? (headingIndex >= 0 ? parts.slice(headingIndex + 1) : undefined)
+  const preview = slotted
+    ? parts.filter(part => part !== slotted)
+    : headingIndex >= 0
+      ? parts.slice(0, headingIndex)
+      : parts
+  const hasCode = Boolean(slotted) || headingIndex >= 0
+
+  if (!hasCode) {
+    return <div className={cn('my-5 [&>:first-child]:mt-0 [&>:last-child]:mb-0', className)}>{children}</div>
+  }
 
   return (
-    <div className={cn('my-5 overflow-hidden rounded-md border border-border', className)}>
-      <div className="flex items-center gap-1 border-b border-border bg-muted px-2">
-        {(['preview', 'code'] as const).map(value => (
-          <button
-            key={value}
-            type="button"
-            onClick={() => setTab(value)}
-            className={cn(
-              '-mb-px border-b-2 px-2.5 py-2 text-xs capitalize transition-colors',
-              tab === value
-                ? 'border-primary text-primary'
-                : 'border-transparent text-muted-foreground hover:text-highlighted',
-            )}
-          >
-            {value}
-          </button>
-        ))}
+    <div className={cn('my-5', className)}>
+      <div className="flex items-center gap-1 border-b border-border">
+        <button
+          type="button"
+          onClick={() => setTab('preview')}
+          className={cn(
+            '-mb-px flex items-center gap-1.5 border-b-2 px-3 py-1.5 text-sm transition-colors',
+            tab === 'preview'
+              ? 'border-primary text-primary'
+              : 'border-transparent text-muted-foreground hover:text-highlighted',
+          )}
+        >
+          <Icon name={icon} className="size-4 shrink-0" />
+          {label}
+        </button>
+        <button
+          type="button"
+          onClick={() => setTab('code')}
+          className={cn(
+            '-mb-px flex items-center gap-1.5 border-b-2 px-3 py-1.5 text-sm transition-colors',
+            tab === 'code'
+              ? 'border-primary text-primary'
+              : 'border-transparent text-muted-foreground hover:text-highlighted',
+          )}
+        >
+          <Icon name="i-lucide-code" className="size-4 shrink-0" />
+          Code
+        </button>
       </div>
 
       {tab === 'preview' ? (
-        <div className="p-4 [&>:first-child]:mt-0 [&>:last-child]:mb-0">{preview}</div>
+        <div className="mt-4 [&>:first-child]:mt-0 [&>:last-child]:mb-0">{preview}</div>
       ) : (
-        <div className="[&_>div]:my-0 [&_>div]:rounded-none [&_>div]:border-0">{code ?? null}</div>
+        <div className="mt-4 [&_.docs-code]:my-0">{code}</div>
       )}
     </div>
   )

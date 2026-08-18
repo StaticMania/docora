@@ -1,50 +1,103 @@
 ---
 title: Installation
-description: Wire the theme into a Next.js app.
+description: Get started with Docora.
 icon: download
 ---
 
-Until the CLI lands in Phase 3, add the theme to an existing App Router project
-by hand. Four files change.
+## `create-docora` CLI
 
-## Set up the project
+::steps{level="3"}
 
-The theme expects an App Router project on Next 16 with Tailwind CSS 4. Two
-pieces of configuration make it work.
+### Create your docs directory
 
-### Next config
+Use the `create-docora` CLI to scaffold a new Docora project. Node.js 20.9 or later is required.
 
-`withDocora` transpiles the theme, which is published as TypeScript source:
+```bash [Terminal]
+npx create-docora my-docs
+```
 
-```ts
-// next.config.ts
+You can choose between two templates:
+
+- `default`: Basic Docora setup for single-language documentation
+- `i18n`: Includes internationalization support for multi-language documentation
+
+```bash [Terminal]
+# Create with i18n template
+npx create-docora my-docs -t i18n
+```
+
+The CLI detects your package manager from the command you ran (`npx`, `pnpm dlx`, `yarn dlx`, or `bunx`) and installs dependencies for you. Pass `--pm npm|pnpm|yarn|bun` to choose one explicitly, or `--no-install` to skip the install.
+
+### Start your docs server in development
+
+Move to your docs directory and start the development server:
+
+```bash [Terminal]
+cd my-docs
+npm run dev
+```
+
+A local preview of your documentation will be available at [http://localhost:3000](http://localhost:3000).
+
+### Write your documentation
+
+Every file under `content/` becomes a route. Head over to [Project Structure](/docs/getting-started/project-structure) to learn how to write and organise your documentation.
+
+::
+
+## AI Assistant Skill
+
+Get started quickly with Docora by adding specialized knowledge to your AI assistant (Cursor, Claude, and others):
+
+```bash [Terminal]
+npx skills add https://docora.example.com
+```
+
+This skill helps you create documentation faster by providing your AI assistant with:
+
+- Best practices for writing documentation with Docora
+- MDC component usage and ready-to-use templates
+- Writing guidelines and content structure patterns
+- Configuration and customization tips
+
+Once installed, your AI assistant can help you scaffold new documentation projects, generate pages with proper structure, and write content following Docora best practices.
+
+::tip{to="/docs/ai/agent-skills"}
+You can also publish your own skills from your Docora site. Learn more about Agent Skills.
+::
+
+## Theme Integration
+
+Docora is a **Next.js theme package**. Add it to an existing App Router project on Next.js 16 and Tailwind CSS 4 by installing `docora` and wrapping your config with `withDocora`:
+
+```bash [Terminal]
+npm install docora
+```
+
+```ts [next.config.ts]
 import { withDocora } from 'docora/next'
 
 export default withDocora({})
 ```
 
-### Styles
+`withDocora` transpiles the theme, which is published as TypeScript source. Import the stylesheet after Tailwind so the design tokens override the defaults:
 
-The theme stylesheet carries the design tokens and points Tailwind at the
-theme's own sources, so its classes survive the content scan:
-
-```css
-/* app/globals.css */
+```css [app/globals.css]
 @import "tailwindcss";
 @import "docora/styles.css";
 ```
 
-Import it after Tailwind — the theme redefines tokens that Tailwind sets first.
+Then wrap the root layout with `DocsRoot` and pass a `docs.config.ts`:
 
-## Mount the theme
+```ts [docs.config.ts]
+import { defineDocsConfig } from 'docora'
 
-### Root layout
+export default defineDocsConfig({
+  site: { name: 'Acme' },
+})
+```
 
-`DocsRoot` owns `<html>` and `<body>`, loads Public Sans, and mounts both the
-colour-mode and configuration providers:
-
-```tsx
-// app/layout.tsx
+```tsx [app/layout.tsx]
 import { DocsRoot } from 'docora'
 import docsConfig from '../docs.config'
 
@@ -55,57 +108,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-### Site configuration
-
-`docs.config.ts` drives the header, sidebar, socials and footer. The smallest
-version that renders something useful:
-
-```ts
-import { defineDocsConfig } from 'docora'
-
-export default defineDocsConfig({
-  site: { name: 'Acme' },
-  navigation: [{ label: 'Introduction', href: '/docs', icon: 'house' }],
-})
-```
-
-## Render a page
-
-### Compile the document
-
-Compile a document and hand the headings to the layout:
-
-```tsx
-// app/docs/page.tsx
-import { DocsLayout, DocsPage, compileMdxFile } from 'docora'
-
-export default async function Page() {
-  const { content, frontmatter, toc } = await compileMdxFile('content/docs/index.mdx')
-
-  return (
-    <DocsLayout toc={toc}>
-      <DocsPage title={frontmatter.title} description={frontmatter.description}>
-        {content}
-      </DocsPage>
-    </DocsLayout>
-  )
-}
-```
-
-### Check the result
-
-You should see the header, the sidebar tree, the table of contents on the right
-and a working colour-mode toggle. If the page renders unstyled, the theme
-stylesheet import is missing or ordered before Tailwind.
-
-## What you get
-
-### On every page
-
-Header, sidebar, table of contents, mobile drawer and colour-mode toggle, all
-driven by the configuration file.
-
-### Still to come
-
-Search is a stub until Phase 4, and every page still needs its own route file
-until the catch-all route arrives in Phase 2.
+The [create-docora](#create-docora-cli) starter wires the catch-all route, search, sitemap and content source for you. See [Configuration](/docs/core-concepts/configuration) for every option the theme reads.

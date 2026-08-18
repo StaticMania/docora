@@ -4,11 +4,39 @@ description: Use markdown components to structure your content.
 icon: puzzle
 ---
 
-Prose components replace HTML typography tags and are available in every
-document by name — no imports. Write them with MDC syntax.
+Prose components are replacements for HTML typography tags. They provide a
+simple way to customize your UI when using Markdown.
+
+Docora ships a set of styled prose components so you can write documentation
+with [MDC syntax](https://content.nuxt.com/docs/files/markdown#mdc-syntax) —
+no imports. Every example below has a live preview and the source to copy.
 
 ## Accordion
 
+Use the `accordion` and `accordion-item` components to display a collapsible
+list of questions and answers.
+
+::code-preview
+
+:::accordion
+
+::::accordion-item{label="What is Docora?" icon="i-lucide-circle-help"}
+A documentation framework for Next.js: a theme package, a scaffolding CLI and
+starters. Content is markdown, routing comes from the file tree.
+::::
+
+::::accordion-item{label="What do I need to start?" icon="i-lucide-circle-help"}
+A `content/` folder. Everything else has a default.
+::::
+
+::::accordion-item{label="Can I use React components?" icon="i-lucide-circle-help"}
+Yes — documents are MDX, so JSX works alongside MDC syntax.
+::::
+
+:::
+
+#code
+```mdc
 ::accordion
 
   :::accordion-item{label="What is Docora?" icon="i-lucide-circle-help"}
@@ -25,18 +53,61 @@ document by name — no imports. Write them with MDC syntax.
   :::
 
 ::
+```
+
+::
 
 ## Badge
 
+Use markdown in the default slot of the `badge` component to display a badge
+in your content.
+
+::code-preview
+
+:::badge
+**v0.1.0**
+:::
+
+#code
+```mdc
 ::badge
 **v0.1.0**
+::
+```
+
 ::
 
 ## Callout
 
-Use `note`, `tip`, `warning` and `caution` for pre-set icons and colours, or
-`callout` with your own `icon`, `color` and `to`.
+Use markdown in the default slot of the `callout` component to add
+eye-catching context to your content.
 
+Use the `icon` and `color` props to customize it. You can also pass `to` to
+turn the whole callout into a link.
+
+You can also use the `note`, `tip`, `warning` and `caution` shortcuts with
+pre-defined icons and colours.
+
+::code-preview
+
+:::note
+Here's some additional information for you.
+:::
+
+:::tip
+Here's a helpful suggestion.
+:::
+
+:::warning
+Be careful with this action as it might have unexpected results.
+:::
+
+:::caution
+This action cannot be undone.
+:::
+
+#code
+```mdc
 ::note
 Here's some additional information for you.
 ::
@@ -52,13 +123,45 @@ Be careful with this action as it might have unexpected results.
 ::caution
 This action cannot be undone.
 ::
+```
 
-::callout{icon="i-lucide-rocket" to="/docs/getting-started/installation"}
-A callout with `to` becomes a link to another page.
 ::
 
 ## Card and CardGroup
 
+Use markdown in the default slot of the `card` component to highlight your
+content.
+
+Use the `title`, `icon` and `color` props to customize it. You can also pass
+`to` to turn the card into a link.
+
+Wrap your `card` components with the `card-group` component to group them
+together in a grid layout.
+
+::code-preview
+
+:::card-group
+
+::::card{title="Installation" icon="i-lucide-download" to="/docs/getting-started/installation"}
+Wire the theme into a Next.js app.
+::::
+
+::::card{title="Project Structure" icon="i-lucide-folder-tree" to="/docs/getting-started/project-structure"}
+How content maps onto routes.
+::::
+
+::::card{title="Configuration" icon="i-lucide-settings" to="/docs/core-concepts/configuration"}
+Every option the theme reads.
+::::
+
+::::card{title="Code Blocks" icon="i-lucide-code" to="/docs/essentials/code-blocks"}
+Filenames, highlighting and groups.
+::::
+
+:::
+
+#code
+```mdc
 ::card-group
 
   :::card{title="Installation" icon="i-lucide-download" to="/docs/getting-started/installation"}
@@ -78,23 +181,71 @@ A callout with `to` becomes a link to another page.
   :::
 
 ::
+```
+
+::
 
 ## Collapsible
 
+Wrap your content with the `collapsible` component to hide it behind a toggle.
+
+::code-preview
+
+:::collapsible
+
+| Prop    | Default   | Type     |
+| ------- | --------- | -------- |
+| `name`  |           | `string` |
+| `size`  | `md`      | `string` |
+| `color` | `neutral` | `string` |
+
+:::
+
+#code
+```mdc
 ::collapsible
 
-```ts [docs.config.ts]
-export default defineDocsConfig({
-  site: { name: 'Acme' },
-})
+| Prop    | Default   | Type     |
+|---------|-----------|----------|
+| `name`  |           | `string` |
+| `size`  | `md`      | `string` |
+| `color` | `neutral` | `string` |
+
+::
 ```
 
 ::
 
 ## Field and FieldGroup
 
-::field-group
+A `field` is a prop or parameter to display in your content. Group them with
+`field-group` in a list.
 
+::code-preview
+
+:::field-group
+
+::::field{name="site.name" type="string" required}
+The site name, used as the header title fallback.
+::::
+
+::::field{name="header.search" type="boolean"}
+Set to `false` to remove the search trigger. Defaults to `true`.
+::::
+
+::::field{name="colorMode.forced" type="'light' | 'dark'"}
+Pins the site to one colour mode and hides the toggle.
+::::
+
+::::field{name="site.url" type="string"}
+Canonical site URL. Enables the sitemap, social images and edit links.
+::::
+
+:::
+
+#code
+```mdc
+::field-group
   :::field{name="site.name" type="string" required}
   The site name, used as the header title fallback.
   :::
@@ -104,58 +255,118 @@ export default defineDocsConfig({
   :::
 
   :::field{name="colorMode.forced" type="'light' | 'dark'"}
-  Pins the site to one mode and hides the toggle.
+  Pins the site to one colour mode and hides the toggle.
   :::
+
+  :::field{name="site.url" type="string"}
+  Canonical site URL. Enables the sitemap, social images and edit links.
+  :::
+::
+```
 
 ::
 
 ## Icon
 
-Icons come from lucide, written either as `:icon{name="rocket"}` or with the
-Iconify prefix Docus uses: :icon{name="i-lucide-rocket" class="inline size-4"}
+Use the `icon` component to display an icon in your content. Names are lucide
+in kebab-case, or the Iconify prefix Docus uses (`i-lucide-rocket`).
+
+::code-preview
+:icon{name="i-lucide-rocket"}
+
+#code
+```mdc
+:icon{name="i-lucide-rocket"}
+```
+::
 
 ## Kbd
 
-Press :kbd{value="Ctrl"} :kbd{value="K"} to open the search palette.
+Use the `kbd` component to display a keyboard key in your content.
+
+::code-preview
+:kbd{value="meta"} :kbd{value="K"}
+
+#code
+```mdc
+:kbd{value="meta"} :kbd{value="K"}
+```
+::
 
 ## Tabs
 
+Use the `tabs` and `tabs-item` components to display tabs in your content.
+
+::code-preview
+
+:::tabs
+
+::::tabs-item{icon="i-lucide-file-text" label="Write"}
+Documents are markdown with MDC syntax, so components need no imports.
+::::
+
+::::tabs-item{icon="i-lucide-sparkles" label="Publish"}
+Every file under `content/` becomes a route.
+::::
+
+:::
+
+#code
+```mdc
 ::tabs
-
-  :::tabs-item{label="Preview" icon="i-lucide-eye"}
-  Tabs take a label and an optional icon on each item.
+  :::tabs-item{icon="i-lucide-file-text" label="Write"}
+  Documents are markdown with MDC syntax, so components need no imports.
   :::
 
-  :::tabs-item{label="Code" icon="i-lucide-code"}
-  ```mdc
-  ::tabs
-    :::tabs-item{label="Preview" icon="i-lucide-eye"}
-    Content
-    :::
-  ::
-  ```
+  :::tabs-item{icon="i-lucide-sparkles" label="Publish"}
+  Every file under `content/` becomes a route.
   :::
-
+::
+```
 ::
 
 ## Steps
 
-::steps{level="3"}
+Wrap your headings with the `steps` component to display a list of steps.
 
-### Install the theme
+Use the `level` prop to define which heading will be used for the steps.
+
+::code-preview
+
+:::steps{level="4"}
+
+#### Create your docs directory
 
 ```bash [Terminal]
-npm install docora
+npx create-docora my-docs
 ```
 
-### Add a content file
-
-Create `content/index.mdx` with frontmatter and a body.
-
-### Run the dev server
+#### Start the development server
 
 ```bash [Terminal]
+cd my-docs
 npm run dev
 ```
 
+:::
+
+#code
+````mdc
+::steps{level="4"}
+
+#### Create your docs directory
+
+```bash [Terminal]
+npx create-docora my-docs
+```
+
+#### Start the development server
+
+```bash [Terminal]
+cd my-docs
+npm run dev
+```
+
+::
+````
 ::

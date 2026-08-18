@@ -1,16 +1,16 @@
-import { defineDocsConfig } from 'docora'
+import { defineDocsConfig } from "docora";
 
 export default defineDocsConfig({
   site: {
-    name: 'My Docs',
-    description: 'Documentation built with Docora.',
+    name: "My Docs",
+    description: "Documentation built with Docora.",
     // Set this to enable canonical URLs, the sitemap and social images.
     // url: 'https://docs.example.com',
-    locale: 'en',
+    locale: "en",
   },
 
   header: {
-    links: [{ label: 'Docs', href: '/docs/getting-started/introduction' }],
+    links: [],
   },
 
   socials: {
@@ -18,10 +18,10 @@ export default defineDocsConfig({
   },
 
   toc: {
-    title: 'On this page',
+    title: "On this page",
   },
 
   footer: {
     credits: `Built with Docora · ${new Date().getFullYear()}`,
   },
-})
+});

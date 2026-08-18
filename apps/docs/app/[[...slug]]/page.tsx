@@ -26,15 +26,20 @@ export default async function Page({ params }: PageProps) {
 
   const { content, frontmatter, toc } = await compileMdxFile(page.filePath)
 
+  // A landing page supplies its own hero, so the title block would duplicate it.
+  if (frontmatter.layout === 'landing') {
+    return (
+      <LandingLayout>
+        <DocsPage>{content}</DocsPage>
+      </LandingLayout>
+    )
+  }
+
   const body = (
     <DocsPage title={frontmatter.title} description={frontmatter.description}>
       {content}
     </DocsPage>
   )
-
-  if (frontmatter.layout === 'landing') {
-    return <LandingLayout>{body}</LandingLayout>
-  }
 
   const { prev, next } = await source.getSurround(page.path)
 

@@ -40,11 +40,11 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
   }
 
   return (
-    <div className="group relative my-5 overflow-hidden rounded-md border border-border bg-muted">
+    <div className="docs-code group relative my-5">
       {filename && (
-        <div className="flex items-center gap-2 border-b border-border px-4 py-2 text-xs text-muted-foreground">
-          <Icon name={iconForFilename(filename)} className="size-3.5 shrink-0 text-dimmed" />
-          <span className="truncate font-mono">{filename}</span>
+        <div className="docs-code-header relative flex items-center gap-1.5 rounded-t-md border border-border border-b-0 bg-background px-4 py-3 pe-12">
+          <Icon name={iconForFilename(filename)} className="size-4 shrink-0 text-muted-foreground" />
+          <span className="truncate text-sm/6 text-highlighted">{filename}</span>
         </div>
       )}
 
@@ -52,8 +52,7 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
         type="button"
         onClick={copy}
         aria-label={copied ? 'Copied' : 'Copy code'}
-        className="absolute end-2 z-10 inline-flex size-7 items-center justify-center rounded-md border border-border bg-background text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
-        style={{ top: filename ? '2.6rem' : '0.5rem' }}
+        className="absolute end-[11px] top-[11px] z-10 inline-flex size-7 items-center justify-center rounded-md border border-border bg-background text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
       >
         {copied ? <Check className="size-3.5 text-primary" /> : <Copy className="size-3.5" />}
       </button>
@@ -62,7 +61,8 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
         ref={preRef}
         data-language={language}
         className={cn(
-          'overflow-x-auto p-4 font-mono text-sm leading-6',
+          'overflow-x-auto rounded-md border border-border bg-muted px-4 py-3 font-mono text-sm/6',
+          filename && 'rounded-t-none',
           lineNumbers && 'docs-line-numbers',
           className,
         )}

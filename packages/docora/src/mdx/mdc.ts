@@ -33,5 +33,5 @@ export const mdcHandlers = {
   leafComponent: (state: State, node: ComponentNode) => toElement(state, node, node.name ?? 'div'),
   /** `#name` blocks inside a component become named slots. */
   componentContainerSection: (state: State, node: ComponentNode) =>
-    toElement(state, node, 'mdc-slot', { slot: node.name ?? '' }),
+    toElement(state, node, 'mdc-slot', { 'data-slot': node.name ?? '' }),
 } as unknown as Handlers

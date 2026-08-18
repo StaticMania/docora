@@ -1,23 +1,107 @@
 ---
 title: Project Structure
-description: How the content directory maps onto routes and the sidebar.
+description: Learn about the project structure of Docora.
 icon: folder-tree
 ---
 
-Every route comes from a file under `content/`. There are no page files to
-write — one catch-all route compiles whichever document matches the URL.
+## Global structure
 
-## Routes
+Docora is a **Next.js theme package** that extends a standard App Router
+application with documentation features. This gives you the flexibility of a
+full Next.js project.
+
+When you create a new Docora project with `npx create-docora my-docs`, you get:
+
+```bash
+my-docs/
+├── content/             # Your markdown content
+│   ├── index.mdx        # Homepage
+│   └── docs/            # Documentation pages
+├── app/                 # Next.js App Router
+│   ├── [[...slug]]/     # Catch-all that compiles content
+│   ├── layout.tsx       # Root layout
+│   └── globals.css      # Theme stylesheet
+├── lib/source.ts        # Content source
+├── docs.config.ts       # Site configuration
+├── next.config.ts       # Next.js configuration
+└── package.json         # Dependencies and scripts
+```
+
+You can still use any feature or file of a classical Next.js project:
+
+```bash
+my-docs/
+├── app/
+│   ├── components/      # Components (add your own)
+│   ├── about/page.tsx   # Extra pages (alongside the catch-all)
+│   └── api/             # API routes
+├── middleware.ts        # Route middleware
+└── public/              # Static assets
+```
+
+### `content/` directory
+
+This is where you [write pages](/docs/essentials/markdown-syntax) in Markdown
+and MDX. Docora automatically generates routes based on your file structure —
+there are no page files to write.
+
+**Single language structure:**
+
+```bash
+content/
+├── index.mdx                    # Landing page (/)
+├── docs/
+│   ├── index.mdx                # Documentation index (/docs)
+│   └── 1.getting-started/
+│       ├── .navigation.yml      # Section title and icon
+│       ├── 1.introduction.mdx   # /docs/getting-started/introduction
+│       └── 2.installation.mdx   # /docs/getting-started/installation
+└── guide/
+    └── configuration.mdx        # /guide/configuration
+```
 
 A file's path becomes its route, minus the extension:
 
-| File                                          | Route                            |
-| --------------------------------------------- | -------------------------------- |
-| `content/index.mdx`                            | `/`                              |
-| `content/docs/index.mdx`                       | `/docs`                          |
-| `content/docs/1.getting-started/1.installation.mdx` | `/docs/getting-started/installation` |
+| File                                                | Route                                |
+| --------------------------------------------------- | ------------------------------------ |
+| `content/index.mdx`                                  | `/`                                  |
+| `content/docs/index.mdx`                             | `/docs`                              |
+| `content/docs/1.getting-started/1.installation.mdx`  | `/docs/getting-started/installation` |
 
-## Ordering
+::tip{to="/docs/essentials/markdown-syntax"}
+Put documentation under a `docs/` subfolder to serve it at `/docs`, which
+keeps `/` free for a landing page. You can also add ordinary App Router pages
+alongside the catch-all if you need a custom React route.
+::
+
+**Multi-language structure (with i18n):**
+
+```bash
+content/
+├── en/
+│   ├── index.mdx                    # English landing page (/en)
+│   └── docs/
+│       └── 1.getting-started/
+│           └── 1.introduction.mdx   # /en/docs/getting-started/introduction
+└── fr/
+    ├── index.mdx                    # French landing page (/fr)
+    └── docs/
+        └── 1.getting-started/
+            └── 1.introduction.mdx   # /fr/docs/getting-started/introduction
+```
+
+Scaffold this layout with the i18n template:
+
+```bash [Terminal]
+npx create-docora my-docs -t i18n
+```
+
+::tip{to="/docs/getting-started/installation"}
+The i18n starter prefixes every route with a locale and builds a separate
+sidebar for each language. See Installation for how to create one.
+::
+
+#### Ordering
 
 A numeric prefix sets the position in the sidebar and is stripped from the
 route. `1.installation.mdx` sorts before `2.project-structure.mdx` and is
@@ -25,13 +109,12 @@ served at `/docs/getting-started/installation`.
 
 Files without a prefix sort after the numbered ones, alphabetically.
 
-## Sections
+#### Sections
 
 A folder becomes a sidebar section. Give it a title and an icon with a
 `.navigation.yml` beside its pages:
 
-```yaml
-# content/docs/1.getting-started/.navigation.yml
+```yaml [content/docs/1.getting-started/.navigation.yml]
 title: Getting Started
 icon: rocket
 ```
@@ -39,11 +122,11 @@ icon: rocket
 Without one, the folder name is humanised — `getting-started` becomes
 `Getting Started`.
 
-## Hiding pages
+#### Hiding pages
 
-<Note title="Frontmatter wins">
+::note
 Anything set in a document's frontmatter overrides the conventions above.
-</Note>
+::
 
 Set `navigation: false` to keep a page routable but out of the sidebar, or pass
 an object to change how it appears:
@@ -57,7 +140,111 @@ navigation:
 ---
 ```
 
-## The landing page
+#### The landing page
 
 `content/index.mdx` is the site root. Give it `layout: landing` and it renders
 without the sidebar and table of contents.
+
+### `public/` directory
+
+Files in `public/` are served at the root and are not modified by the build
+process. This is where you put images, icons, and other static assets — for
+example `public/images/banner.png` is available at `/images/banner.png`.
+
+### `package.json`
+
+This file contains the dependencies and scripts for your application. The
+`package.json` of a Docora application is minimal and looks like:
+
+```json [package.json]
+{
+  "name": "my-docs",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "docora": "latest",
+    "next": "^16.3.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  }
+}
+```
+
+### `next.config.ts`
+
+Wrap your Next.js config with `withDocora` so the theme is transpiled and the
+content directory is traced into the build:
+
+```ts [next.config.ts]
+import { withDocora } from 'docora/next'
+
+export default withDocora({})
+```
+
+You can still pass any Next.js option through:
+
+```ts [next.config.ts]
+import { withDocora } from 'docora/next'
+
+export default withDocora({
+  images: {
+    remotePatterns: [{ hostname: 'res.cloudinary.com' }],
+  },
+})
+```
+
+### `docs.config.ts`
+
+This is where you [configure Docora](/docs/core-concepts/configuration) to fit
+your branding, handle SEO, set your locale, and adapt links and socials.
+
+```ts [docs.config.ts]
+import { defineDocsConfig } from 'docora'
+
+export default defineDocsConfig({
+  site: {
+    name: 'My Docs',
+    description: 'My awesome documentation',
+    locale: 'en',
+  },
+  header: {
+    links: [{ label: 'Docs', href: '/docs/getting-started/introduction' }],
+  },
+  // ... other configurations
+})
+```
+
+Pass the result to `DocsRoot` in `app/layout.tsx`.
+
+## Full Next.js Project Capabilities
+
+Since Docora is a theme on top of the App Router, you can use **any feature** of
+a standard Next.js project:
+
+```bash
+my-docs/
+├── app/                 # App Router
+│   ├── layout.tsx       # Root layout (wraps DocsRoot)
+│   ├── [[...slug]]/     # Content catch-all
+│   ├── globals.css      # Custom theme
+│   ├── about/page.tsx   # Custom pages (outside of content)
+│   ├── components/      # Custom React components
+│   └── api/             # API routes
+├── middleware.ts        # Route middleware
+├── public/              # Static assets
+└── next.config.ts       # Next.js configuration
+```
+
+::warning
+The catch-all at `app/[[...slug]]/page.tsx` compiles whichever document matches
+the URL. More specific App Router pages — `app/about/page.tsx`, API routes, and
+the like — take precedence over it.
+::
+
+::tip{to="/docs/core-concepts/customization"}
+Reskin the theme, swap layout slots, or register extra MDX components without
+leaving the Next.js app.
+::

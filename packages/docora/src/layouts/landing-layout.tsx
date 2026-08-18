@@ -19,7 +19,7 @@ export function LandingLayout({ children, header, footer, className }: LandingLa
   return (
     <div className="flex min-h-svh flex-col">
       {header ?? <SiteHeader />}
-      <main className={cn('mx-auto w-full max-w-3xl flex-1 px-4 py-16 sm:px-6', className)}>{children}</main>
+      <main className={cn('mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-6', className)}>{children}</main>
       {footer ?? <SiteFooter />}
     </div>
   )

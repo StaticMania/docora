@@ -51,7 +51,9 @@ export function CodeTree({ children, className, ...props }: CodeTreeProps) {
       </div>
 
       {/* The nested block brings its own frame, which would double up here. */}
-      <div className="min-w-0 flex-1 [&_>div]:my-0 [&_>div]:rounded-none [&_>div]:border-0">{blocks[active]}</div>
+      <div className="min-w-0 flex-1 [&_.docs-code]:my-0 [&_.docs-code-header]:hidden [&_.docs-code_pre]:rounded-none [&_.docs-code_pre]:border-0">
+        {blocks[active]}
+      </div>
     </div>
   )
 }

@@ -34,6 +34,20 @@ export function Video({ src, autoplay, controls, loop, muted, className, ...prop
 }
 
 /** Carrier for MDC `#name` slots, so components can pick children apart. */
-export function MdcSlot({ children }: { children?: ReactNode; slot?: string }) {
-  return <>{children}</>
+export function MdcSlot({
+  children,
+  slot,
+  ...props
+}: {
+  children?: ReactNode
+  slot?: string
+  'data-slot'?: string
+}) {
+  const name = slot ?? props['data-slot'] ?? ''
+
+  return (
+    <div data-slot={name} className="contents">
+      {children}
+    </div>
+  )
 }
