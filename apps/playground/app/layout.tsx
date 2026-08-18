@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { DocsRoot, createRootMetadata } from 'docs-theme'
+import { DocsRoot, createRootMetadata } from 'docora'
 
 import docsConfig from '../docs.config'
 import { source } from '../lib/source'

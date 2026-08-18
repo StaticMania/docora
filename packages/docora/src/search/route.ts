@@ -7,7 +7,7 @@ import { buildSearchIndex } from './build'
  *
  * ```ts
  * // app/api/search/route.ts
- * import { createSearchRoute } from 'docs-theme'
+ * import { createSearchRoute } from 'docora'
  * import { source } from '../../../lib/source'
  *
  * export const { GET, dynamic } = createSearchRoute(source)

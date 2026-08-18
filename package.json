@@ -1,8 +1,8 @@
 {
-  "name": "next-docs-workspace",
+  "name": "docora-workspace",
   "version": "0.0.0",
   "private": true,
-  "description": "Documentation framework for Next.js \u2014 theme package, CLI and starters",
+  "description": "Docora is an open-source documentation framework for Next.js and React, built with TypeScript, Tailwind CSS, and Markdown. Create fast, beautiful, SEO-friendly documentation sites with minimal configuration.",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -12,11 +12,11 @@
     "docs:start": "pnpm --filter docs start",
     "playground:dev": "pnpm --filter playground dev",
     "playground:build": "pnpm --filter playground build",
-    "build": "pnpm --filter create-docs build && pnpm run docs:build",
+    "build": "pnpm --filter create-docora build && pnpm run docs:build",
     "typecheck": "pnpm -r --parallel typecheck",
     "verify": "pnpm run typecheck && pnpm run build",
-    "release:theme": "pnpm --filter docs-theme publish --access public",
-    "release:cli": "pnpm --filter create-docs publish --access public",
+    "release:theme": "pnpm --filter docora publish --access public",
+    "release:cli": "pnpm --filter create-docora publish --access public",
     "clean": "rimraf --glob \"**/node_modules\" \"**/.next\" \"**/dist\""
   },
   "devDependencies": {
@@ -30,6 +30,6 @@
   "packageManager": "pnpm@9.15.1",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Arifulislam5577/next-docs.git"
+    "url": "git+https://github.com/Arifulislam5577/docora.git"
   }
 }

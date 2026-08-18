@@ -1,9 +1,9 @@
 ---
 name: writing-docs
-description: Write and structure documentation pages for a next-docs site — file naming, frontmatter, sidebar ordering and MDC components.
+description: Write and structure documentation pages for a Docora site — file naming, frontmatter, sidebar ordering and MDC components.
 ---
 
-# Writing docs for next-docs
+# Writing docs for Docora
 
 ## Where pages live
 

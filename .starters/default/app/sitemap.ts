@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { createSitemap } from 'docs-theme'
+import { createSitemap } from 'docora'
 
 import docsConfig from '../docs.config'
 import { source } from '../lib/source'

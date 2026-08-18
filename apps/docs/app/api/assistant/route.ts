@@ -1,4 +1,4 @@
-import { createAssistantRoute } from 'docs-theme'
+import { createAssistantRoute } from 'docora'
 
 import docsConfig from '../../../docs.config'
 import { source } from '../../../lib/source'

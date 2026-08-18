@@ -1,6 +1,6 @@
 # My Docs
 
-Documentation built with [next-docs](https://github.com/Arifulislam5577/next-docs).
+Documentation built with [Docora](https://github.com/Arifulislam5577/docora).
 
 ## Develop
 

@@ -1,4 +1,4 @@
-import { createLlmsTxtRoute } from 'docs-theme'
+import { createLlmsTxtRoute } from 'docora'
 
 import docsConfig from '../../docs.config'
 import { source } from '../../lib/source'

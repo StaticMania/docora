@@ -9,7 +9,7 @@ result to `DocsRoot`.
 
 ```ts
 // docs.config.ts
-import { defineDocsConfig } from 'docs-theme'
+import { defineDocsConfig } from 'docora'
 
 export default defineDocsConfig({
   site: { name: 'Acme', description: 'Acme documentation' },
@@ -86,7 +86,7 @@ Override any of them in your own stylesheet, after the theme import:
 
 ```css
 @import "tailwindcss";
-@import "docs-theme/styles.css";
+@import "docora/styles.css";
 
 :root {
   --primary: var(--color-blue-500);

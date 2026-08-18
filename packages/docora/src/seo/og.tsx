@@ -9,7 +9,7 @@ export const OG_SIZE = { width: 1200, height: 630 }
  *
  * ```ts
  * // app/og/route.tsx
- * import { createOgRoute } from 'docs-theme'
+ * import { createOgRoute } from 'docora'
  * import docsConfig from '../../docs.config'
  *
  * export const { GET } = createOgRoute(docsConfig)

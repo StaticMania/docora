@@ -1,24 +1,24 @@
-# docs-theme
+# docora
 
 The Next.js documentation theme: layouts, MDX rendering, design tokens and the
-`withDocsTheme()` config helper.
+`withDocora()` config helper.
 
 ```ts
 // next.config.ts
-import { withDocsTheme } from 'docs-theme/next'
+import { withDocora } from 'docora/next'
 
-export default withDocsTheme({})
+export default withDocora({})
 ```
 
 ```css
 /* app/globals.css */
 @import "tailwindcss";
-@import "docs-theme/styles.css";
+@import "docora/styles.css";
 ```
 
 ```ts
 // docs.config.ts
-import { defineDocsConfig } from 'docs-theme'
+import { defineDocsConfig } from 'docora'
 
 export default defineDocsConfig({
   site: { name: 'Acme' },
@@ -29,7 +29,7 @@ export default defineDocsConfig({
 
 ```tsx
 // app/layout.tsx
-import { DocsRoot } from 'docs-theme'
+import { DocsRoot } from 'docora'
 
 import docsConfig from '../docs.config'
 
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ```ts
 // lib/source.ts
-import { createDocsSource, defaultContentDir } from 'docs-theme'
+import { createDocsSource, defaultContentDir } from 'docora'
 
 export const source = createDocsSource({ contentDir: defaultContentDir() })
 ```
@@ -48,7 +48,7 @@ export const source = createDocsSource({ contentDir: defaultContentDir() })
 ```tsx
 // app/[[...slug]]/page.tsx
 import { notFound } from 'next/navigation'
-import { DocsLayout, DocsPage, DocsPager, compileMdxFile } from 'docs-theme'
+import { DocsLayout, DocsPage, DocsPager, compileMdxFile } from 'docora'
 
 import { source } from '../../lib/source'
 
@@ -163,7 +163,7 @@ route the palette fetches once:
 
 ```ts
 // app/api/search/route.ts
-import { createSearchRoute } from 'docs-theme'
+import { createSearchRoute } from 'docora'
 import { source } from '../../../lib/source'
 
 export const { GET, dynamic } = createSearchRoute(source)

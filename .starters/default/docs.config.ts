@@ -1,9 +1,9 @@
-import { defineDocsConfig } from 'docs-theme'
+import { defineDocsConfig } from 'docora'
 
 export default defineDocsConfig({
   site: {
     name: 'My Docs',
-    description: 'Documentation built with next-docs.',
+    description: 'Documentation built with Docora.',
     // Set this to enable canonical URLs, the sitemap and social images.
     // url: 'https://docs.example.com',
     locale: 'en',
@@ -22,6 +22,6 @@ export default defineDocsConfig({
   },
 
   footer: {
-    credits: `Built with next-docs · ${new Date().getFullYear()}`,
+    credits: `Built with Docora · ${new Date().getFullYear()}`,
   },
 })

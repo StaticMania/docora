@@ -10,7 +10,7 @@ export interface CliOptions {
 }
 
 export const HELP = `
-Usage: create-docs [directory] [options]
+Usage: create-docora [directory] [options]
 
 Options:
   -t, --template <name>  Starter to use (default: "default")
@@ -20,9 +20,9 @@ Options:
   -v, --version          Show the version
 
 Examples:
-  npx create-docs my-docs
-  npx create-docs my-docs --template default --pm pnpm
-  npx create-docs . --no-install
+  npx create-docora my-docs
+  npx create-docora my-docs --template default --pm pnpm
+  npx create-docora . --no-install
 `
 
 export function parseCliArgs(argv: string[]): CliOptions {

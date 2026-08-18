@@ -23,7 +23,7 @@ mainly a local-development concern.
 Then mount the route:
 
 ```ts [app/api/assistant/route.ts]
-import { createAssistantRoute } from 'docs-theme'
+import { createAssistantRoute } from 'docora'
 
 import docsConfig from '../../../docs.config'
 import { source } from '../../../lib/source'
@@ -35,7 +35,7 @@ The layout tells the client whether it may render the chat. The credential is
 read on the server and never reaches the browser:
 
 ```tsx [app/layout.tsx]{5}
-import { DocsRoot, isAssistantEnabled } from 'docs-theme'
+import { DocsRoot, isAssistantEnabled } from 'docora'
 
 <DocsRoot
   config={docsConfig}

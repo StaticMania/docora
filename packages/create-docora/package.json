@@ -1,11 +1,11 @@
 {
-  "name": "create-docs",
+  "name": "create-docora",
   "version": "0.1.0",
-  "description": "Scaffold a Next.js documentation site",
+  "description": "Scaffold a Docora documentation site.",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "create-docs": "./dist/index.mjs"
+    "create-docora": "./dist/index.mjs"
   },
   "files": [
     "dist",
@@ -25,14 +25,14 @@
   "engines": {
     "node": ">=20.9.0"
   },
-  "homepage": "https://github.com/Arifulislam5577/next-docs#readme",
+  "homepage": "https://github.com/Arifulislam5577/docora#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Arifulislam5577/next-docs.git",
-    "directory": "packages/create-docs"
+    "url": "git+https://github.com/Arifulislam5577/docora.git",
+    "directory": "packages/create-docora"
   },
   "bugs": {
-    "url": "https://github.com/Arifulislam5577/next-docs/issues"
+    "url": "https://github.com/Arifulislam5577/docora/issues"
   },
   "keywords": [
     "nextjs",

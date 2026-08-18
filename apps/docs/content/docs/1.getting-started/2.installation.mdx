@@ -14,13 +14,13 @@ pieces of configuration make it work.
 
 ### Next config
 
-`withDocsTheme` transpiles the theme, which is published as TypeScript source:
+`withDocora` transpiles the theme, which is published as TypeScript source:
 
 ```ts
 // next.config.ts
-import { withDocsTheme } from 'docs-theme/next'
+import { withDocora } from 'docora/next'
 
-export default withDocsTheme({})
+export default withDocora({})
 ```
 
 ### Styles
@@ -31,7 +31,7 @@ theme's own sources, so its classes survive the content scan:
 ```css
 /* app/globals.css */
 @import "tailwindcss";
-@import "docs-theme/styles.css";
+@import "docora/styles.css";
 ```
 
 Import it after Tailwind — the theme redefines tokens that Tailwind sets first.
@@ -45,7 +45,7 @@ colour-mode and configuration providers:
 
 ```tsx
 // app/layout.tsx
-import { DocsRoot } from 'docs-theme'
+import { DocsRoot } from 'docora'
 import docsConfig from '../docs.config'
 
 import './globals.css'
@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 version that renders something useful:
 
 ```ts
-import { defineDocsConfig } from 'docs-theme'
+import { defineDocsConfig } from 'docora'
 
 export default defineDocsConfig({
   site: { name: 'Acme' },
@@ -77,7 +77,7 @@ Compile a document and hand the headings to the layout:
 
 ```tsx
 // app/docs/page.tsx
-import { DocsLayout, DocsPage, compileMdxFile } from 'docs-theme'
+import { DocsLayout, DocsPage, compileMdxFile } from 'docora'
 
 export default async function Page() {
   const { content, frontmatter, toc } = await compileMdxFile('content/docs/index.mdx')

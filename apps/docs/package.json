@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "docs-theme": "workspace:*",
+    "docora": "workspace:*",
     "next": "^16.3.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
@@ -23,5 +23,5 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   },
-  "description": "The next-docs documentation site, built with next-docs."
+  "description": "The Docora documentation site, built with Docora."
 }

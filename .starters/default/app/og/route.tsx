@@ -1,4 +1,4 @@
-import { createOgRoute } from 'docs-theme'
+import { createOgRoute } from 'docora'
 
 import docsConfig from '../../docs.config'
 

@@ -1,6 +1,6 @@
 import type { NextConfig } from 'next'
-import { withDocsTheme } from 'docs-theme/next'
+import { withDocora } from 'docora/next'
 
 const nextConfig: NextConfig = {}
 
-export default withDocsTheme(nextConfig)
+export default withDocora(nextConfig)

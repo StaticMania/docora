@@ -12,11 +12,11 @@
  * @param {import('next').NextConfig & { contentDir?: string }} [nextConfig]
  * @returns {import('next').NextConfig}
  */
-export function withDocsTheme(nextConfig = {}) {
+export function withDocora(nextConfig = {}) {
   const { contentDir = 'content', ...rest } = nextConfig
 
   const transpilePackages = new Set(rest.transpilePackages ?? [])
-  transpilePackages.add('docs-theme')
+  transpilePackages.add('docora')
 
   return {
     ...rest,
@@ -28,4 +28,4 @@ export function withDocsTheme(nextConfig = {}) {
   }
 }
 
-export default withDocsTheme
+export default withDocora

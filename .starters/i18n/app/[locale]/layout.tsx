@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { DocsRoot, createRootMetadata, isAssistantEnabled } from 'docs-theme'
+import { DocsRoot, createRootMetadata, isAssistantEnabled } from 'docora'
 
 import docsConfig from '../../docs.config'
 import { source } from '../../lib/source'

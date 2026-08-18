@@ -1,9 +1,9 @@
 /*
- * docs-theme styles.
+ * docora styles.
  *
  * Consuming apps do:
  *   @import "tailwindcss";
- *   @import "docs-theme/styles.css";
+ *   @import "docora/styles.css";
  *
  * The palette mirrors Docus: a zinc neutral ramp with an emerald primary,
  * using the same semantic roles Nuxt UI exposes (bg / elevated / accented,

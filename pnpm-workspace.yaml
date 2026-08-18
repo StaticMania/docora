@@ -2,4 +2,4 @@ packages:
   - packages/*
   - apps/*
   # .starters/* stay out of the workspace on purpose: they are templates that get
-  # copied by `create-docs` and installed with a plain registry install.
+  # copied by `create-docora` and installed with a plain registry install.

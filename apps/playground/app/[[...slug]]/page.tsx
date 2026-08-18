@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { DocsLayout, DocsPage, DocsPager, LandingLayout, compileMdxFile } from 'docs-theme'
+import { DocsLayout, DocsPage, DocsPager, LandingLayout, compileMdxFile } from 'docora'
 
 import { source } from '../../lib/source'
 

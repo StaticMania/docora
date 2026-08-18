@@ -20,9 +20,9 @@ importers:
 
   apps/docs:
     dependencies:
-      docs-theme:
+      docora:
         specifier: workspace:*
-        version: link:../../packages/docs-theme
+        version: link:../../packages/docora
       next:
         specifier: ^16.3.1
         version: 16.3.1(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -54,9 +54,9 @@ importers:
 
   apps/playground:
     dependencies:
-      docs-theme:
+      docora:
         specifier: workspace:*
-        version: link:../../packages/docs-theme
+        version: link:../../packages/docora
       next:
         specifier: ^16.3.1
         version: 16.3.1(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -86,7 +86,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/create-docs:
+  packages/create-docora:
     devDependencies:
       '@types/node':
         specifier: ^26.2.0
@@ -98,7 +98,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/docs-theme:
+  packages/docora:
     dependencies:
       '@ai-sdk/react':
         specifier: ^4.0.69

@@ -1,4 +1,4 @@
-import { defineDocsConfig } from 'docs-theme'
+import { defineDocsConfig } from 'docora'
 
 /** Minimal config — the playground exists to exercise the theme, not to be a site. */
 export default defineDocsConfig({
@@ -13,6 +13,6 @@ export default defineDocsConfig({
   },
 
   footer: {
-    credits: 'docs-theme playground',
+    credits: 'docora playground',
   },
 })

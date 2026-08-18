@@ -1,4 +1,4 @@
-import { createRawRoute } from 'docs-theme'
+import { createRawRoute } from 'docora'
 
 import { source } from '../../../lib/source'
 

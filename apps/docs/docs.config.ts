@@ -1,12 +1,12 @@
-import { defineDocsConfig } from 'docs-theme'
+import { defineDocsConfig } from 'docora'
 
 export default defineDocsConfig({
   site: {
-    name: 'next-docs',
-    description: 'A documentation framework for Next.js.',
+    name: 'Docora',
+    description: 'Beautiful documentation for Next.js and React.',
     // Change this to the deployed URL; it drives canonical links, the sitemap
     // and social images.
-    url: 'https://next-docs.example.com',
+    url: 'https://docora.example.com',
     locale: 'en',
   },
 
@@ -19,7 +19,7 @@ export default defineDocsConfig({
 
   // Placeholder repository — swap once the project has a public home.
   socials: {
-    github: 'https://github.com/Arifulislam5577/next-docs',
+    github: 'https://github.com/Arifulislam5577/docora',
   },
 
   assistant: {
@@ -37,7 +37,7 @@ export default defineDocsConfig({
       links: [
         {
           label: 'Report an issue',
-          href: 'https://github.com/Arifulislam5577/next-docs/issues',
+          href: 'https://github.com/Arifulislam5577/docora/issues',
           icon: 'book-open',
         },
       ],
@@ -45,17 +45,17 @@ export default defineDocsConfig({
   },
 
   github: {
-    url: 'https://github.com/Arifulislam5577/next-docs',
+    url: 'https://github.com/Arifulislam5577/docora',
     branch: 'main',
     // Where this app sits in the repository, so edit links resolve.
     rootDir: 'apps/docs',
   },
 
   footer: {
-    credits: 'Built with next-docs',
+    credits: 'Built with Docora',
     links: [
       { label: 'Docs', href: '/docs/getting-started/introduction' },
-      { label: 'GitHub', href: 'https://github.com/Arifulislam5577/next-docs' },
+      { label: 'GitHub', href: 'https://github.com/Arifulislam5577/docora' },
     ],
   },
 })

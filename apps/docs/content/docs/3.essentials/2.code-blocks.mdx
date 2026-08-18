@@ -24,7 +24,7 @@ Add a filename in brackets and it appears in a header, with an icon chosen from
 the extension:
 
 ```ts [docs.config.ts]
-import { defineDocsConfig } from 'docs-theme'
+import { defineDocsConfig } from 'docora'
 
 export default defineDocsConfig({
   site: { name: 'Acme' },
@@ -36,9 +36,9 @@ export default defineDocsConfig({
 Append line numbers in braces to draw attention to part of a snippet:
 
 ```ts [next.config.ts]{3-5}
-import { withDocsTheme } from 'docs-theme/next'
+import { withDocora } from 'docora/next'
 
-export default withDocsTheme({
+export default withDocora({
   contentDir: 'content',
 })
 ```
@@ -47,7 +47,7 @@ Add `line-numbers` to number every line:
 
 ```css [app/globals.css] line-numbers
 @import "tailwindcss";
-@import "docs-theme/styles.css";
+@import "docora/styles.css";
 ```
 
 ## Advanced
@@ -59,15 +59,15 @@ Group related snippets into tabs — ideal for package managers:
 ::code-group
 
 ```bash [npm]
-npm install docs-theme
+npm install docora
 ```
 
 ```bash [pnpm]
-pnpm add docs-theme
+pnpm add docora
 ```
 
 ```bash [yarn]
-yarn add docs-theme
+yarn add docora
 ```
 
 ::
@@ -79,13 +79,13 @@ Show a set of files together with a tree beside them:
 ::code-tree{default-value="docs.config.ts"}
 
 ```ts [next.config.ts]
-import { withDocsTheme } from 'docs-theme/next'
+import { withDocora } from 'docora/next'
 
-export default withDocsTheme({})
+export default withDocora({})
 ```
 
 ```ts [docs.config.ts]
-import { defineDocsConfig } from 'docs-theme'
+import { defineDocsConfig } from 'docora'
 
 export default defineDocsConfig({
   site: { name: 'Acme' },
@@ -94,7 +94,7 @@ export default defineDocsConfig({
 
 ```css [app/globals.css]
 @import "tailwindcss";
-@import "docs-theme/styles.css";
+@import "docora/styles.css";
 ```
 
 ::
@@ -107,7 +107,7 @@ Collapse a long file behind a toggle:
 
 ```css [app/globals.css]
 @import "tailwindcss";
-@import "docs-theme/styles.css";
+@import "docora/styles.css";
 
 :root {
   --primary: var(--color-blue-500);

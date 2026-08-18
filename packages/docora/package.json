@@ -1,7 +1,7 @@
 {
-  "name": "docs-theme",
+  "name": "docora",
   "version": "0.1.0",
-  "description": "Next.js documentation theme \u2014 layouts, MDX rendering and configuration",
+  "description": "Docora theme for Next.js — layouts, content pipeline, MDC components, search and SEO.",
   "license": "MIT",
   "type": "module",
   "sideEffects": [
@@ -61,14 +61,14 @@
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.0"
   },
-  "homepage": "https://github.com/Arifulislam5577/next-docs#readme",
+  "homepage": "https://github.com/Arifulislam5577/docora#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Arifulislam5577/next-docs.git",
-    "directory": "packages/docs-theme"
+    "url": "git+https://github.com/Arifulislam5577/docora.git",
+    "directory": "packages/docora"
   },
   "bugs": {
-    "url": "https://github.com/Arifulislam5577/next-docs/issues"
+    "url": "https://github.com/Arifulislam5577/docora/issues"
   },
   "keywords": [
     "nextjs",

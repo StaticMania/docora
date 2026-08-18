@@ -10,7 +10,7 @@ import type { ShikiTransformer } from 'shiki'
  */
 export function transformerCodeMeta(): ShikiTransformer {
   return {
-    name: 'docs-theme:code-meta',
+    name: 'docora:code-meta',
     pre(node) {
       const raw = String((this.options.meta as { __raw?: string } | undefined)?.__raw ?? '')
 

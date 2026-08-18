@@ -1,4 +1,4 @@
-import { createSearchRoute } from 'docs-theme'
+import { createSearchRoute } from 'docora'
 
 import { source } from '../../../lib/source'
 

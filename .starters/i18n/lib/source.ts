@@ -1,4 +1,4 @@
-import { createDocsSource, defaultContentDir } from 'docs-theme'
+import { createDocsSource, defaultContentDir } from 'docora'
 
 import docsConfig from '../docs.config'
 
