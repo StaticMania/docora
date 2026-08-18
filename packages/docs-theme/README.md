@@ -75,6 +75,26 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 `DocsLayout` reads the sidebar, socials, footer and colour-mode settings from
 the config; `LandingLayout` is the same chrome without the asides.
 
+## AI assistant
+
+An in-page chat that answers from your own pages, gated on a credential:
+
+```ts
+// app/api/assistant/route.ts
+export const { POST } = createAssistantRoute(source, docsConfig)
+```
+
+```tsx
+// app/layout.tsx — the credential is read on the server, never shipped
+<DocsRoot assistantEnabled={isAssistantEnabled(docsConfig.assistant)} ... />
+```
+
+With no `AI_GATEWAY_API_KEY` (or Vercel OIDC token) the route answers 503 and
+the UI is not rendered at all. The model gets `search-docs` and `get-page` —
+the same pair the MCP server exposes — and is told to answer only from those
+pages and cite them. Configure with `assistant.model`, `assistant.suggestions`,
+`assistant.systemPrompt`, `assistant.enabled` and `assistant.explainWithAi`.
+
 ## LLM surface
 
 Four route helpers make the documentation readable by tools:

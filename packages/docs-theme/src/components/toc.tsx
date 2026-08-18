@@ -9,6 +9,7 @@ import { useMessages } from '../i18n/context'
 import { useActiveHeadings } from '../hooks/use-active-heading'
 import { buildTocTree, type TocEntry, type TocNode } from '../mdx/toc'
 import { cn } from '../utils/cn'
+import { ExplainWithAi } from './assistant-trigger'
 import { Icon } from './icon'
 import { circuitRailStyle, TOC_LINK_HEIGHT_REM } from './toc-rail'
 
@@ -102,6 +103,12 @@ export function TableOfContents({ items, className }: TableOfContentsProps) {
             <TocList nodes={tree} level={0} activeIds={activeSet} />
           </div>
         </nav>
+      )}
+
+      {config.assistant?.explainWithAi !== false && (
+        <div className={cn(tree.length > 0 && 'border-t border-dashed border-border pt-6')}>
+          <ExplainWithAi />
+        </div>
       )}
 
       {bottom?.links && bottom.links.length > 0 && (

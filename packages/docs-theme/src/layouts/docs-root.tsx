@@ -4,6 +4,9 @@ import { DocsConfigProvider } from '../config/context'
 import { fallbackDocsConfig } from '../config/define'
 import type { DocsConfig, NavItem } from '../config/types'
 import { RouteProgress } from '../components/route-progress'
+import { AssistantPanel } from '../components/assistant-panel'
+import { AssistantTrigger } from '../components/assistant-trigger'
+import { AssistantProvider } from '../assistant/context'
 import { SearchProvider } from '../components/search-provider'
 import { I18nProvider } from '../i18n/context'
 import { ThemeProvider } from '../components/theme-provider'
@@ -21,6 +24,11 @@ export interface DocsRootProps {
   navigation?: NavItem[]
   /** Active locale. Sets `<html lang>` and picks the interface strings. */
   locale?: string
+  /**
+   * Whether the AI assistant can run. Computed on the server with
+   * `isAssistantEnabled()`, so the credential never reaches the browser.
+   */
+  assistantEnabled?: boolean
   className?: string
   bodyClassName?: string
 }
@@ -36,6 +44,7 @@ export function DocsRoot({
   config = fallbackDocsConfig,
   navigation,
   locale,
+  assistantEnabled = false,
   className,
   bodyClassName,
 }: DocsRootProps) {
@@ -61,7 +70,11 @@ export function DocsRoot({
               {config.loadingIndicator?.enabled !== false && (
                 <RouteProgress color={config.loadingIndicator?.color} height={config.loadingIndicator?.height} />
               )}
-              {children}
+              <AssistantProvider enabled={assistantEnabled}>
+                {children}
+                <AssistantTrigger />
+                <AssistantPanel />
+              </AssistantProvider>
             </SearchProvider>
             </I18nProvider>
           </DocsConfigProvider>

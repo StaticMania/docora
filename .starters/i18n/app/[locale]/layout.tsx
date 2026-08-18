@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { DocsRoot, createRootMetadata } from 'docs-theme'
+import { DocsRoot, createRootMetadata, isAssistantEnabled } from 'docs-theme'
 
 import docsConfig from '../../docs.config'
 import { source } from '../../lib/source'
@@ -28,7 +28,12 @@ export default async function LocaleLayout({
   if (!docsConfig.i18n!.locales.some(entry => entry.code === locale)) notFound()
 
   return (
-    <DocsRoot config={docsConfig} locale={locale} navigation={await source.getNavigation(locale)}>
+    <DocsRoot
+      config={docsConfig}
+      locale={locale}
+      navigation={await source.getNavigation(locale)}
+      assistantEnabled={isAssistantEnabled(docsConfig.assistant)}
+    >
       {children}
     </DocsRoot>
   )

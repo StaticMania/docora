@@ -47,5 +47,5 @@ Built phase by phase; each phase ships something usable.
 - [ ] Phase 4 — search + sitemap/robots/OG
 - [x] **Phase 5** — i18n routing, translated interface, language switcher, `i18n` starter
 - [x] **Phase 6** — llms.txt, raw markdown, MCP server, agent skills
-- [ ] Phase 7 — AI assistant
+- [x] **Phase 7** — env-gated AI assistant with docs-grounded tools
 - [ ] Phase 8 — dogfooded docs site + release

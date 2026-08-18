@@ -1,0 +1,99 @@
+---
+title: Assistant
+description: An in-page chat that answers from your documentation.
+icon: sparkles
+---
+
+The assistant answers questions using the pages of your own site. It appears
+only when a credential is configured — with none, nothing is rendered.
+
+## Enabling it
+
+Add an [AI Gateway](https://vercel.com/docs/ai-gateway) key:
+
+```bash [.env.local]
+AI_GATEWAY_API_KEY=your_key_here
+```
+
+::note
+Deployments on Vercel authenticate through OIDC automatically, so the key is
+mainly a local-development concern.
+::
+
+Then mount the route:
+
+```ts [app/api/assistant/route.ts]
+import { createAssistantRoute } from 'docs-theme'
+
+import docsConfig from '../../../docs.config'
+import { source } from '../../../lib/source'
+
+export const { POST } = createAssistantRoute(source, docsConfig)
+```
+
+The layout tells the client whether it may render the chat. The credential is
+read on the server and never reaches the browser:
+
+```tsx [app/layout.tsx]{5}
+import { DocsRoot, isAssistantEnabled } from 'docs-theme'
+
+<DocsRoot
+  config={docsConfig}
+  assistantEnabled={isAssistantEnabled(docsConfig.assistant)}
+>
+```
+
+## How answers are grounded
+
+The model is given two tools, the same pair the [MCP server](/docs/ai/mcp-server)
+exposes, so the in-page chat and a connected editor read the docs identically:
+
+::field-group
+  :::field{name="search-docs" type="{ query, locale? }"}
+  Searches the index and returns matching pages with excerpts.
+  :::
+
+  :::field{name="get-page" type="{ path }" required}
+  Reads one page in full as markdown.
+  :::
+::
+
+The system prompt tells it to answer only from those pages, to say so when the
+documentation does not cover something, and to cite the pages it used. The panel
+shows each tool step as it happens, so a reader can see what was consulted.
+
+## Configuration
+
+::field-group
+  :::field{name="assistant.enabled" type="boolean"}
+  Set `false` to keep the assistant off even when a credential exists.
+  :::
+
+  :::field{name="assistant.model" type="string"}
+  Any AI Gateway model string. Defaults to `anthropic/claude-sonnet-5`.
+  :::
+
+  :::field{name="assistant.suggestions" type="string[]"}
+  Starter questions offered in an empty conversation.
+  :::
+
+  :::field{name="assistant.systemPrompt" type="string"}
+  Replaces the built-in prompt entirely.
+  :::
+
+  :::field{name="assistant.explainWithAi" type="boolean"}
+  Set `false` to drop the button under the table of contents.
+  :::
+::
+
+```ts [docs.config.ts]
+assistant: {
+  model: 'anthropic/claude-sonnet-5',
+  suggestions: ['How do I add a new page?', 'How does sidebar order work?'],
+}
+```
+
+::warning
+Without `AI_GATEWAY_API_KEY` the route answers `503` and the chat UI is not
+rendered at all — not disabled, absent.
+::

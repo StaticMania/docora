@@ -20,6 +20,14 @@ export default defineDocsConfig({
     github: 'https://github.com/Arifulislam5577/next-docs',
   },
 
+  assistant: {
+    suggestions: [
+      'How do I add a new page?',
+      'How does the sidebar order work?',
+      'What MDC components are available?',
+    ],
+  },
+
   toc: {
     title: 'On this page',
     bottom: {

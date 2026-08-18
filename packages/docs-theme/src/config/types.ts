@@ -1,3 +1,4 @@
+import type { AssistantConfig } from '../assistant/config'
 import type { I18nConfig } from '../i18n/types'
 
 /** A link rendered in the header, footer or TOC bottom section. */
@@ -79,6 +80,9 @@ export interface DocsConfig {
     credits?: string
     links?: NavLink[]
   }
+
+  /** In-page AI chat. Only appears when a gateway credential is configured. */
+  assistant?: AssistantConfig
 
   search?: {
     /** Set to `false` to remove the palette and its trigger. */
