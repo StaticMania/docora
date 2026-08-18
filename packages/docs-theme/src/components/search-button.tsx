@@ -4,15 +4,11 @@ import { useEffect, useState } from 'react'
 import { Search } from 'lucide-react'
 
 import { cn } from '../utils/cn'
+import { useSearch } from './search-provider'
 
-/**
- * Search trigger.
- *
- * Phase 1 ships the affordance only — the index and the command palette are
- * built in Phase 4, so the button announces itself as unavailable rather than
- * pretending to work.
- */
+/** Opens the search palette. Also reachable with the keyboard shortcut. */
 export function SearchButton({ className, iconOnly = false }: { className?: string; iconOnly?: boolean }) {
+  const { setOpen } = useSearch()
   const [modifier, setModifier] = useState('CTRL')
 
   useEffect(() => {
@@ -23,11 +19,10 @@ export function SearchButton({ className, iconOnly = false }: { className?: stri
     return (
       <button
         type="button"
-        disabled
+        onClick={() => setOpen(true)}
         aria-label="Search"
-        title="Search arrives in a later phase"
         className={cn(
-          'inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted disabled:cursor-not-allowed disabled:opacity-60',
+          'inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted',
           className,
         )}
       >
@@ -39,10 +34,9 @@ export function SearchButton({ className, iconOnly = false }: { className?: stri
   return (
     <button
       type="button"
-      disabled
-      title="Search arrives in a later phase"
+      onClick={() => setOpen(true)}
       className={cn(
-        'inline-flex h-9 items-center gap-2 rounded-md border border-border bg-muted px-3 text-sm text-muted-foreground transition-colors hover:border-border-accented disabled:cursor-not-allowed disabled:opacity-70',
+        'inline-flex h-9 items-center gap-2 rounded-md border border-border bg-muted px-3 text-sm text-muted-foreground transition-colors hover:border-border-accented',
         className,
       )}
     >

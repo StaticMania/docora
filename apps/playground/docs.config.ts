@@ -4,6 +4,7 @@ export default defineDocsConfig({
   site: {
     name: 'next-docs',
     description: 'A documentation framework for Next.js.',
+    url: 'https://next-docs.example.com',
     locale: 'en',
   },
 

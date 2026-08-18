@@ -75,6 +75,42 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 `DocsLayout` reads the sidebar, socials, footer and colour-mode settings from
 the config; `LandingLayout` is the same chrome without the asides.
 
+## Search and SEO
+
+The theme builds a search index from the content directory and serves it from a
+route the palette fetches once:
+
+```ts
+// app/api/search/route.ts
+import { createSearchRoute } from 'docs-theme'
+import { source } from '../../../lib/source'
+
+export const { GET, dynamic } = createSearchRoute(source)
+```
+
+`dynamic: 'force-static'` means it is prerendered in production and rebuilt per
+request in development. The palette opens with the header button or Cmd/Ctrl-K,
+ranks title over heading over description over body, requires every term to
+match, and deep-links to the matching heading.
+
+Metadata, sitemap, robots and Open Graph images come from the same config:
+
+```ts
+// app/layout.tsx
+export const metadata = createRootMetadata(docsConfig)
+
+// app/[[...slug]]/page.tsx
+export const generateMetadata = async ({ params }) =>
+  createPageMetadata({ config: docsConfig, page: await source.getPage((await params).slug) })
+
+// app/sitemap.ts       export default () => createSitemap(source, docsConfig)
+// app/robots.ts        export default () => createRobots(docsConfig)
+// app/og/route.tsx     export const { GET } = createOgRoute(docsConfig)
+```
+
+Set `site.url` to switch on canonical links, absolute sitemap entries and social
+images; without it those are omitted rather than emitted as relative URLs.
+
 ## MDC syntax
 
 Documents are markdown with [MDC](https://content.nuxt.com/docs/files/markdown#mdc-syntax)

@@ -4,6 +4,7 @@ import { DocsConfigProvider } from '../config/context'
 import { fallbackDocsConfig } from '../config/define'
 import type { DocsConfig, NavItem } from '../config/types'
 import { RouteProgress } from '../components/route-progress'
+import { SearchProvider } from '../components/search-provider'
 import { ThemeProvider } from '../components/theme-provider'
 import { docsFont } from '../font'
 import { cn } from '../utils/cn'
@@ -41,10 +42,15 @@ export function DocsRoot({
       <body className={cn('min-h-svh bg-background font-sans text-foreground antialiased', bodyClassName)}>
         <ThemeProvider colorMode={config.colorMode}>
           <DocsConfigProvider config={resolvedConfig}>
-            {config.loadingIndicator?.enabled !== false && (
-              <RouteProgress color={config.loadingIndicator?.color} height={config.loadingIndicator?.height} />
-            )}
-            {children}
+            <SearchProvider
+              enabled={config.search?.enabled !== false}
+              endpoint={config.search?.endpoint}
+            >
+              {config.loadingIndicator?.enabled !== false && (
+                <RouteProgress color={config.loadingIndicator?.color} height={config.loadingIndicator?.height} />
+              )}
+              {children}
+            </SearchProvider>
           </DocsConfigProvider>
         </ThemeProvider>
       </body>

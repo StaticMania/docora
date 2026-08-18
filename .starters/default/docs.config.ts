@@ -4,6 +4,8 @@ export default defineDocsConfig({
   site: {
     name: 'My Docs',
     description: 'Documentation built with next-docs.',
+    // Set this to enable canonical URLs, the sitemap and social images.
+    // url: 'https://docs.example.com',
     locale: 'en',
   },
 

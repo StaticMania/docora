@@ -49,4 +49,14 @@ export {
   type PageSurround,
 } from './content/index'
 
+export * from './seo/index'
+
+export { createSearchRoute } from './search/route'
+export { buildSearchIndex } from './search/build'
+export { searchDocuments, headingSlug, type SearchResult } from './search/match'
+export { toSearchableText, extractHeadings } from './search/text'
+export type { SearchDocument, SearchIndex } from './search/types'
+export { SearchProvider, useSearch } from './components/search-provider'
+export { SearchDialog, type SearchDialogProps } from './components/search-dialog'
+
 export { cn } from './utils/cn'

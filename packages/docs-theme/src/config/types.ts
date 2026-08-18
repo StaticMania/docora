@@ -75,6 +75,23 @@ export interface DocsConfig {
     links?: NavLink[]
   }
 
+  search?: {
+    /** Set to `false` to remove the palette and its trigger. */
+    enabled?: boolean
+    /** Where the index is served from. Defaults to `/api/search`. */
+    endpoint?: string
+  }
+
+  seo?: {
+    /** Overrides `site.name` in the title template. */
+    title?: string
+    /** `%s` is replaced with the page title. Defaults to `%s · <site name>`. */
+    titleTemplate?: string
+    description?: string
+    /** Path of the OG image route. Defaults to `/og`. */
+    ogImage?: string
+  }
+
   /** Progress bar shown across the top of the page during navigation. */
   loadingIndicator?: {
     /** Set to `false` to remove it. */

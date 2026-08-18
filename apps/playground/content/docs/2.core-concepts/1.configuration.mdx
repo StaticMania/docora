@@ -115,6 +115,23 @@ navigation: [
 Around thirty common documentation icons are bundled and render on the server;
 any other name is loaded lazily on the client.
 
+## search
+
+The palette is on by default. `enabled: false` removes it and its trigger, and
+`endpoint` points at a different route if you serve the index elsewhere.
+
+```ts
+search: { enabled: true, endpoint: '/api/search' }
+```
+
+## seo
+
+`title` overrides `site.name` in the title template, `titleTemplate` changes its
+shape, and `ogImage` points at a different image route.
+
+Canonical links, sitemap entries and social images need `site.url`. Without it
+they are left out rather than emitted as relative URLs.
+
 ## loadingIndicator
 
 The progress bar across the top of the page during navigation. It is on by
