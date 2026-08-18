@@ -14,23 +14,6 @@ export default defineDocsConfig({
     ],
   },
 
-  // Hardcoded for now — Phase 2 derives this tree from the content directory.
-  navigation: [
-    {
-      label: 'Getting Started',
-      icon: 'rocket',
-      children: [
-        { label: 'Introduction', href: '/docs', icon: 'house' },
-        { label: 'Installation', href: '/docs/getting-started', icon: 'download' },
-      ],
-    },
-    {
-      label: 'Core Concepts',
-      icon: 'brain',
-      children: [{ label: 'Configuration', href: '/docs/configuration', icon: 'settings' }],
-    },
-  ],
-
   // Placeholder repository — swap once the project has a public home.
   socials: {
     github: 'https://github.com/Arifulislam5577/next-docs',

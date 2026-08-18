@@ -1,0 +1,63 @@
+---
+title: Project Structure
+description: How the content directory maps onto routes and the sidebar.
+icon: folder-tree
+---
+
+Every route comes from a file under `content/`. There are no page files to
+write — one catch-all route compiles whichever document matches the URL.
+
+## Routes
+
+A file's path becomes its route, minus the extension:
+
+| File                                          | Route                            |
+| --------------------------------------------- | -------------------------------- |
+| `content/index.mdx`                            | `/`                              |
+| `content/docs/index.mdx`                       | `/docs`                          |
+| `content/docs/1.getting-started/1.installation.mdx` | `/docs/getting-started/installation` |
+
+## Ordering
+
+A numeric prefix sets the position in the sidebar and is stripped from the
+route. `1.installation.mdx` sorts before `2.project-structure.mdx` and is
+served at `/docs/getting-started/installation`.
+
+Files without a prefix sort after the numbered ones, alphabetically.
+
+## Sections
+
+A folder becomes a sidebar section. Give it a title and an icon with a
+`.navigation.yml` beside its pages:
+
+```yaml
+# content/docs/1.getting-started/.navigation.yml
+title: Getting Started
+icon: rocket
+```
+
+Without one, the folder name is humanised — `getting-started` becomes
+`Getting Started`.
+
+## Hiding pages
+
+<Note title="Frontmatter wins">
+Anything set in a document's frontmatter overrides the conventions above.
+</Note>
+
+Set `navigation: false` to keep a page routable but out of the sidebar, or pass
+an object to change how it appears:
+
+```yaml
+---
+title: A very long page title
+navigation:
+  title: Short title
+  icon: flag
+---
+```
+
+## The landing page
+
+`content/index.mdx` is the site root. Give it `layout: landing` and it renders
+without the sidebar and table of contents.

@@ -3,6 +3,8 @@ import type { MDXComponents } from 'mdx/types'
 import type { AnchorHTMLAttributes, HTMLAttributes } from 'react'
 
 import { cn } from '../utils/cn'
+import { Callout, Caution, Note, Tip, Warning } from './callout'
+import { Tab, Tabs } from './tabs'
 
 function Anchor({ href = '', className, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) {
   const classes = cn(
@@ -75,15 +77,21 @@ export const defaultMdxComponents: MDXComponents = {
     <blockquote className="mt-6 border-l-2 border-primary/40 pl-6 text-muted-foreground italic" {...props} />
   ),
   hr: props => <hr className="my-10 border-border" {...props} />,
-  code: props => (
+  code: ({ className, ...props }) => (
     <code
-      className="rounded-md border border-border bg-muted px-[0.4em] py-[0.2em] font-mono text-[0.875em] text-highlighted [pre_&]:border-0 [pre_&]:bg-transparent [pre_&]:p-0"
+      className={cn(
+        'rounded-md border border-border bg-muted px-[0.4em] py-[0.2em] font-mono text-[0.875em] text-highlighted [pre_&]:border-0 [pre_&]:bg-transparent [pre_&]:p-0 [pre_&]:text-inherit',
+        className,
+      )}
       {...props}
     />
   ),
-  pre: props => (
+  pre: ({ className, ...props }) => (
     <pre
-      className="mt-6 overflow-x-auto rounded-md border border-border bg-muted p-4 font-mono text-sm leading-6"
+      className={cn(
+        'mt-6 overflow-x-auto rounded-md border border-border bg-muted p-4 font-mono text-sm leading-6',
+        className,
+      )}
       {...props}
     />
   ),
@@ -100,7 +108,20 @@ export const defaultMdxComponents: MDXComponents = {
   ),
 }
 
+/**
+ * Components documents can use by name, without importing anything.
+ */
+export const mdxShortcodes = {
+  Callout,
+  Note,
+  Tip,
+  Warning,
+  Caution,
+  Tabs,
+  Tab,
+}
+
 /** Merge extra components on top of the theme defaults. */
 export function getMdxComponents(components?: MDXComponents): MDXComponents {
-  return { ...defaultMdxComponents, ...components }
+  return { ...defaultMdxComponents, ...mdxShortcodes, ...components }
 }

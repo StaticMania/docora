@@ -1,0 +1,85 @@
+---
+title: Markdown Syntax
+description: Callouts, tabs and highlighted code blocks.
+icon: heading-1
+---
+
+Documents are MDX, so components can be used by name without importing
+anything.
+
+## Callouts
+
+<Note>
+The default callout, for information worth setting apart from the body text.
+</Note>
+
+<Tip title="Worth knowing">
+Every callout takes an optional `title`.
+</Tip>
+
+<Warning>
+Something that will cause trouble if it is overlooked.
+</Warning>
+
+<Caution>
+Something destructive or irreversible.
+</Caution>
+
+Write them as `<Note>`, `<Tip>`, `<Warning>` and `<Caution>`, or use
+`<Callout type="warning">` directly.
+
+## Tabs
+
+<Tabs items={["npm", "pnpm", "yarn"]}>
+
+<Tab>
+```bash
+npm install docs-theme
+```
+</Tab>
+
+<Tab>
+```bash
+pnpm add docs-theme
+```
+</Tab>
+
+<Tab>
+```bash
+yarn add docs-theme
+```
+</Tab>
+
+</Tabs>
+
+## Code blocks
+
+Fenced code is highlighted by Shiki at compile time, with both colour schemes
+emitted as custom properties so switching themes needs no re-render:
+
+```ts
+import { createDocsSource, defaultContentDir } from 'docs-theme'
+
+export const source = createDocsSource({ contentDir: defaultContentDir() })
+
+const page = await source.getPage(['docs', 'getting-started', 'installation'])
+```
+
+```css
+:root {
+  --primary: var(--color-emerald-500);
+}
+```
+
+Inline `code` is styled separately from blocks.
+
+## Tables and quotes
+
+| Convention          | Effect                          |
+| ------------------- | ------------------------------- |
+| `1.` prefix          | Sets sidebar order              |
+| `.navigation.yml`    | Sets a section title and icon   |
+| `navigation: false`  | Hides a page from the sidebar   |
+
+> GitHub-flavoured markdown is enabled, so tables, strikethrough and task
+> lists all work.

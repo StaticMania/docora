@@ -12,15 +12,40 @@ export { SearchButton } from './components/search-button'
 export { MobileNav } from './components/mobile-nav'
 export { Icon, type IconProps } from './components/icon'
 export { RouteProgress, type RouteProgressProps } from './components/route-progress'
+export { DocsPager } from './components/docs-pager'
 export { docsFont } from './font'
 
 export { defineDocsConfig, fallbackDocsConfig } from './config/define'
 export { useDocsConfig } from './config/context'
 export type { DocsConfig, NavItem, NavLink, SocialKey } from './config/types'
 
-export { defaultMdxComponents, getMdxComponents } from './mdx/components'
+export { defaultMdxComponents, getMdxComponents, mdxShortcodes } from './mdx/components'
+export { Callout, Note, Tip, Warning, Caution, type CalloutProps, type CalloutType } from './mdx/callout'
+export { Tabs, Tab, type TabsProps } from './mdx/tabs'
 export { compileMdx, compileMdxFile, type CompileMdxOptions, type CompiledMdx } from './mdx/compile'
 export { splitFrontmatter, type Frontmatter } from './mdx/frontmatter'
 export { buildTocTree, type TocEntry, type TocNode } from './mdx/toc'
+
+export {
+  createDocsSource,
+  defaultContentDir,
+  buildNavigation,
+  findSurround,
+  flattenNavigation,
+  readContentTree,
+  flattenPages,
+  findDirectory,
+  humanize,
+  parseOrderPrefix,
+  slugToPath,
+  stripExtension,
+  type DocsSource,
+  type DocsSourceOptions,
+  type ContentDirectory,
+  type ContentPage,
+  type DirectoryMeta,
+  type PageFrontmatter,
+  type PageSurround,
+} from './content/index'
 
 export { cn } from './utils/cn'

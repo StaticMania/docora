@@ -3,12 +3,22 @@ import type { ReactElement } from 'react'
 import * as runtime from 'react/jsx-runtime'
 import { evaluate, type EvaluateOptions } from '@mdx-js/mdx'
 import type { MDXComponents } from 'mdx/types'
+import rehypeShiki from '@shikijs/rehype'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 
 import { getMdxComponents } from './components'
 import { splitFrontmatter, type Frontmatter } from './frontmatter'
 import { rehypeCollectToc, type TocEntry } from './toc'
+
+/**
+ * Dual-theme highlighting: Shiki emits `--shiki-light` / `--shiki-dark` custom
+ * properties instead of colours, and the stylesheet picks one per colour mode.
+ */
+const SHIKI_OPTIONS = {
+  themes: { light: 'github-light', dark: 'github-dark' },
+  defaultColor: false,
+} as const
 
 export interface CompileMdxOptions {
   /** Extra components made available to the document, merged over the theme defaults. */
@@ -42,7 +52,12 @@ export async function compileMdx<F extends Frontmatter = Frontmatter>(
     ...runtime,
     development: false,
     remarkPlugins: [remarkGfm, ...(options.remarkPlugins ?? [])],
-    rehypePlugins: [rehypeSlug, rehypeCollectToc(toc), ...(options.rehypePlugins ?? [])],
+    rehypePlugins: [
+      rehypeSlug,
+      rehypeCollectToc(toc),
+      [rehypeShiki, SHIKI_OPTIONS],
+      ...(options.rehypePlugins ?? []),
+    ],
   } as EvaluateOptions)
 
   return {

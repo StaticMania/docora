@@ -110,6 +110,21 @@
 }
 
 @layer base {
+  /*
+   * Shiki runs with `defaultColor: false`, so it emits both palettes as custom
+   * properties and the colour mode decides which one applies.
+   */
+  .shiki,
+  .shiki span {
+    color: var(--shiki-light);
+    background-color: transparent;
+  }
+
+  .dark .shiki,
+  .dark .shiki span {
+    color: var(--shiki-dark);
+  }
+
   * {
     border-color: var(--color-border);
   }

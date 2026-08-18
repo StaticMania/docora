@@ -38,21 +38,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-```tsx
-// app/page.tsx
-import path from 'node:path'
-import { DocsLayout, DocsPage, compileMdxFile } from 'docs-theme'
+```ts
+// lib/source.ts
+import { createDocsSource, defaultContentDir } from 'docs-theme'
 
-export default async function Page() {
-  const { content, frontmatter, toc } = await compileMdxFile(
-    path.join(process.cwd(), 'content', 'index.mdx'),
-  )
+export const source = createDocsSource({ contentDir: defaultContentDir() })
+```
+
+```tsx
+// app/[[...slug]]/page.tsx
+import { notFound } from 'next/navigation'
+import { DocsLayout, DocsPage, DocsPager, compileMdxFile } from 'docs-theme'
+
+import { source } from '../../lib/source'
+
+export const generateStaticParams = () => source.getStaticParams()
+
+export default async function Page({ params }: { params: Promise<{ slug?: string[] }> }) {
+  const page = await source.getPage((await params).slug)
+  if (!page) notFound()
+
+  const { content, frontmatter, toc } = await compileMdxFile(page.filePath)
+  const { prev, next } = await source.getSurround(page.path)
 
   return (
     <DocsLayout toc={toc}>
       <DocsPage title={frontmatter.title} description={frontmatter.description}>
         {content}
       </DocsPage>
+      <DocsPager prev={prev} next={next} />
     </DocsLayout>
   )
 }

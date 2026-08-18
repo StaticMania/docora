@@ -6,16 +6,25 @@
  * reading) happens at runtime on the server, not through bundler loaders —
  * that keeps this helper small and Turbopack-friendly.
  *
- * @param {import('next').NextConfig} [nextConfig]
+ * Pages are compiled from files on disk at render time, so the content
+ * directory has to be traced into the build output.
+ *
+ * @param {import('next').NextConfig & { contentDir?: string }} [nextConfig]
  * @returns {import('next').NextConfig}
  */
 export function withDocsTheme(nextConfig = {}) {
-  const transpilePackages = new Set(nextConfig.transpilePackages ?? [])
+  const { contentDir = 'content', ...rest } = nextConfig
+
+  const transpilePackages = new Set(rest.transpilePackages ?? [])
   transpilePackages.add('docs-theme')
 
   return {
-    ...nextConfig,
+    ...rest,
     transpilePackages: [...transpilePackages],
+    outputFileTracingIncludes: {
+      ...rest.outputFileTracingIncludes,
+      '/**/*': [`./${contentDir}/**/*`],
+    },
   }
 }
 
