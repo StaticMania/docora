@@ -1,3 +1,5 @@
+import type { I18nConfig } from '../i18n/types'
+
 /** A link rendered in the header, footer or TOC bottom section. */
 export interface NavLink {
   label: string
@@ -25,6 +27,9 @@ export interface NavItem {
 export type SocialKey = 'github' | 'x' | 'discord' | 'linkedin' | 'youtube' | 'bluesky' | (string & {})
 
 export interface DocsConfig {
+  /** Multi-language routing. Content moves under `content/{locale}/`. */
+  i18n?: I18nConfig
+
   site: {
     name: string
     description?: string

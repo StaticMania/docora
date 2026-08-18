@@ -1,0 +1,44 @@
+---
+title: Introduction
+description: Comment le contenu multilingue est organisé.
+icon: house
+---
+
+Le contenu se trouve dans `content/{locale}/`, donc cette page est
+`content/fr/docs/1.getting-started/1.introduction.mdx` et elle est servie sur
+`/fr/docs/getting-started/introduction`.
+
+## Ajouter une langue
+
+::steps{level="3"}
+
+### Ajouter la locale à la configuration
+
+```ts [docs.config.ts]
+i18n: {
+  defaultLocale: 'en',
+  locales: [
+    { code: 'en', name: 'English' },
+    { code: 'de', name: 'Deutsch' },
+  ],
+}
+```
+
+### Créer le dossier
+
+Copiez `content/en` vers `content/de` et traduisez-le. Les routes, la barre
+latérale et le sélecteur de langue suivent automatiquement.
+
+### Traduire l'interface
+
+Le thème fournit l'anglais, le français et l'espagnol. Vous pouvez remplacer
+n'importe quelle chaîne par locale.
+
+::
+
+## Ce qui est localisé
+
+::note
+Les pages, la barre latérale, la pagination et chaque chaîne de l'interface.
+Une page qui n'existe que dans une langue n'apparaît pas dans les autres.
+::

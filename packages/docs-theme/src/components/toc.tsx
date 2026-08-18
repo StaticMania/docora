@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 
 import { useDocsConfig } from '../config/context'
+import { useMessages } from '../i18n/context'
 import { useActiveHeadings } from '../hooks/use-active-heading'
 import { buildTocTree, type TocEntry, type TocNode } from '../mdx/toc'
 import { cn } from '../utils/cn'
@@ -63,6 +64,7 @@ function TocList({
 
 export function TableOfContents({ items, className }: TableOfContentsProps) {
   const config = useDocsConfig()
+  const messages = useMessages()
   const activeIds = useActiveHeadings(items.map(item => item.id))
   const tree = useMemo(() => buildTocTree(items), [items])
   const flat = useMemo(() => flattenTree(tree), [tree])
@@ -79,7 +81,7 @@ export function TableOfContents({ items, className }: TableOfContentsProps) {
       {tree.length > 0 && (
         <nav aria-labelledby="toc-heading">
           <p id="toc-heading" className="mb-2 flex items-center py-1 text-sm font-semibold text-highlighted">
-            {config.toc?.title ?? 'On this page'}
+            {config.toc?.title ?? messages.tocTitle}
           </p>
 
           <div className="relative">

@@ -28,9 +28,13 @@ there are no page files to write.
 npx create-docs my-docs
 ```
 
-The starters ship inside the CLI tarball, so scaffolding works offline. Pass
-`--template` to pick one, `--pm` to choose a package manager, and
-`--no-install` to skip dependency installation.
+```bash
+npx create-docs my-docs --template i18n
+```
+
+Two templates: `default` for a single language, `i18n` for a multi-language
+site. The starters ship inside the CLI tarball, so scaffolding works offline.
+Pass `--pm` to choose a package manager and `--no-install` to skip installing.
 
 ## Status
 
@@ -41,7 +45,7 @@ Built phase by phase; each phase ships something usable.
 - [x] **Phase 2** — content pipeline, navigation tree, catch-all route, MDC syntax and prose components
 - [x] **Phase 3** — `create-docs` CLI + default starter
 - [ ] Phase 4 — search + sitemap/robots/OG
-- [ ] Phase 5 — i18n
+- [x] **Phase 5** — i18n routing, translated interface, language switcher, `i18n` starter
 - [ ] Phase 6 — llms.txt, MCP, skills
 - [ ] Phase 7 — AI assistant
 - [ ] Phase 8 — dogfooded docs site + release

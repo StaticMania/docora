@@ -75,6 +75,37 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 `DocsLayout` reads the sidebar, socials, footer and colour-mode settings from
 the config; `LandingLayout` is the same chrome without the asides.
 
+## Internationalisation
+
+Content moves under `content/{locale}/` and every route becomes locale-prefixed:
+
+```ts
+// docs.config.ts
+i18n: {
+  defaultLocale: 'en',
+  locales: [
+    { code: 'en', name: 'English' },
+    { code: 'fr', name: 'Français' },
+  ],
+}
+```
+
+```ts
+// lib/source.ts
+export const source = createDocsSource({
+  contentDir: defaultContentDir(),
+  i18n: docsConfig.i18n,
+})
+```
+
+Routes live under `app/[locale]/`, whose layout owns `<html lang>` and passes
+`locale` to `DocsRoot`. Each locale gets its own navigation tree, pager and
+search results, and `source.getAlternates(path)` feeds hreflang.
+
+Interface strings ship for English, French and Spanish; any locale falls back to
+English, and `i18n.messages` overrides individual strings per locale. The
+language switcher keeps the reader on the same page.
+
 ## Search and SEO
 
 The theme builds a search index from the content directory and serves it from a

@@ -6,11 +6,13 @@ import { Dialog } from 'radix-ui'
 import { Menu, X } from 'lucide-react'
 
 import { useDocsConfig } from '../config/context'
+import { useMessages } from '../i18n/context'
 import { SidebarNav } from './sidebar-nav'
 
 /** Hamburger trigger plus the slide-in drawer holding the documentation tree. */
 export function MobileNav() {
   const config = useDocsConfig()
+  const messages = useMessages()
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
@@ -23,7 +25,7 @@ export function MobileNav() {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger
-        aria-label="Open navigation"
+        aria-label={messages.openNavigation}
         className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none lg:hidden"
       >
         <Menu className="size-4" />
@@ -39,14 +41,14 @@ export function MobileNav() {
             </Dialog.Title>
 
             <Dialog.Close
-              aria-label="Close navigation"
+              aria-label={messages.closeNavigation}
               className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted"
             >
               <X className="size-4" />
             </Dialog.Close>
           </div>
 
-          <Dialog.Description className="sr-only">Documentation navigation</Dialog.Description>
+          <Dialog.Description className="sr-only">{messages.documentation}</Dialog.Description>
 
           <div className="flex-1 overflow-y-auto p-4">
             <SidebarNav items={items} onNavigate={() => setOpen(false)} />

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Dialog } from 'radix-ui'
 import { FileText, Hash, Search } from 'lucide-react'
 
+import { useLocale, useMessages } from '../i18n/context'
 import { headingSlug, searchDocuments, type SearchResult } from '../search/match'
 import type { SearchIndex } from '../search/types'
 import { cn } from '../utils/cn'
@@ -22,6 +23,8 @@ function resultHref(result: SearchResult): string {
 
 export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: SearchDialogProps) {
   const router = useRouter()
+  const messages = useMessages()
+  const { locale, i18n } = useLocale()
   const [query, setQuery] = useState('')
   const [index, setIndex] = useState<SearchIndex>()
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')
@@ -42,10 +45,16 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
       .catch(() => setStatus('error'))
   }, [open, index, status, endpoint])
 
-  const results = useMemo(
-    () => (index ? searchDocuments(index.documents, query) : []),
-    [index, query],
-  )
+  const results = useMemo(() => {
+    if (!index) return []
+
+    // With i18n on, results stay inside the locale being read.
+    const documents = i18n
+      ? index.documents.filter(document => !document.locale || document.locale === locale)
+      : index.documents
+
+    return searchDocuments(documents, query)
+  }, [index, query, i18n, locale])
 
   useEffect(() => setActive(0), [query])
 
@@ -88,7 +97,7 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
           onKeyDown={onKeyDown}
           className="fixed top-[12vh] left-1/2 z-50 flex max-h-[70vh] w-[92vw] max-w-xl -translate-x-1/2 flex-col overflow-hidden rounded-lg border border-border bg-background shadow-2xl focus:outline-none"
         >
-          <Dialog.Title className="sr-only">Search documentation</Dialog.Title>
+          <Dialog.Title className="sr-only">{messages.searchPlaceholder}</Dialog.Title>
           <Dialog.Description className="sr-only">
             Type to search. Use the arrow keys to move between results and Enter to open one.
           </Dialog.Description>
@@ -99,22 +108,22 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
               autoFocus
               value={query}
               onChange={event => setQuery(event.target.value)}
-              placeholder="Search documentation..."
-              aria-label="Search documentation"
+              placeholder={messages.searchPlaceholder}
+              aria-label={messages.searchPlaceholder}
               className="h-12 w-full bg-transparent text-sm text-foreground placeholder:text-dimmed focus:outline-none"
             />
           </div>
 
           <div ref={listRef} className="min-h-0 flex-1 overflow-y-auto p-2">
-            {status === 'loading' && <p className="p-4 text-sm text-muted-foreground">Loading index…</p>}
+            {status === 'loading' && <p className="p-4 text-sm text-muted-foreground">{messages.searchLoading}</p>}
 
             {status === 'error' && (
-              <p className="p-4 text-sm text-destructive">Could not load the search index.</p>
+              <p className="p-4 text-sm text-destructive">{messages.searchError}</p>
             )}
 
             {status === 'idle' && query && results.length === 0 && (
               <p className="p-4 text-sm text-muted-foreground">
-                No results for <span className="text-highlighted">{query}</span>
+                {messages.searchEmpty} <span className="text-highlighted">{query}</span>
               </p>
             )}
 
@@ -156,13 +165,13 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
 
           <div className="flex items-center gap-3 border-t border-border px-4 py-2 text-[11px] text-dimmed">
             <span>
-              <kbd className="font-sans">↑</kbd> <kbd className="font-sans">↓</kbd> to navigate
+              <kbd className="font-sans">↑</kbd> <kbd className="font-sans">↓</kbd> {messages.searchNavigate}
             </span>
             <span>
-              <kbd className="font-sans">↵</kbd> to open
+              <kbd className="font-sans">↵</kbd> {messages.searchOpen}
             </span>
             <span>
-              <kbd className="font-sans">esc</kbd> to close
+              <kbd className="font-sans">esc</kbd> {messages.searchClose}
             </span>
           </div>
         </Dialog.Content>

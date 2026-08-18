@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import type { NavItem } from '../config/types'
+import { useMessages } from '../i18n/context'
 import { cn } from '../utils/cn'
 import { Icon } from './icon'
 
@@ -75,10 +76,12 @@ function NavTree({ items, level, onNavigate }: { items: NavItem[]; level: number
 
 /** The documentation tree, shared by the desktop aside and the mobile drawer. */
 export function SidebarNav({ items, onNavigate, className }: SidebarNavProps) {
+  const messages = useMessages()
+
   if (items.length === 0) return null
 
   return (
-    <nav aria-label="Documentation" className={className}>
+    <nav aria-label={messages.documentation} className={className}>
       <NavTree items={items} level={0} onNavigate={onNavigate} />
     </nav>
   )

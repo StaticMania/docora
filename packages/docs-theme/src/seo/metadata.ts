@@ -13,6 +13,8 @@ export interface PageMetadataOptions {
   config: DocsConfig
   /** The page being rendered. Omit for the site-wide defaults. */
   page?: Pick<ContentPage, 'path' | 'title'> & { frontmatter?: { description?: string } }
+  /** `locale -> path` for the same document, from `source.getAlternates()`. */
+  alternates?: Record<string, string>
 }
 
 /**
@@ -21,7 +23,7 @@ export interface PageMetadataOptions {
  * Falls back to the site description, and skips absolute URLs entirely when
  * `site.url` is unset — a relative canonical would be worse than none.
  */
-export function createPageMetadata({ config, page }: PageMetadataOptions): Metadata {
+export function createPageMetadata({ config, page, alternates }: PageMetadataOptions): Metadata {
   const siteName = config.seo?.title ?? config.site.name
   const title = page?.title
   const description = page?.frontmatter?.description ?? config.seo?.description ?? config.site.description
@@ -33,10 +35,23 @@ export function createPageMetadata({ config, page }: PageMetadataOptions): Metad
   if (description) ogParams.set('description', description)
   const ogImage = absoluteUrl(config, `${ogPath}?${ogParams.toString()}`)
 
+  // hreflang entries, plus x-default pointing at the default locale.
+  const languages: Record<string, string> = {}
+  for (const [code, localePath] of Object.entries(alternates ?? {})) {
+    languages[code] = absoluteUrl(config, localePath) ?? localePath
+    if (code === config.i18n?.defaultLocale) {
+      languages['x-default'] = absoluteUrl(config, localePath) ?? localePath
+    }
+  }
+
+  const hasLanguages = Object.keys(languages).length > 0
+
   return {
     ...(title ? { title } : {}),
     ...(description ? { description } : {}),
-    ...(canonical ? { alternates: { canonical } } : {}),
+    ...(canonical || hasLanguages
+      ? { alternates: { ...(canonical ? { canonical } : {}), ...(hasLanguages ? { languages } : {}) } }
+      : {}),
     openGraph: {
       type: 'website',
       siteName,

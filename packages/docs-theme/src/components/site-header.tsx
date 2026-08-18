@@ -8,6 +8,7 @@ import { useDocsConfig } from '../config/context'
 import { cn } from '../utils/cn'
 import { MobileNav } from './mobile-nav'
 import { SearchButton } from './search-button'
+import { LanguageSwitcher } from './language-switcher'
 import { SocialIcon, socialLabels } from './social-icon'
 import { ThemeToggle } from './theme-toggle'
 
@@ -112,6 +113,7 @@ export function SiteHeader({ children, className }: SiteHeaderProps) {
             </a>
           ))}
 
+          <LanguageSwitcher />
           {showThemeToggle && <ThemeToggle />}
         </div>
       </div>

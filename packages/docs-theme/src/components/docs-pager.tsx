@@ -1,11 +1,16 @@
+'use client'
+
 import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import type { PageSurround } from '../content/types'
+import { useMessages } from '../i18n/context'
 import { cn } from '../utils/cn'
 
 /** Previous / next links at the foot of a document. */
 export function DocsPager({ prev, next, className }: PageSurround & { className?: string }) {
+  const messages = useMessages()
+
   if (!prev && !next) return null
 
   return (
@@ -17,7 +22,7 @@ export function DocsPager({ prev, next, className }: PageSurround & { className?
         >
           <span className="flex items-center gap-1 text-xs text-muted-foreground">
             <ChevronLeft className="size-3" aria-hidden />
-            Previous
+            {messages.previous}
           </span>
           <span className="truncate font-medium text-highlighted transition-colors group-hover:text-primary">
             {prev.label}
@@ -33,7 +38,7 @@ export function DocsPager({ prev, next, className }: PageSurround & { className?
           className="group flex flex-col gap-1 rounded-md border border-border p-4 text-end transition-colors hover:border-border-accented sm:col-start-2"
         >
           <span className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
-            Next
+            {messages.next}
             <ChevronRight className="size-3" aria-hidden />
           </span>
           <span className="truncate font-medium text-highlighted transition-colors group-hover:text-primary">

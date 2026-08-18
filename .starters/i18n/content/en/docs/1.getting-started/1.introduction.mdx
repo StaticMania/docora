@@ -1,0 +1,51 @@
+---
+title: Introduction
+description: How multi-language content is organised.
+icon: house
+---
+
+Content lives under `content/{locale}/`, so this page is
+`content/en/docs/1.getting-started/1.introduction.mdx` and is served at
+`/en/docs/getting-started/introduction`.
+
+## Adding a language
+
+::steps{level="3"}
+
+### Add the locale to the config
+
+```ts [docs.config.ts]
+i18n: {
+  defaultLocale: 'en',
+  locales: [
+    { code: 'en', name: 'English' },
+    { code: 'de', name: 'Deutsch' },
+  ],
+}
+```
+
+### Create the folder
+
+Copy `content/en` to `content/de` and translate it. Routes, the sidebar and the
+language switcher follow automatically.
+
+### Translate the interface
+
+The theme ships English, French and Spanish. Override any string per locale:
+
+```ts [docs.config.ts]
+i18n: {
+  messages: {
+    de: { tocTitle: 'Auf dieser Seite' },
+  },
+}
+```
+
+::
+
+## What is localised
+
+::note
+Pages, the sidebar, the pager and every interface string. Pages that only exist
+in one language simply do not appear in the others.
+::

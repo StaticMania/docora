@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react'
 import { Search } from 'lucide-react'
 
 import { cn } from '../utils/cn'
+import { useMessages } from '../i18n/context'
 import { useSearch } from './search-provider'
 
 /** Opens the search palette. Also reachable with the keyboard shortcut. */
 export function SearchButton({ className, iconOnly = false }: { className?: string; iconOnly?: boolean }) {
   const { setOpen } = useSearch()
+  const messages = useMessages()
   const [modifier, setModifier] = useState('CTRL')
 
   useEffect(() => {
@@ -20,7 +22,7 @@ export function SearchButton({ className, iconOnly = false }: { className?: stri
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Search"
+        aria-label={messages.searchButton}
         className={cn(
           'inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted',
           className,
@@ -41,7 +43,7 @@ export function SearchButton({ className, iconOnly = false }: { className?: stri
       )}
     >
       <Search className="size-4 shrink-0 text-dimmed" />
-      <span>Search...</span>
+      <span>{messages.searchButton}</span>
       <kbd className="ml-auto rounded border border-border bg-elevated px-1.5 py-0.5 font-sans text-[10px] font-medium text-dimmed">
         {modifier}
       </kbd>
