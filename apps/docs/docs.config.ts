@@ -19,7 +19,7 @@ export default defineDocsConfig({
 
   // Placeholder repository — swap once the project has a public home.
   socials: {
-    github: 'https://github.com/Arifulislam5577/docora',
+    github: 'https://github.com/StaticMania/docora',
   },
 
   assistant: {
@@ -37,7 +37,7 @@ export default defineDocsConfig({
       links: [
         {
           label: 'Report an issue',
-          href: 'https://github.com/Arifulislam5577/docora/issues',
+          href: 'https://github.com/StaticMania/docora/issues',
           icon: 'book-open',
         },
       ],
@@ -45,7 +45,7 @@ export default defineDocsConfig({
   },
 
   github: {
-    url: 'https://github.com/Arifulislam5577/docora',
+    url: 'https://github.com/StaticMania/docora',
     branch: 'main',
     // Where this app sits in the repository, so edit links resolve.
     rootDir: 'apps/docs',
@@ -55,7 +55,7 @@ export default defineDocsConfig({
     credits: 'Built with Docora',
     links: [
       { label: 'Docs', href: '/docs/getting-started/introduction' },
-      { label: 'GitHub', href: 'https://github.com/Arifulislam5577/docora' },
+      { label: 'GitHub', href: 'https://github.com/StaticMania/docora' },
     ],
   },
 })

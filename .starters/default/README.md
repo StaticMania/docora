@@ -1,6 +1,6 @@
 # My Docs
 
-Documentation built with [Docora](https://github.com/Arifulislam5577/docora).
+Documentation built with [Docora](https://github.com/StaticMania/docora).
 
 ## Develop
 
