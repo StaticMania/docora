@@ -75,6 +75,36 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 `DocsLayout` reads the sidebar, socials, footer and colour-mode settings from
 the config; `LandingLayout` is the same chrome without the asides.
 
+## LLM surface
+
+Four route helpers make the documentation readable by tools:
+
+```ts
+// app/llms.txt/route.ts            createLlmsTxtRoute(source, docsConfig)
+// app/llms-full.txt/route.ts       createLlmsFullTxtRoute(source, docsConfig)
+// app/raw/[...slug]/route.ts       createRawRoute(source)
+// app/mcp/route.ts                 createMcpRoute(source, docsConfig)
+```
+
+`/llms.txt` follows llmstxt.org, grouping pages by sidebar section and linking
+to their markdown. `/llms-full.txt` is the whole corpus in one file.
+`/raw/{path}.md` serves a page's source.
+
+`/mcp` is a stateless Model Context Protocol server over Streamable HTTP with
+`list-pages` and `get-page`, both annotated read-only. Each POST is answered
+with one JSON-RPC response; `GET` and `DELETE` return 405, since there is no
+stream to open and no session to end. Pass `tools` to replace the built-in pair.
+
+A `skills/` folder at the project root is published at `/.well-known/skills/`:
+
+```ts
+// app/.well-known/skills/index.json/route.ts  createSkillsIndexRoute(defaultSkillsDir())
+// app/.well-known/skills/[...slug]/route.ts   createSkillsFileRoute(defaultSkillsDir())
+```
+
+Each `skills/{name}/SKILL.md` needs a `name` and `description` in frontmatter.
+Only files the catalog lists are served, so the route cannot walk the disk.
+
 ## Internationalisation
 
 Content moves under `content/{locale}/` and every route becomes locale-prefixed:

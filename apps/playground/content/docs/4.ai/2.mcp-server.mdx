@@ -1,0 +1,81 @@
+---
+title: MCP Server
+description: Let editors and agents read your documentation over the Model Context Protocol.
+icon: server
+---
+
+`/mcp` speaks the [Model Context Protocol](https://modelcontextprotocol.io) over
+Streamable HTTP, so an editor can read the documentation directly instead of
+scraping it.
+
+## Tools
+
+::field-group
+  :::field{name="list-pages" type="{ locale?: string }"}
+  Every page with its title, path, description and URL. The starting point when
+  the exact page is unknown.
+  :::
+
+  :::field{name="get-page" type="{ path: string }" required}
+  The full markdown of one page, plus its metadata.
+  :::
+::
+
+Both are annotated read-only, so a client knows they cannot change anything.
+
+## Connecting
+
+::tabs
+
+  :::tabs-item{label="Cursor" icon="i-lucide-code"}
+  ```json [.cursor/mcp.json]
+  {
+    "mcpServers": {
+      "my-docs": { "url": "https://example.com/mcp" }
+    }
+  }
+  ```
+  :::
+
+  :::tabs-item{label="VS Code" icon="i-lucide-code"}
+  ```json [.vscode/mcp.json]
+  {
+    "servers": {
+      "my-docs": { "type": "http", "url": "https://example.com/mcp" }
+    }
+  }
+  ```
+  :::
+
+  :::tabs-item{label="curl" icon="i-lucide-terminal"}
+  ```bash [Terminal]
+  curl -X POST https://example.com/mcp \
+    -H 'content-type: application/json' \
+    -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  ```
+  :::
+
+::
+
+## How it behaves
+
+The server is stateless: each POST is answered with one JSON-RPC response, and
+nothing is stored between requests. `GET` and `DELETE` return 405, since there
+is no stream to open and no session to end.
+
+::tip
+A tool that fails — an unknown page, say — comes back as a result marked
+`isError`, not a protocol error, so the model can read the message and try
+something else.
+::
+
+## Custom tools
+
+Pass your own to replace the built-in pair:
+
+```ts [app/mcp/route.ts]
+export const { GET, POST, DELETE } = createMcpRoute(source, docsConfig, {
+  name: 'my-docs',
+  tools: [...createMcpTools(source, docsConfig), myTool],
+})
+```

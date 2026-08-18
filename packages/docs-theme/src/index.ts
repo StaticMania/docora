@@ -59,6 +59,7 @@ export type { SearchDocument, SearchIndex } from './search/types'
 export { SearchProvider, useSearch } from './components/search-provider'
 export { SearchDialog, type SearchDialogProps } from './components/search-dialog'
 
+export * from './llm/index'
 export * from './i18n/index'
 export { LanguageSwitcher } from './components/language-switcher'
 

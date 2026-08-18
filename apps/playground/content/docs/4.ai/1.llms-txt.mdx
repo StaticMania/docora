@@ -1,0 +1,64 @@
+---
+title: llms.txt
+description: Machine-readable entry points for agents and language models.
+icon: bot
+---
+
+Four routes make the documentation legible to tools, not just browsers.
+
+## The index
+
+`/llms.txt` follows [llmstxt.org](https://llmstxt.org): a title, a summary, and
+link lists grouped by sidebar section. Each link points at the page's markdown
+rather than its rendered HTML.
+
+```md [llms.txt]
+# next-docs
+
+> A documentation framework for Next.js.
+
+## Getting Started
+
+- [Introduction](https://example.com/raw/docs/getting-started/introduction.md): What the theme gives you.
+```
+
+With i18n on, headings carry the locale so an agent can stay in one language.
+
+## The whole corpus
+
+`/llms-full.txt` concatenates every page — title, URL, description and body —
+separated by rules. It suits pasting into a context window in one go.
+
+::note
+Both routes are `force-static`, so they are generated at build time and served
+as files.
+::
+
+## Raw markdown
+
+Every page is also available as its source at `/raw/{path}.md`:
+
+::code-group
+
+```bash [Page]
+curl https://example.com/raw/docs/getting-started/installation.md
+```
+
+```bash [Landing page]
+curl https://example.com/raw/index.md
+```
+
+::
+
+## Wiring it up
+
+```ts [app/llms.txt/route.ts]
+import { createLlmsTxtRoute } from 'docs-theme'
+
+import docsConfig from '../../docs.config'
+import { source } from '../../lib/source'
+
+export const { GET, dynamic } = createLlmsTxtRoute(source, docsConfig)
+```
+
+Set `site.url` so the links are absolute; without it they stay relative.

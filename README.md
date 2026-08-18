@@ -46,6 +46,6 @@ Built phase by phase; each phase ships something usable.
 - [x] **Phase 3** — `create-docs` CLI + default starter
 - [ ] Phase 4 — search + sitemap/robots/OG
 - [x] **Phase 5** — i18n routing, translated interface, language switcher, `i18n` starter
-- [ ] Phase 6 — llms.txt, MCP, skills
+- [x] **Phase 6** — llms.txt, raw markdown, MCP server, agent skills
 - [ ] Phase 7 — AI assistant
 - [ ] Phase 8 — dogfooded docs site + release

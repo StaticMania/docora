@@ -1,0 +1,66 @@
+---
+title: Agent Skills
+description: Publish reusable instructions agents can discover from your site.
+icon: sparkles
+---
+
+A `skills/` folder at the project root is served at `/.well-known/skills/`, so
+agents can find and load your house rules.
+
+## Layout
+
+```
+skills/
+└── writing-docs/
+    └── SKILL.md
+```
+
+Each skill needs a `SKILL.md` whose frontmatter carries a `name` and a
+`description`:
+
+```md [skills/writing-docs/SKILL.md]
+---
+name: writing-docs
+description: How to write and structure pages for this documentation site.
+---
+
+# Writing docs
+
+Every route comes from a file under `content/`...
+```
+
+The name must be lowercase, hyphenated and at most 64 characters. Any other
+files in the folder are served alongside it, so a skill can ship references.
+
+## Discovery
+
+::code-group
+
+```bash [Catalog]
+curl https://example.com/.well-known/skills/index.json
+```
+
+```bash [One skill]
+curl https://example.com/.well-known/skills/writing-docs/SKILL.md
+```
+
+::
+
+The catalog lists each skill's name, description and files:
+
+```json
+{
+  "skills": [
+    {
+      "name": "writing-docs",
+      "description": "How to write and structure pages for this documentation site.",
+      "files": ["SKILL.md"]
+    }
+  ]
+}
+```
+
+::warning
+Only files listed in the catalog are served. A folder without a valid
+`SKILL.md` is skipped rather than failing the build.
+::
