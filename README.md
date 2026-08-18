@@ -28,7 +28,7 @@ Built phase by phase; each phase ships something usable.
 
 - [x] **Phase 0** — monorepo skeleton, theme package, playground renders an MDX page
 - [x] **Phase 1** — docs shell: header, sidebar, TOC, mobile drawer, dark mode, `docs.config.ts`
-- [x] **Phase 2** — content pipeline, navigation tree, catch-all MDX route, Shiki, callouts and tabs
+- [x] **Phase 2** — content pipeline, navigation tree, catch-all route, MDC syntax and prose components
 - [ ] Phase 3 — `create-docs` CLI + default starter
 - [ ] Phase 4 — search + sitemap/robots/OG
 - [ ] Phase 5 — i18n

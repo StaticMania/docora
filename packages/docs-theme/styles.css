@@ -125,6 +125,70 @@
     color: var(--shiki-dark);
   }
 
+  /* `{1,3-5}` in a fence's meta marks lines through Shiki's transformer. */
+  .shiki .line.highlighted {
+    display: inline-block;
+    width: calc(100% + 2rem);
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    background-color: color-mix(in oklch, var(--primary) 12%, transparent);
+    box-shadow: inset 2px 0 var(--primary);
+  }
+
+  .docs-line-numbers .line {
+    counter-increment: docs-line;
+  }
+
+  .docs-line-numbers .line::before {
+    content: counter(docs-line);
+    display: inline-block;
+    width: 1.5rem;
+    margin-inline-end: 1rem;
+    text-align: end;
+    color: var(--color-dimmed);
+  }
+
+  .docs-line-numbers {
+    counter-reset: docs-line;
+  }
+
+  /*
+   * `::steps` numbers the headings it contains. The level is a data attribute
+   * so the same rule serves `##` and `###` steps.
+   */
+  .docs-steps {
+    counter-reset: docs-step;
+  }
+
+  .docs-steps > :is(h2, h3, h4) {
+    counter-increment: docs-step;
+    position: relative;
+    margin-top: 2rem;
+    border-bottom: 0;
+    padding-bottom: 0;
+    font-size: 1rem;
+  }
+
+  .docs-steps > :is(h2, h3, h4)::before {
+    content: counter(docs-step);
+    position: absolute;
+    inset-inline-start: -3.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 9999px;
+    background-color: var(--color-elevated);
+    color: var(--color-highlighted);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .docs-steps > :first-child {
+    margin-top: 0;
+  }
+
   * {
     border-color: var(--color-border);
   }

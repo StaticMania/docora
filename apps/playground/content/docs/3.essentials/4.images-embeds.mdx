@@ -1,0 +1,39 @@
+---
+title: Images and Embeds
+description: Add images, video and other HTML elements.
+icon: image
+---
+
+## Markdown
+
+### Images
+
+Display images with standard markdown syntax. Remote and local paths both work:
+
+![The Next.js logo](https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_light_background.png)
+
+```md
+![The Next.js logo](/images/logo.png)
+```
+
+Images are constrained to the content width and get the same border radius as
+other blocks.
+
+### Videos
+
+Use the `video` component for playable media:
+
+:video{controls loop src="https://res.cloudinary.com/dcrl8q2g3/video/upload/v1745404403/landing_od8epr.mp4"}
+
+```mdc
+:video{autoplay controls loop src="/media/demo.mp4"}
+```
+
+Valueless attributes such as `autoplay`, `controls`, `loop` and `muted` work the
+same way they do in HTML. Autoplaying video is muted automatically, since
+browsers refuse to start it otherwise.
+
+## HTML
+
+Raw HTML is passed through for anything the components do not cover — embeds,
+iframes and the like.

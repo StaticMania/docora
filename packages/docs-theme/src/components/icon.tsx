@@ -4,9 +4,13 @@ import {
   Blocks,
   BookOpen,
   Bot,
+  Box,
   Brain,
+  CircleAlert,
+  CircleHelp,
   Code,
   Download,
+  Eye,
   FileText,
   Flag,
   FolderTree,
@@ -15,7 +19,10 @@ import {
   Heading1,
   House,
   Image,
+  Info,
   Layers,
+  Lightbulb,
+  Link2,
   List,
   Palette,
   Pencil,
@@ -27,6 +34,7 @@ import {
   Sparkles,
   Star,
   Terminal,
+  TriangleAlert,
   Wrench,
   Zap,
   type LucideIcon,
@@ -34,17 +42,21 @@ import {
 import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
 
 /**
- * Icons common enough in documentation navigation to be worth bundling — these
- * render on the server with no pop-in. Anything else falls back to lucide's
- * lazy loader, so any icon name still works.
+ * Icons common enough in documentation to be worth bundling — these render on
+ * the server with no pop-in. Anything else falls back to lucide's lazy loader,
+ * so any icon name still works.
  */
 const BUNDLED_ICONS: Record<string, LucideIcon> = {
   blocks: Blocks,
   'book-open': BookOpen,
   bot: Bot,
+  box: Box,
   brain: Brain,
+  'circle-alert': CircleAlert,
+  'circle-help': CircleHelp,
   code: Code,
   download: Download,
+  eye: Eye,
   'file-text': FileText,
   flag: Flag,
   'folder-tree': FolderTree,
@@ -53,7 +65,10 @@ const BUNDLED_ICONS: Record<string, LucideIcon> = {
   'heading-1': Heading1,
   house: House,
   image: Image,
+  info: Info,
   layers: Layers,
+  lightbulb: Lightbulb,
+  link: Link2,
   list: List,
   palette: Palette,
   pencil: Pencil,
@@ -65,24 +80,43 @@ const BUNDLED_ICONS: Record<string, LucideIcon> = {
   sparkles: Sparkles,
   star: Star,
   terminal: Terminal,
+  'triangle-alert': TriangleAlert,
   wrench: Wrench,
   zap: Zap,
 }
 
+/**
+ * Accepts both plain lucide names (`rocket`) and the Iconify-style names Docus
+ * content uses (`i-lucide-rocket`). Collections other than lucide are not
+ * bundled, so they fall back to a generic mark rather than breaking the page.
+ */
+export function normalizeIconName(name: string): string | undefined {
+  if (!name) return undefined
+  if (!name.startsWith('i-')) return name
+
+  const lucide = name.match(/^i-lucide-(.+)$/)
+  if (lucide) return lucide[1]
+
+  return undefined
+}
+
 export interface IconProps {
-  /** A lucide icon name in kebab-case, e.g. `folder-tree`. */
+  /** A lucide name (`folder-tree`) or Iconify name (`i-lucide-folder-tree`). */
   name: string
   className?: string
 }
 
 export function Icon({ name, className }: IconProps) {
-  const Bundled = BUNDLED_ICONS[name]
+  const resolved = normalizeIconName(name)
 
+  if (!resolved) return <Link2 className={className} aria-hidden />
+
+  const Bundled = BUNDLED_ICONS[resolved]
   if (Bundled) return <Bundled className={className} aria-hidden />
 
   return (
     <DynamicIcon
-      name={name as IconName}
+      name={resolved as IconName}
       className={className}
       aria-hidden
       fallback={() => <span className={className} />}

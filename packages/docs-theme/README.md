@@ -75,6 +75,39 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 `DocsLayout` reads the sidebar, socials, footer and colour-mode settings from
 the config; `LandingLayout` is the same chrome without the asides.
 
+## MDC syntax
+
+Documents are markdown with [MDC](https://content.nuxt.com/docs/files/markdown#mdc-syntax)
+on top, the same authoring syntax Docus uses, so components need no imports:
+
+```mdc
+::note{icon="i-lucide-info"}
+Block components use `::name`, nested ones add a colon per level.
+::
+
+::card-group
+  :::card{title="Installation" to="/docs/installation" icon="i-lucide-download"}
+  Card bodies are markdown too.
+  :::
+::
+
+Inline components use one colon — :badge{label="v1"} — and
+[styled spans]{.text-primary} use bracket syntax.
+```
+
+`remark-mdc` parses it and the theme maps every component name onto a React
+component, so `::card-group` resolves to `CardGroup`. JSX still works alongside
+it, since documents are compiled as MDX.
+
+Shipped components: `callout` (plus `note`, `tip`, `warning`, `caution`),
+`card` / `card-group`, `accordion` / `accordion-item`, `tabs` / `tabs-item`,
+`field` / `field-group`, `steps`, `collapsible`, `badge`, `kbd`, `icon`,
+`video`, and the code wrappers `code-group`, `code-tree`, `code-collapse`,
+`code-preview`.
+
+Fenced code takes a filename and line range in its meta — ``` ```ts [nuxt.config.ts]{3-5} ``` —
+and every block gets a copy button.
+
 The table of contents uses the same "circuit" rail Nuxt UI draws for Docus: a
 masked SVG path that steps sideways where the heading list changes depth, with a
 coloured segment spanning whichever headings are on screen. `DocsRoot` also

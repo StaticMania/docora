@@ -6,6 +6,11 @@ import type { MDXComponents } from 'mdx/types'
 import rehypeShiki from '@shikijs/rehype'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
+import remarkMdc from 'remark-mdc'
+import { transformerMetaHighlight } from '@shikijs/transformers'
+
+import { transformerCodeMeta } from './code-meta'
+import { mdcHandlers } from './mdc'
 
 import { getMdxComponents } from './components'
 import { splitFrontmatter, type Frontmatter } from './frontmatter'
@@ -18,7 +23,9 @@ import { rehypeCollectToc, type TocEntry } from './toc'
 const SHIKI_OPTIONS = {
   themes: { light: 'github-light', dark: 'github-dark' },
   defaultColor: false,
-} as const
+  // `[filename]` and `line-numbers` from the fence meta, then `{1,3-5}`.
+  transformers: [transformerCodeMeta(), transformerMetaHighlight()],
+}
 
 export interface CompileMdxOptions {
   /** Extra components made available to the document, merged over the theme defaults. */
@@ -51,7 +58,9 @@ export async function compileMdx<F extends Frontmatter = Frontmatter>(
   const { default: MdxContent } = await evaluate(body, {
     ...runtime,
     development: false,
-    remarkPlugins: [remarkGfm, ...(options.remarkPlugins ?? [])],
+    // MDC first: it claims `::name{...}` before MDX reads `{}` as an expression.
+    remarkPlugins: [remarkMdc, remarkGfm, ...(options.remarkPlugins ?? [])],
+    remarkRehypeOptions: { handlers: mdcHandlers },
     rehypePlugins: [
       rehypeSlug,
       rehypeCollectToc(toc),

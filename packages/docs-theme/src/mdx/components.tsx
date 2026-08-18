@@ -3,8 +3,33 @@ import type { MDXComponents } from 'mdx/types'
 import type { AnchorHTMLAttributes, HTMLAttributes } from 'react'
 
 import { cn } from '../utils/cn'
-import { Callout, Caution, Note, Tip, Warning } from './callout'
-import { Tab, Tabs } from './tabs'
+import {
+  Accordion,
+  AccordionItem,
+  Badge,
+  Callout,
+  Card,
+  CardGroup,
+  Caution,
+  CodeBlock,
+  CodeCollapse,
+  CodeGroup,
+  CodePreview,
+  CodeTree,
+  Collapsible,
+  Field,
+  FieldGroup,
+  Kbd,
+  MdcSlot,
+  Note,
+  Steps,
+  Tabs,
+  TabsItem,
+  Tip,
+  Video,
+  Warning,
+} from '../mdc/index'
+import { Icon } from '../components/icon'
 
 function Anchor({ href = '', className, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) {
   const classes = cn(
@@ -86,15 +111,7 @@ export const defaultMdxComponents: MDXComponents = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }) => (
-    <pre
-      className={cn(
-        'mt-6 overflow-x-auto rounded-md border border-border bg-muted p-4 font-mono text-sm leading-6',
-        className,
-      )}
-      {...props}
-    />
-  ),
+  pre: CodeBlock,
   table: props => (
     <div className="mt-6 w-full overflow-x-auto">
       <table className="w-full border-collapse text-sm" {...props} />
@@ -111,14 +128,56 @@ export const defaultMdxComponents: MDXComponents = {
 /**
  * Components documents can use by name, without importing anything.
  */
-export const mdxShortcodes = {
+export const mdxShortcodes: MDXComponents = {
+  // MDC lowercases component names, so both spellings are registered: content
+  // can use `::card-group` or JSX `<CardGroup>`.
   Callout,
+  callout: Callout,
   Note,
+  note: Note,
   Tip,
+  tip: Tip,
   Warning,
+  warning: Warning,
   Caution,
+  caution: Caution,
+  Badge,
+  badge: Badge,
+  Kbd,
+  kbd: Kbd,
+  Icon,
+  icon: Icon,
+  Card,
+  card: Card,
+  CardGroup,
+  'card-group': CardGroup,
+  Accordion,
+  accordion: Accordion,
+  AccordionItem,
+  'accordion-item': AccordionItem,
+  Collapsible,
+  collapsible: Collapsible,
+  Field,
+  field: Field,
+  FieldGroup,
+  'field-group': FieldGroup,
+  Steps,
+  steps: Steps,
   Tabs,
-  Tab,
+  tabs: Tabs,
+  TabsItem,
+  'tabs-item': TabsItem,
+  CodeGroup,
+  'code-group': CodeGroup,
+  CodeCollapse,
+  'code-collapse': CodeCollapse,
+  CodePreview,
+  'code-preview': CodePreview,
+  CodeTree,
+  'code-tree': CodeTree,
+  Video,
+  video: Video,
+  'mdc-slot': MdcSlot,
 }
 
 /** Merge extra components on top of the theme defaults. */

@@ -1,0 +1,161 @@
+---
+title: Components
+description: Use markdown components to structure your content.
+icon: puzzle
+---
+
+Prose components replace HTML typography tags and are available in every
+document by name — no imports. Write them with MDC syntax.
+
+## Accordion
+
+::accordion
+
+  :::accordion-item{label="What is next-docs?" icon="i-lucide-circle-help"}
+  A documentation framework for Next.js: a theme package, a scaffolding CLI and
+  starters. Content is markdown, routing comes from the file tree.
+  :::
+
+  :::accordion-item{label="What do I need to start?" icon="i-lucide-circle-help"}
+  A `content/` folder. Everything else has a default.
+  :::
+
+  :::accordion-item{label="Can I use React components?" icon="i-lucide-circle-help"}
+  Yes — documents are MDX, so JSX works alongside MDC syntax.
+  :::
+
+::
+
+## Badge
+
+::badge
+**v0.1.0**
+::
+
+## Callout
+
+Use `note`, `tip`, `warning` and `caution` for pre-set icons and colours, or
+`callout` with your own `icon`, `color` and `to`.
+
+::note
+Here's some additional information for you.
+::
+
+::tip
+Here's a helpful suggestion.
+::
+
+::warning
+Be careful with this action as it might have unexpected results.
+::
+
+::caution
+This action cannot be undone.
+::
+
+::callout{icon="i-lucide-rocket" to="/docs/getting-started/installation"}
+A callout with `to` becomes a link to another page.
+::
+
+## Card and CardGroup
+
+::card-group
+
+  :::card{title="Installation" icon="i-lucide-download" to="/docs/getting-started/installation"}
+  Wire the theme into a Next.js app.
+  :::
+
+  :::card{title="Project Structure" icon="i-lucide-folder-tree" to="/docs/getting-started/project-structure"}
+  How content maps onto routes.
+  :::
+
+  :::card{title="Configuration" icon="i-lucide-settings" to="/docs/core-concepts/configuration"}
+  Every option the theme reads.
+  :::
+
+  :::card{title="Code Blocks" icon="i-lucide-code" to="/docs/essentials/code-blocks"}
+  Filenames, highlighting and groups.
+  :::
+
+::
+
+## Collapsible
+
+::collapsible
+
+```ts [docs.config.ts]
+export default defineDocsConfig({
+  site: { name: 'Acme' },
+})
+```
+
+::
+
+## Field and FieldGroup
+
+::field-group
+
+  :::field{name="site.name" type="string" required}
+  The site name, used as the header title fallback.
+  :::
+
+  :::field{name="header.search" type="boolean"}
+  Set to `false` to remove the search trigger. Defaults to `true`.
+  :::
+
+  :::field{name="colorMode.forced" type="'light' | 'dark'"}
+  Pins the site to one mode and hides the toggle.
+  :::
+
+::
+
+## Icon
+
+Icons come from lucide, written either as `:icon{name="rocket"}` or with the
+Iconify prefix Docus uses: :icon{name="i-lucide-rocket" class="inline size-4"}
+
+## Kbd
+
+Press :kbd{value="Ctrl"} :kbd{value="K"} to open the search palette.
+
+## Tabs
+
+::tabs
+
+  :::tabs-item{label="Preview" icon="i-lucide-eye"}
+  Tabs take a label and an optional icon on each item.
+  :::
+
+  :::tabs-item{label="Code" icon="i-lucide-code"}
+  ```mdc
+  ::tabs
+    :::tabs-item{label="Preview" icon="i-lucide-eye"}
+    Content
+    :::
+  ::
+  ```
+  :::
+
+::
+
+## Steps
+
+::steps{level="3"}
+
+### Install the theme
+
+```bash [Terminal]
+npm install docs-theme
+```
+
+### Add a content file
+
+Create `content/index.mdx` with frontmatter and a body.
+
+### Run the dev server
+
+```bash [Terminal]
+npm run dev
+```
+
+::

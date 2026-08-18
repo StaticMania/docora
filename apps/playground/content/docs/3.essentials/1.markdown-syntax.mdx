@@ -1,85 +1,88 @@
 ---
 title: Markdown Syntax
-description: Callouts, tabs and highlighted code blocks.
+description: Text, titles and styling in standard markdown.
 icon: heading-1
 ---
 
-Documents are MDX, so components can be used by name without importing
-anything.
+Documents are markdown with [MDC syntax](/docs/essentials/components) on top, so
+components can be used without importing anything.
 
-## Callouts
+## Titles
 
-<Note>
-The default callout, for information worth setting apart from the body text.
-</Note>
+Use titles to introduce main sections. They structure your documentation and
+help readers navigate.
 
-<Tip title="Worth knowing">
-Every callout takes an optional `title`.
-</Tip>
-
-<Warning>
-Something that will cause trouble if it is overlooked.
-</Warning>
-
-<Caution>
-Something destructive or irreversible.
-</Caution>
-
-Write them as `<Note>`, `<Tip>`, `<Warning>` and `<Caution>`, or use
-`<Callout type="warning">` directly.
-
-## Tabs
-
-<Tabs items={["npm", "pnpm", "yarn"]}>
-
-<Tab>
-```bash
-npm install docs-theme
-```
-</Tab>
-
-<Tab>
-```bash
-pnpm add docs-theme
-```
-</Tab>
-
-<Tab>
-```bash
-yarn add docs-theme
-```
-</Tab>
-
-</Tabs>
-
-## Code blocks
-
-Fenced code is highlighted by Shiki at compile time, with both colour schemes
-emitted as custom properties so switching themes needs no re-render:
-
-```ts
-import { createDocsSource, defaultContentDir } from 'docs-theme'
-
-export const source = createDocsSource({ contentDir: defaultContentDir() })
-
-const page = await source.getPage(['docs', 'getting-started', 'installation'])
+```mdc
+## Titles
+### Subtitles
 ```
 
-```css
-:root {
-  --primary: var(--color-emerald-500);
-}
-```
+Headings become anchors automatically and populate the table of contents.
 
-Inline `code` is styled separately from blocks.
+## Text Formatting
 
-## Tables and quotes
+| Style           | Syntax              | Output            |
+| --------------- | ------------------- | ----------------- |
+| Bold            | `**bold**`          | **bold**          |
+| Italic          | `_italic_`          | _italic_          |
+| Strikethrough   | `~~struck~~`        | ~~struck~~        |
+| Inline code     | `` `code` ``        | `code`            |
+| Link            | `[label](/docs)`    | [label](/docs)    |
 
-| Convention          | Effect                          |
-| ------------------- | ------------------------------- |
-| `1.` prefix          | Sets sidebar order              |
-| `.navigation.yml`    | Sets a section title and icon   |
-| `navigation: false`  | Hides a page from the sidebar   |
+Styled spans use MDC's bracket syntax — `[emphasis]{.text-primary}` renders as
+[emphasis]{.text-primary}, and keyboard keys use `:kbd{value="K"}`: press
+:kbd{value="Ctrl"} :kbd{value="K"} to open search.
 
-> GitHub-flavoured markdown is enabled, so tables, strikethrough and task
-> lists all work.
+## Links
+
+Internal links are routed on the client, external links open in a new tab:
+
+- [Project structure](/docs/getting-started/project-structure)
+- [Next.js documentation](https://nextjs.org)
+
+## Lists
+
+### Unordered
+
+- First item
+- Second item
+- Third item
+
+### Ordered
+
+1. First step
+2. Second step
+3. Third step
+
+### Nested
+
+- Parent item
+  - Child item
+  - Another child
+- Second parent
+
+### Task lists
+
+- [x] Content pipeline
+- [x] MDC syntax
+- [ ] Search
+
+## Tables
+
+| Convention          | Effect                        |
+| ------------------- | ----------------------------- |
+| `1.` prefix          | Sets sidebar order            |
+| `.navigation.yml`    | Sets a section title and icon |
+| `navigation: false`  | Hides a page from the sidebar |
+
+## Blockquotes
+
+### Singleline
+
+> Content is just files on disk.
+
+### Multiline
+
+> Every route comes from a file under `content/`.
+>
+> Adding an `.mdx` file creates the route and the sidebar entry.
