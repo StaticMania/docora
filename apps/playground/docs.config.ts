@@ -9,7 +9,7 @@ export default defineDocsConfig({
 
   header: {
     links: [
-      { label: 'Docs', href: '/docs' },
+      { label: 'Docs', href: '/docs/getting-started/introduction' },
       { label: 'Roadmap', href: '/#roadmap' },
     ],
   },
@@ -41,7 +41,7 @@ export default defineDocsConfig({
   footer: {
     credits: 'Built with next-docs',
     links: [
-      { label: 'Docs', href: '/docs' },
+      { label: 'Docs', href: '/docs/getting-started/introduction' },
       { label: 'GitHub', href: 'https://github.com/Arifulislam5577/next-docs' },
     ],
   },
