@@ -1,0 +1,42 @@
+---
+title: Introduction
+description: What you get out of the box.
+icon: house
+---
+
+This page lives at `content/docs/1.getting-started/1.introduction.mdx`. The `1.`
+prefix sets its position in the sidebar and is stripped from the route.
+
+## Writing content
+
+Documents are markdown with [MDC](https://content.nuxt.com/docs/files/markdown#mdc-syntax)
+syntax on top, so components need no imports:
+
+::note
+Callouts come in `note`, `tip`, `warning` and `caution`.
+::
+
+::card-group
+  :::card{title="Add a page" icon="i-lucide-file-text"}
+  Create an `.mdx` file under `content/` and it becomes a route.
+  :::
+
+  :::card{title="Add a section" icon="i-lucide-folder-tree"}
+  Create a folder with a `.navigation.yml` giving it a title and icon.
+  :::
+::
+
+## Code blocks
+
+Fences take a filename and a line range, and every block has a copy button:
+
+```ts [docs.config.ts]{2}
+export default defineDocsConfig({
+  site: { name: 'My Docs' },
+})
+```
+
+## Next steps
+
+Delete these starter pages and write your own — the sidebar follows whatever is
+on disk.

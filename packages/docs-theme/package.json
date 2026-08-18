@@ -1,7 +1,7 @@
 {
   "name": "docs-theme",
-  "version": "0.0.0",
-  "description": "Next.js documentation theme — layouts, MDX rendering and configuration",
+  "version": "0.1.0",
+  "description": "Next.js documentation theme \u2014 layouts, MDX rendering and configuration",
   "license": "MIT",
   "type": "module",
   "sideEffects": [

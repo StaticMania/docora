@@ -1,0 +1,38 @@
+---
+title: Installation
+description: Running and deploying your documentation.
+icon: download
+---
+
+## Development
+
+```bash [Terminal]
+npm run dev
+```
+
+The site runs at `http://localhost:3000`. Content changes show on refresh.
+
+## Production
+
+```bash [Terminal]
+npm run build
+npm run start
+```
+
+Every page under `content/` is prerendered as static HTML at build time.
+
+## Configuration
+
+::field-group
+  :::field{name="site.name" type="string" required}
+  Shown in the header and used as the metadata title.
+  :::
+
+  :::field{name="header.links" type="NavLink[]"}
+  Top-level links beside the logo.
+  :::
+
+  :::field{name="colorMode.forced" type="'light' | 'dark'"}
+  Pins the site to one colour mode and hides the toggle.
+  :::
+::

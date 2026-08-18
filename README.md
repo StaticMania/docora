@@ -6,9 +6,9 @@ is packaged for Nuxt: a **theme package**, a **scaffolding CLI**, and **starters
 | Path                     | Role                                                       | Docus equivalent |
 | ------------------------ | ---------------------------------------------------------- | ---------------- |
 | `packages/docs-theme`    | Publishable theme: layouts, MDX pipeline, config, styles    | `layer/`         |
-| `packages/create-docs`   | `npx create-docs my-docs` scaffolder (stub until Phase 3)   | `cli/`           |
+| `packages/create-docs`   | `npx create-docs my-docs` scaffolder                        | `cli/`           |
 | `apps/playground`        | Local app used to develop the theme                         | `playground/`    |
-| `.starters/default`      | Template copied by the CLI (stub until Phase 3)             | `.starters/`     |
+| `.starters/default`      | Template the CLI copies                                     | `.starters/`     |
 
 ## Develop
 
@@ -22,6 +22,16 @@ Then open http://localhost:3000. Every route comes from a file under
 `/docs`. Adding an `.mdx` file there creates the route and the sidebar entry;
 there are no page files to write.
 
+## Scaffold a new site
+
+```bash
+npx create-docs my-docs
+```
+
+The starters ship inside the CLI tarball, so scaffolding works offline. Pass
+`--template` to pick one, `--pm` to choose a package manager, and
+`--no-install` to skip dependency installation.
+
 ## Status
 
 Built phase by phase; each phase ships something usable.
@@ -29,7 +39,7 @@ Built phase by phase; each phase ships something usable.
 - [x] **Phase 0** — monorepo skeleton, theme package, playground renders an MDX page
 - [x] **Phase 1** — docs shell: header, sidebar, TOC, mobile drawer, dark mode, `docs.config.ts`
 - [x] **Phase 2** — content pipeline, navigation tree, catch-all route, MDC syntax and prose components
-- [ ] Phase 3 — `create-docs` CLI + default starter
+- [x] **Phase 3** — `create-docs` CLI + default starter
 - [ ] Phase 4 — search + sitemap/robots/OG
 - [ ] Phase 5 — i18n
 - [ ] Phase 6 — llms.txt, MCP, skills
