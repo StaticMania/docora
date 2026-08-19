@@ -1,0 +1,62 @@
+name: Bug report
+description: Report a bug in Docora, create-docora, or the documentation site.
+title: '[bug] '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please search existing issues first.
+        Security reports belong in [SECURITY.md](https://github.com/StaticMania/docora/blob/main/SECURITY.md), not here.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      description: Where did you hit the problem?
+      options:
+        - docora
+        - create-docora
+        - Documentation site
+        - Starter template
+        - Unsure
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Package version, or `main` if you are on the git checkout.
+      placeholder: '0.0.1'
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps or a small repo that shows the issue.
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Node.js, package manager, OS, and Next.js versions if relevant.
+      placeholder: |
+        Node.js:
+        pnpm / npm:
+        OS:
+        Next.js:
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: Logs, screenshots, or related issues.

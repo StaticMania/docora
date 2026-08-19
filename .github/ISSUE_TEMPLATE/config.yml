@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/StaticMania/docora#readme
+    about: Read the README and contributing guide before opening an issue.
+  - name: Security advisory
+    url: https://github.com/StaticMania/docora/security/advisories/new
+    about: Report a vulnerability privately. Do not file a public issue.

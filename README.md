@@ -198,6 +198,15 @@ This is a monorepo containing:
 - [`apps/docs`](https://github.com/StaticMania/docora/tree/main/apps/docs) — Official documentation
 - [`.starters`](https://github.com/StaticMania/docora/tree/main/.starters) — Starter templates
 
+## 🤝 Contributing
+
+We welcome contributions. Please read [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md) before opening a pull request.
+
+- [Report a bug or request a feature](https://github.com/StaticMania/docora/issues/new/choose)
+- [Support](SUPPORT.md)
+- [Security policy](SECURITY.md)
+- [Governance](GOVERNANCE.md)
+
 ## 📄 License
 
-Published under the [MIT](https://github.com/StaticMania/docora/blob/main/LICENSE) license.
+Published under the [MIT](LICENSE) license.

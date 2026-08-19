@@ -36,6 +36,10 @@
     "node": ">=20.9.0"
   },
   "packageManager": "pnpm@9.15.1",
+  "homepage": "https://github.com/StaticMania/docora#readme",
+  "bugs": {
+    "url": "https://github.com/StaticMania/docora/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/StaticMania/docora.git"
