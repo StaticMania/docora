@@ -44,7 +44,11 @@ export interface DocsSource {
  * The tree is re-read on every call in development so that adding a file shows
  * up on refresh, and cached in production where the content cannot change.
  */
-export function createDocsSource({ contentDir, navigationRoot, i18n }: DocsSourceOptions): DocsSource {
+export function createDocsSource({
+  contentDir,
+  navigationRoot,
+  i18n,
+}: DocsSourceOptions): DocsSource {
   let cached: Promise<ContentDirectory> | undefined
 
   function tree(): Promise<ContentDirectory> {
@@ -127,7 +131,13 @@ export function defaultContentDir(): string {
   return path.join(process.cwd(), 'content')
 }
 
-export { buildNavigation, findSection, findSurround, flattenNavigation, sectionsByPath } from './navigation'
+export {
+  buildNavigation,
+  findSection,
+  findSurround,
+  flattenNavigation,
+  sectionsByPath,
+} from './navigation'
 export { readContentTree, flattenPages, findDirectory, type ContentDirectory } from './tree'
 export { humanize, parseOrderPrefix, slugToPath, stripExtension } from './slug'
 export type { ContentPage, DirectoryMeta, PageFrontmatter, PageSurround } from './types'

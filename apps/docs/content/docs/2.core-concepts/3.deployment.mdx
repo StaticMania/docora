@@ -43,27 +43,29 @@ resolves to the real file. Both links appear under the table of contents.
 
 ::tabs
 
-  :::tabs-item{label="Vercel" icon="i-lucide-triangle"}
-  Import the repository and deploy — the framework is detected automatically.
-  Set `AI_GATEWAY_API_KEY` only if you want the assistant; deployments
-  authenticate through OIDC, so it is mainly a local concern.
-  :::
+:::tabs-item{label="Vercel" icon="i-lucide-triangle"}
+Import the repository and deploy — the framework is detected automatically.
+Set `AI_GATEWAY_API_KEY` only if you want the assistant; deployments
+authenticate through OIDC, so it is mainly a local concern.
+:::
 
-  :::tabs-item{label="Node" icon="i-lucide-server"}
-  ```bash [Terminal]
-  npm run build
-  npm run start
-  ```
-  :::
+:::tabs-item{label="Node" icon="i-lucide-server"}
+
+```bash [Terminal]
+npm run build
+npm run start
+```
+
+:::
 
 ::
 
 ## Environment
 
 ::field-group
-  :::field{name="AI_GATEWAY_API_KEY" type="string"}
-  Enables the AI assistant. Without it the chat is not rendered.
-  :::
+:::field{name="AI_GATEWAY_API_KEY" type="string"}
+Enables the AI assistant. Without it the chat is not rendered.
+:::
 ::
 
 Keep it in `.env.local`, which the starters already gitignore.

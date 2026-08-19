@@ -43,7 +43,11 @@ import {
 } from '../mdc/index'
 import { Icon } from '../components/icon'
 
-function Anchor({ href = '', className, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) {
+function Anchor({
+  href = '',
+  className,
+  ...props
+}: Readonly<AnchorHTMLAttributes<HTMLAnchorElement>>) {
   const classes = cn(
     'font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:decoration-primary',
     className,
@@ -72,7 +76,7 @@ function Heading({
   className,
   children,
   ...props
-}: HTMLAttributes<HTMLHeadingElement> & { as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' }) {
+}: Readonly<HTMLAttributes<HTMLHeadingElement> & { as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' }>) {
   return (
     <Tag className={cn('group scroll-m-20', className)} {...props}>
       {children}
@@ -96,7 +100,9 @@ function Heading({
  * Consumers can extend it: `getMdxComponents({ Callout })`.
  */
 export const defaultMdxComponents: MDXComponents = {
-  h1: props => <h1 className="mt-2 scroll-m-20 text-3xl font-bold tracking-tight sm:text-4xl" {...props} />,
+  h1: props => (
+    <h1 className="mt-2 scroll-m-20 text-3xl font-bold tracking-tight sm:text-4xl" {...props} />
+  ),
   h2: props => (
     <Heading
       as="h2"
@@ -111,7 +117,10 @@ export const defaultMdxComponents: MDXComponents = {
   ul: props => <ul className="mt-4 ml-6 list-disc [&>li]:mt-2" {...props} />,
   ol: props => <ol className="mt-4 ml-6 list-decimal [&>li]:mt-2" {...props} />,
   blockquote: props => (
-    <blockquote className="mt-6 border-l-2 border-primary/40 pl-6 text-muted-foreground italic" {...props} />
+    <blockquote
+      className="mt-6 border-l-2 border-primary/40 pl-6 text-muted-foreground italic"
+      {...props}
+    />
   ),
   hr: props => <hr className="my-10 border-border" {...props} />,
   code: ({ className, ...props }) => (
@@ -130,7 +139,12 @@ export const defaultMdxComponents: MDXComponents = {
       <table className="w-full border-collapse text-sm" {...props} />
     </div>
   ),
-  th: props => <th className="border border-border bg-muted px-4 py-2 text-left font-semibold text-highlighted" {...props} />,
+  th: props => (
+    <th
+      className="border border-border bg-muted px-4 py-2 text-left font-semibold text-highlighted"
+      {...props}
+    />
+  ),
   td: props => <td className="border border-border px-4 py-2" {...props} />,
   img: props => (
     // eslint-disable-next-line @next/next/no-img-element

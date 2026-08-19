@@ -12,8 +12,8 @@ write.
 
 | File                                                | Route                                |
 | --------------------------------------------------- | ------------------------------------ |
-| `content/index.mdx`                                  | `/`                                  |
-| `content/docs/1.getting-started/1.introduction.mdx`  | `/docs/getting-started/introduction` |
+| `content/index.mdx`                                 | `/`                                  |
+| `content/docs/1.getting-started/1.introduction.mdx` | `/docs/getting-started/introduction` |
 
 A numeric prefix sets sidebar order and is stripped from the route. A folder is
 a sidebar section; give it a title and icon with `.navigation.yml`.

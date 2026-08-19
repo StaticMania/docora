@@ -32,13 +32,13 @@ export function createIssueUrl(config: DocsConfig, title: string): string | unde
   return `${repository.replace(/\/+$/, '')}/issues/new?${params.toString()}`
 }
 
-export interface PageLinksProps {
+export type PageLinksProps = Readonly<{
   /** Page path relative to the content directory. */
   relativePath?: string
   /** Page title, used to pre-fill the issue. */
   title?: string
   className?: string
-}
+}>
 
 /** "Edit this page" and "Report an issue", shown under the table of contents. */
 export function PageLinks({ relativePath, title, className }: PageLinksProps) {

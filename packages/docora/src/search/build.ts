@@ -16,7 +16,10 @@ const MAX_CONTENT_LENGTH = 8000
  * Built on the server — either at build time through a static route, or per
  * request in development — so the client only ever downloads the result.
  */
-export async function buildSearchIndex(source: DocsSource, i18n?: I18nConfig): Promise<SearchIndex> {
+export async function buildSearchIndex(
+  source: DocsSource,
+  i18n?: I18nConfig,
+): Promise<SearchIndex> {
   const pages = await source.getPages()
 
   // Section labels differ per locale, so each locale's tree is read separately.

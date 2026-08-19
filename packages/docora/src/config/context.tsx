@@ -7,7 +7,13 @@ import type { DocsConfig } from './types'
 
 const DocsConfigContext = createContext<DocsConfig>(fallbackDocsConfig)
 
-export function DocsConfigProvider({ config, children }: { config: DocsConfig; children: ReactNode }) {
+export function DocsConfigProvider({
+  config,
+  children,
+}: Readonly<{
+  config: DocsConfig
+  children: ReactNode
+}>) {
   return <DocsConfigContext.Provider value={config}>{children}</DocsConfigContext.Provider>
 }
 

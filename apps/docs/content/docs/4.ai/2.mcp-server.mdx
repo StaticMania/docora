@@ -11,14 +11,14 @@ scraping it.
 ## Tools
 
 ::field-group
-  :::field{name="list-pages" type="{ locale?: string }"}
-  Every page with its title, path, description and URL. The starting point when
-  the exact page is unknown.
-  :::
+:::field{name="list-pages" type="{ locale?: string }"}
+Every page with its title, path, description and URL. The starting point when
+the exact page is unknown.
+:::
 
-  :::field{name="get-page" type="{ path: string }" required}
-  The full markdown of one page, plus its metadata.
-  :::
+:::field{name="get-page" type="{ path: string }" required}
+The full markdown of one page, plus its metadata.
+:::
 ::
 
 Both are annotated read-only, so a client knows they cannot change anything.
@@ -27,33 +27,39 @@ Both are annotated read-only, so a client knows they cannot change anything.
 
 ::tabs
 
-  :::tabs-item{label="Cursor" icon="i-lucide-code"}
-  ```json [.cursor/mcp.json]
-  {
-    "mcpServers": {
-      "my-docs": { "url": "https://example.com/mcp" }
-    }
-  }
-  ```
-  :::
+:::tabs-item{label="Cursor" icon="i-lucide-code"}
 
-  :::tabs-item{label="VS Code" icon="i-lucide-code"}
-  ```json [.vscode/mcp.json]
-  {
-    "servers": {
-      "my-docs": { "type": "http", "url": "https://example.com/mcp" }
-    }
+```json [.cursor/mcp.json]
+{
+  "mcpServers": {
+    "my-docs": { "url": "https://example.com/mcp" }
   }
-  ```
-  :::
+}
+```
 
-  :::tabs-item{label="curl" icon="i-lucide-terminal"}
-  ```bash [Terminal]
-  curl -X POST https://example.com/mcp \
-    -H 'content-type: application/json' \
-    -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
-  ```
-  :::
+:::
+
+:::tabs-item{label="VS Code" icon="i-lucide-code"}
+
+```json [.vscode/mcp.json]
+{
+  "servers": {
+    "my-docs": { "type": "http", "url": "https://example.com/mcp" }
+  }
+}
+```
+
+:::
+
+:::tabs-item{label="curl" icon="i-lucide-terminal"}
+
+```bash [Terminal]
+curl -X POST https://example.com/mcp \
+  -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
+
+:::
 
 ::
 

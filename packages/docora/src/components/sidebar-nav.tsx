@@ -8,17 +8,25 @@ import { useMessages } from '../i18n/context'
 import { cn } from '../utils/cn'
 import { Icon } from './icon'
 
-export interface SidebarNavProps {
+export type SidebarNavProps = Readonly<{
   items: NavItem[]
   /** Called after a link is followed — used to close the mobile drawer. */
   onNavigate?: () => void
   className?: string
-}
+}>
 
 /** Shared row geometry: `size-5` icons and `py-1.5` give 2rem rows. */
 const ROW = 'group relative flex w-full items-center gap-1.5 px-2.5 py-1.5 text-sm'
 
-function NavTree({ items, level, onNavigate }: { items: NavItem[]; level: number; onNavigate?: () => void }) {
+function NavTree({
+  items,
+  level,
+  onNavigate,
+}: Readonly<{
+  items: NavItem[]
+  level: number
+  onNavigate?: () => void
+}>) {
   const pathname = usePathname()
   const nested = level > 0
 
@@ -53,7 +61,9 @@ function NavTree({ items, level, onNavigate }: { items: NavItem[]; level: number
                     name={item.icon}
                     className={cn(
                       'size-5 shrink-0',
-                      isActive ? 'text-primary' : 'text-dimmed transition-colors group-hover:text-foreground',
+                      isActive
+                        ? 'text-primary'
+                        : 'text-dimmed transition-colors group-hover:text-foreground',
                     )}
                   />
                 )}
@@ -61,12 +71,16 @@ function NavTree({ items, level, onNavigate }: { items: NavItem[]; level: number
               </Link>
             ) : (
               <span className={cn(ROW, 'font-semibold text-highlighted')}>
-                {item.icon && <Icon name={item.icon} className="size-5 shrink-0 text-highlighted" />}
+                {item.icon && (
+                  <Icon name={item.icon} className="size-5 shrink-0 text-highlighted" />
+                )}
                 <span className="truncate">{item.label}</span>
               </span>
             )}
 
-            {hasChildren && <NavTree items={item.children!} level={level + 1} onNavigate={onNavigate} />}
+            {hasChildren && (
+              <NavTree items={item.children!} level={level + 1} onNavigate={onNavigate} />
+            )}
           </li>
         )
       })}

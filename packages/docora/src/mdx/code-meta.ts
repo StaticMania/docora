@@ -55,11 +55,14 @@ export function rehypePrettyCodeFigure() {
 
       const title = node.children.find(
         (child): child is Element =>
-          isElement(child) &&
-          child.properties['data-rehype-pretty-code-title'] !== undefined,
+          isElement(child) && child.properties['data-rehype-pretty-code-title'] !== undefined,
       )
-      const pre = node.children.find((child): child is Element => isElement(child) && child.tagName === 'pre')
-      const code = pre?.children.find((child): child is Element => isElement(child) && child.tagName === 'code')
+      const pre = node.children.find(
+        (child): child is Element => isElement(child) && child.tagName === 'pre',
+      )
+      const code = pre?.children.find(
+        (child): child is Element => isElement(child) && child.tagName === 'code',
+      )
 
       if (title) {
         const filename = elementText(title).trim()

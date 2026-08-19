@@ -33,7 +33,11 @@ const JSON_HEADERS = { 'content-type': 'application/json' }
  * export const { GET, POST, DELETE } = createMcpRoute(source, docsConfig)
  * ```
  */
-export function createMcpRoute(source: DocsSource, config: DocsConfig, options: McpRouteOptions = {}) {
+export function createMcpRoute(
+  source: DocsSource,
+  config: DocsConfig,
+  options: McpRouteOptions = {},
+) {
   const tools = options.tools ?? createMcpTools(source, config)
   const serverInfo = {
     name: options.name ?? config.site.name,
@@ -74,7 +78,9 @@ export function createMcpRoute(source: DocsSource, config: DocsConfig, options: 
         }
 
         try {
-          const output = await tool.handler((request.params?.arguments as Record<string, unknown>) ?? {})
+          const output = await tool.handler(
+            (request.params?.arguments as Record<string, unknown>) ?? {},
+          )
 
           return result(request.id, {
             content: [{ type: 'text', text: JSON.stringify(output, null, 2) }],
@@ -114,7 +120,9 @@ export function createMcpRoute(source: DocsSource, config: DocsConfig, options: 
 
       for (const entry of batch) {
         if (!isJsonRpcRequest(entry)) {
-          responses.push(failure(null, { code: ERROR_CODES.invalidRequest, message: 'Invalid request' }))
+          responses.push(
+            failure(null, { code: ERROR_CODES.invalidRequest, message: 'Invalid request' }),
+          )
           continue
         }
 
@@ -125,7 +133,9 @@ export function createMcpRoute(source: DocsSource, config: DocsConfig, options: 
       // A batch of nothing but notifications gets an empty 202, per the spec.
       if (responses.length === 0) return new Response(null, { status: 202 })
 
-      return Response.json(Array.isArray(payload) ? responses : responses[0], { headers: JSON_HEADERS })
+      return Response.json(Array.isArray(payload) ? responses : responses[0], {
+        headers: JSON_HEADERS,
+      })
     },
 
     /** No server-initiated stream to open, so the SSE channel is declined. */

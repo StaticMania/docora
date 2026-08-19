@@ -12,7 +12,7 @@ import { LanguageSwitcher } from './language-switcher'
 import { SocialIcon, socialLabels } from './social-icon'
 import { ThemeToggle } from './theme-toggle'
 
-export interface SiteHeaderProps {
+export type SiteHeaderProps = Readonly<{
   /** Rendered at the far right, before the language and theme controls. */
   children?: ReactNode
   /** Replaces the default logo and site name. */
@@ -20,7 +20,7 @@ export interface SiteHeaderProps {
   /** Rendered after the navigation links — a call to action, say. */
   cta?: ReactNode
   className?: string
-}
+}>
 
 function Logo() {
   const config = useDocsConfig()
@@ -81,7 +81,8 @@ export function SiteHeader({ children, logo, cta, className }: SiteHeaderProps) 
             <nav aria-label="Main" className="ml-4 hidden items-center gap-4 lg:flex">
               {links.map(link => {
                 const external = link.external ?? link.href.startsWith('http')
-                const isActive = !external && (pathname === link.href || pathname.startsWith(`${link.href}/`))
+                const isActive =
+                  !external && (pathname === link.href || pathname.startsWith(`${link.href}/`))
 
                 return (
                   <Link
@@ -90,7 +91,9 @@ export function SiteHeader({ children, logo, cta, className }: SiteHeaderProps) 
                     {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
                     className={cn(
                       'text-sm transition-colors',
-                      isActive ? 'font-medium text-foreground' : 'text-muted-foreground hover:text-foreground',
+                      isActive
+                        ? 'font-medium text-foreground'
+                        : 'text-muted-foreground hover:text-foreground',
                     )}
                   >
                     {link.label}

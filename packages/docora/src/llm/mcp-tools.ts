@@ -88,7 +88,8 @@ export function createMcpTools(source: DocsSource, config: DocsConfig): McpTool[
         properties: {
           path: {
             type: 'string',
-            description: 'Exact page path from list-pages, e.g. "/docs/getting-started/installation".',
+            description:
+              'Exact page path from list-pages, e.g. "/docs/getting-started/installation".',
           },
         },
         required: ['path'],

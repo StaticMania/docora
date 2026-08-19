@@ -7,7 +7,7 @@ import './globals.css'
 
 export const metadata: Metadata = createRootMetadata(docsConfig)
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <DocsRoot config={docsConfig} navigation={await source.getNavigation()}>
       {children}

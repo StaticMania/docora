@@ -37,55 +37,63 @@ export function createOgRoute(config: DocsConfig, options: { logo?: string } = {
         : undefined
 
       return new ImageResponse(
-        (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            backgroundColor: '#18181b',
+            padding: '80px',
+            // A soft wash so the card is not a flat rectangle.
+            backgroundImage: 'radial-gradient(circle at 85% 15%, #10b98133, transparent 55%)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+            {logo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={logo} width={64} height={64} alt="" />
+            ) : (
+              <div
+                style={{ width: 14, height: 14, borderRadius: 999, backgroundColor: '#34d399' }}
+              />
+            )}
+            <div style={{ fontSize: 32, color: '#e4e4e7', fontWeight: 600, letterSpacing: -0.5 }}>
+              {config.site.name}
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <div
+              style={{
+                fontSize: title.length > 40 ? 64 : 78,
+                color: '#ffffff',
+                fontWeight: 700,
+                letterSpacing: -2,
+                lineHeight: 1.1,
+              }}
+            >
+              {title}
+            </div>
+
+            {description && (
+              <div style={{ fontSize: 32, color: '#a1a1aa', lineHeight: 1.35 }}>
+                {description.length > 120 ? `${description.slice(0, 120)}…` : description}
+              </div>
+            )}
+          </div>
+
           <div
             style={{
-              width: '100%',
-              height: '100%',
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              backgroundColor: '#18181b',
-              padding: '80px',
-              // A soft wash so the card is not a flat rectangle.
-              backgroundImage: 'radial-gradient(circle at 85% 15%, #10b98133, transparent 55%)',
+              height: 8,
+              borderRadius: 999,
+              backgroundColor: '#34d399',
+              width: 160,
             }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-              {logo ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={logo} width={64} height={64} alt="" />
-              ) : (
-                <div style={{ width: 14, height: 14, borderRadius: 999, backgroundColor: '#34d399' }} />
-              )}
-              <div style={{ fontSize: 32, color: '#e4e4e7', fontWeight: 600, letterSpacing: -0.5 }}>
-                {config.site.name}
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-              <div
-                style={{
-                  fontSize: title.length > 40 ? 64 : 78,
-                  color: '#ffffff',
-                  fontWeight: 700,
-                  letterSpacing: -2,
-                  lineHeight: 1.1,
-                }}
-              >
-                {title}
-              </div>
-
-              {description && (
-                <div style={{ fontSize: 32, color: '#a1a1aa', lineHeight: 1.35 }}>
-                  {description.length > 120 ? `${description.slice(0, 120)}…` : description}
-                </div>
-              )}
-            </div>
-
-            <div style={{ display: 'flex', height: 8, borderRadius: 999, backgroundColor: '#34d399', width: 160 }} />
-          </div>
-        ),
+          />
+        </div>,
         OG_SIZE,
       )
     },

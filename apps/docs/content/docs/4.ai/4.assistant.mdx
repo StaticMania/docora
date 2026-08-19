@@ -49,13 +49,13 @@ The model is given two tools, the same pair the [MCP server](/docs/ai/mcp-server
 exposes, so the in-page chat and a connected editor read the docs identically:
 
 ::field-group
-  :::field{name="search-docs" type="{ query, locale? }"}
-  Searches the index and returns matching pages with excerpts.
-  :::
+:::field{name="search-docs" type="{ query, locale? }"}
+Searches the index and returns matching pages with excerpts.
+:::
 
-  :::field{name="get-page" type="{ path }" required}
-  Reads one page in full as markdown.
-  :::
+:::field{name="get-page" type="{ path }" required}
+Reads one page in full as markdown.
+:::
 ::
 
 The system prompt tells it to answer only from those pages, to say so when the
@@ -65,25 +65,25 @@ shows each tool step as it happens, so a reader can see what was consulted.
 ## Configuration
 
 ::field-group
-  :::field{name="assistant.enabled" type="boolean"}
-  Set `false` to keep the assistant off even when a credential exists.
-  :::
+:::field{name="assistant.enabled" type="boolean"}
+Set `false` to keep the assistant off even when a credential exists.
+:::
 
-  :::field{name="assistant.model" type="string"}
-  Any AI Gateway model string. Defaults to `anthropic/claude-sonnet-5`.
-  :::
+:::field{name="assistant.model" type="string"}
+Any AI Gateway model string. Defaults to `anthropic/claude-sonnet-5`.
+:::
 
-  :::field{name="assistant.suggestions" type="string[]"}
-  Starter questions offered in an empty conversation.
-  :::
+:::field{name="assistant.suggestions" type="string[]"}
+Starter questions offered in an empty conversation.
+:::
 
-  :::field{name="assistant.systemPrompt" type="string"}
-  Replaces the built-in prompt entirely.
-  :::
+:::field{name="assistant.systemPrompt" type="string"}
+Replaces the built-in prompt entirely.
+:::
 
-  :::field{name="assistant.explainWithAi" type="boolean"}
-  Set `false` to drop the button under the table of contents.
-  :::
+:::field{name="assistant.explainWithAi" type="boolean"}
+Set `false` to drop the button under the table of contents.
+:::
 ::
 
 ```ts [docs.config.ts]

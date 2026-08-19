@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 
 import { SearchDialog } from './search-dialog'
 
@@ -10,7 +10,11 @@ interface SearchContextValue {
   enabled: boolean
 }
 
-const SearchContext = createContext<SearchContextValue>({ open: false, setOpen: () => {}, enabled: false })
+const SearchContext = createContext<SearchContextValue>({
+  open: false,
+  setOpen: () => {},
+  enabled: false,
+})
 
 export function useSearch() {
   return useContext(SearchContext)
@@ -21,11 +25,11 @@ export function SearchProvider({
   children,
   enabled = true,
   endpoint,
-}: {
+}: Readonly<{
   children: ReactNode
   enabled?: boolean
   endpoint?: string
-}) {
+}>) {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {

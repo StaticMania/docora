@@ -4,9 +4,9 @@ import { DocsLayout, DocsPage, DocsPager, LandingLayout, compileMdxFile } from '
 
 import { source } from '../../lib/source'
 
-interface PageProps {
+type PageProps = Readonly<{
   params: Promise<{ slug?: string[] }>
-}
+}>
 
 export async function generateStaticParams() {
   return source.getStaticParams()

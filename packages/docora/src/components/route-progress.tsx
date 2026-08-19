@@ -16,15 +16,15 @@ const SAFETY_TIMEOUT = DURATION * 3
 /** Fast at first, then asymptotic. */
 function estimatedProgress(elapsed: number): number {
   const completion = (elapsed / DURATION) * 100
-  return ((2 / Math.PI) * 100 * Math.atan(completion / 50))
+  return (2 / Math.PI) * 100 * Math.atan(completion / 50)
 }
 
-export interface RouteProgressProps {
+export type RouteProgressProps = Readonly<{
   /** Any CSS colour. Defaults to the theme's primary. */
   color?: string
   /** Bar thickness in pixels. */
   height?: number
-}
+}>
 
 /**
  * A progress bar across the top of the page during client-side navigation.
@@ -40,7 +40,13 @@ export function RouteProgress({ color, height = 3 }: RouteProgressProps) {
   const running = useRef(false)
   const finishRef = useRef<() => void>(undefined)
   const pathnameRef = useRef(pathname)
-  const timers = useRef<{ raf?: number; throttle?: number; hide?: number; reset?: number; safety?: number }>({})
+  const timers = useRef<{
+    raf?: number
+    throttle?: number
+    hide?: number
+    reset?: number
+    safety?: number
+  }>({})
 
   const clearTimers = useCallback(() => {
     const { raf, throttle, hide, reset, safety } = timers.current

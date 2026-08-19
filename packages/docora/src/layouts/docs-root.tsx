@@ -13,7 +13,7 @@ import { ThemeProvider } from '../components/theme-provider'
 import { docsFont } from '../font'
 import { cn } from '../utils/cn'
 
-export interface DocsRootProps {
+export type DocsRootProps = Readonly<{
   children: ReactNode
   /** Site configuration, usually the default export of `docs.config.ts`. */
   config?: DocsConfig
@@ -31,7 +31,7 @@ export interface DocsRootProps {
   assistantEnabled?: boolean
   className?: string
   bodyClassName?: string
-}
+}>
 
 /**
  * The `<html>` / `<body>` shell for a docs site.
@@ -59,23 +59,31 @@ export function DocsRoot({
       className={cn(docsFont.variable, className)}
       suppressHydrationWarning
     >
-      <body className={cn('min-h-svh bg-background font-sans text-foreground antialiased', bodyClassName)}>
+      <body
+        className={cn(
+          'min-h-svh bg-background font-sans text-foreground antialiased',
+          bodyClassName,
+        )}
+      >
         <ThemeProvider colorMode={config.colorMode}>
           <DocsConfigProvider config={resolvedConfig}>
             <I18nProvider locale={activeLocale} i18n={config.i18n}>
-            <SearchProvider
-              enabled={config.search?.enabled !== false}
-              endpoint={config.search?.endpoint}
-            >
-              {config.loadingIndicator?.enabled !== false && (
-                <RouteProgress color={config.loadingIndicator?.color} height={config.loadingIndicator?.height} />
-              )}
-              <AssistantProvider enabled={assistantEnabled}>
-                {children}
-                <AssistantTrigger />
-                <AssistantPanel />
-              </AssistantProvider>
-            </SearchProvider>
+              <SearchProvider
+                enabled={config.search?.enabled !== false}
+                endpoint={config.search?.endpoint}
+              >
+                {config.loadingIndicator?.enabled !== false && (
+                  <RouteProgress
+                    color={config.loadingIndicator?.color}
+                    height={config.loadingIndicator?.height}
+                  />
+                )}
+                <AssistantProvider enabled={assistantEnabled}>
+                  {children}
+                  <AssistantTrigger />
+                  <AssistantPanel />
+                </AssistantProvider>
+              </SearchProvider>
             </I18nProvider>
           </DocsConfigProvider>
         </ThemeProvider>

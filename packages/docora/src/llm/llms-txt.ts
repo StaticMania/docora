@@ -47,7 +47,9 @@ export function createLlmsTxtRoute(source: DocsSource, config: DocsConfig) {
         lines.push(`## ${heading}`, '')
 
         for (const page of groupPages) {
-          const description = page.frontmatter.description ? `: ${page.frontmatter.description}` : ''
+          const description = page.frontmatter.description
+            ? `: ${page.frontmatter.description}`
+            : ''
           lines.push(`- [${page.title}](${absolute(config, rawPath(page))})${description}`)
         }
 
@@ -77,7 +79,9 @@ export function createLlmsFullTxtRoute(source: DocsSource, config: DocsConfig) {
             `# ${page.title}`,
             '',
             `URL: ${absolute(config, page.path)}`,
-            ...(page.frontmatter.description ? [`Description: ${page.frontmatter.description}`] : []),
+            ...(page.frontmatter.description
+              ? [`Description: ${page.frontmatter.description}`]
+              : []),
             '',
             body.trim(),
           ].join('\n')

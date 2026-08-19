@@ -8,13 +8,20 @@ import { useMessages } from '../i18n/context'
 import { cn } from '../utils/cn'
 
 /** Previous / next links at the foot of a document. */
-export function DocsPager({ prev, next, className }: PageSurround & { className?: string }) {
+export function DocsPager({
+  prev,
+  next,
+  className,
+}: Readonly<PageSurround & { className?: string }>) {
   const messages = useMessages()
 
   if (!prev && !next) return null
 
   return (
-    <nav aria-label="Pagination" className={cn('mt-12 grid gap-4 border-t border-border pt-6 sm:grid-cols-2', className)}>
+    <nav
+      aria-label="Pagination"
+      className={cn('mt-12 grid gap-4 border-t border-border pt-6 sm:grid-cols-2', className)}
+    >
       {prev?.href ? (
         <Link
           href={prev.href}

@@ -1,26 +1,23 @@
 'use client'
 
-import { Children, isValidElement, useState, type ReactElement, type ReactNode } from 'react'
+import { Children, isValidElement, useState, type ReactNode } from 'react'
 
 import { Icon } from '../components/icon'
 import { iconForFilename } from '../mdx/code-meta'
 import { cn } from '../utils/cn'
 
-interface CodeChildProps {
+type CodeChildProps = Readonly<{
   'data-filename'?: string
-}
+}>
 
-export interface CodeTreeProps {
+export type CodeTreeProps = Readonly<{
   children?: ReactNode
-  /** Filename to show first. MDC writes this as `default-value`. */
   defaultValue?: string
   'default-value'?: string
   className?: string
-  /** MDC `{class="…"}` lands here rather than on `className`. */
   class?: string
-}
+}>
 
-/** File tree beside the selected file's contents. */
 export function CodeTree({ children, className, class: htmlClass, ...props }: CodeTreeProps) {
   const blocks = Children.toArray(children).filter(isValidElement<CodeChildProps>)
   const names = blocks.map((block, index) => block.props['data-filename'] ?? `File ${index + 1}`)
@@ -58,7 +55,6 @@ export function CodeTree({ children, className, class: htmlClass, ...props }: Co
         ))}
       </div>
 
-      {/* The nested block brings its own frame, which would double up here. */}
       <div className="min-w-0 flex-1 [&_.docs-code]:my-0 [&_.docs-code-header]:hidden [&_.docs-code_pre]:rounded-none [&_.docs-code_pre]:border-0">
         {blocks[active]}
       </div>

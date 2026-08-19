@@ -17,11 +17,11 @@ export function I18nProvider({
   locale,
   i18n,
   children,
-}: {
+}: Readonly<{
   locale?: string
   i18n?: I18nConfig
   children: ReactNode
-}) {
+}>) {
   const value = useMemo(
     () => ({ locale, i18n, messages: resolveMessages(locale, i18n) }),
     [locale, i18n],

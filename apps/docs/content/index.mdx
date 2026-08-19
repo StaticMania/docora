@@ -134,14 +134,14 @@ collapsible blocks ship alongside them.
 :::code-tree{default-value="docs.config.ts" class="mx-auto max-w-3xl"}
 
 ```ts [docs.config.ts]
-import { defineDocsConfig } from "docora";
+import { defineDocsConfig } from 'docora'
 
 export default defineDocsConfig({
   site: {
-    name: "Acme",
-    description: "Acme documentation",
+    name: 'Acme',
+    description: 'Acme documentation',
   },
-});
+})
 ```
 
 ```mdx [content/docs/1.getting-started/1.introduction.mdx]
@@ -157,11 +157,11 @@ and never appear in the URL.
 ```
 
 ```tsx [app/layout.tsx]
-import { DocsRoot } from "docora";
-import docsConfig from "../docs.config";
+import { DocsRoot } from 'docora'
+import docsConfig from '../docs.config'
 
 export default function RootLayout({ children }) {
-  return <DocsRoot config={docsConfig}>{children}</DocsRoot>;
+  return <DocsRoot config={docsConfig}>{children}</DocsRoot>
 }
 ```
 

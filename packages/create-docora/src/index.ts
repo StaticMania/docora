@@ -47,9 +47,10 @@ async function main(argv: string[]): Promise<number> {
     return 1
   }
 
-  const manager = options.packageManager && isPackageManager(options.packageManager)
-    ? options.packageManager
-    : detectPackageManager()
+  const manager =
+    options.packageManager && isPackageManager(options.packageManager)
+      ? options.packageManager
+      : detectPackageManager()
 
   await scaffold({ directory: target, template: options.template })
   success(`Created ${color.bold(path.relative(process.cwd(), target) || '.')}`)

@@ -25,7 +25,13 @@ export function useAssistant() {
   return useContext(AssistantContext)
 }
 
-export function AssistantProvider({ enabled, children }: { enabled: boolean; children: ReactNode }) {
+export function AssistantProvider({
+  enabled,
+  children,
+}: Readonly<{
+  enabled: boolean
+  children: ReactNode
+}>) {
   const [open, setOpen] = useState(false)
   const [pending, setPending] = useState<string>()
 

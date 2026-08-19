@@ -10,7 +10,10 @@ import type { DocsSource } from '../content/index'
  * export default () => createSitemap(source, docsConfig)
  * ```
  */
-export async function createSitemap(source: DocsSource, config: DocsConfig): Promise<MetadataRoute.Sitemap> {
+export async function createSitemap(
+  source: DocsSource,
+  config: DocsConfig,
+): Promise<MetadataRoute.Sitemap> {
   const pages = await source.getPages()
   const base = config.site.url
 

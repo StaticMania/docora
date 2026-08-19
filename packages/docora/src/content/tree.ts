@@ -106,7 +106,9 @@ export async function readContentTree(
   const byOrder = <T extends { order: number; name?: string }>(a: T, b: T) =>
     a.order - b.order || (a.name ?? '').localeCompare(b.name ?? '')
 
-  directory.pages.sort((a, b) => a.order - b.order || a.slug.join('/').localeCompare(b.slug.join('/')))
+  directory.pages.sort(
+    (a, b) => a.order - b.order || a.slug.join('/').localeCompare(b.slug.join('/')),
+  )
   directory.directories.sort(byOrder)
 
   return directory
@@ -127,7 +129,10 @@ export function flattenPages(directory: ContentDirectory): ContentPage[] {
 }
 
 /** Find a directory by its slug, so a section can be used as the nav root. */
-export function findDirectory(directory: ContentDirectory, slug: string[]): ContentDirectory | undefined {
+export function findDirectory(
+  directory: ContentDirectory,
+  slug: string[],
+): ContentDirectory | undefined {
   if (slug.length === 0) return directory
 
   const [head, ...rest] = slug

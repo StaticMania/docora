@@ -83,8 +83,8 @@ export default withDocora({})
 `withDocora` transpiles the theme, which is published as TypeScript source. Import the stylesheet after Tailwind so the design tokens override the defaults:
 
 ```css [app/globals.css]
-@import "tailwindcss";
-@import "docora/styles.css";
+@import 'tailwindcss';
+@import 'docora/styles.css';
 ```
 
 Then wrap the root layout with `DocsRoot` and pass a `docs.config.ts`:

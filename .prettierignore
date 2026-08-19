@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+dist
+.turbo
+pnpm-lock.yaml
+*.tsbuildinfo
+next-env.d.ts
+packages/create-docora/templates
+*.svg

@@ -38,7 +38,11 @@ function excerptAround(content: string, index: number, query: string): string {
  * matches pages containing both. Where a term appears decides the weight:
  * a title hit outranks a body hit.
  */
-export function searchDocuments(documents: SearchDocument[], query: string, limit = 12): SearchResult[] {
+export function searchDocuments(
+  documents: SearchDocument[],
+  query: string,
+  limit = 12,
+): SearchResult[] {
   const terms = normalize(query).split(/\s+/).filter(Boolean)
   if (terms.length === 0) return []
 
@@ -94,7 +98,9 @@ export function searchDocuments(documents: SearchDocument[], query: string, limi
     }
   }
 
-  return results.sort((a, b) => b.score - a.score || a.document.title.localeCompare(b.document.title)).slice(0, limit)
+  return results
+    .sort((a, b) => b.score - a.score || a.document.title.localeCompare(b.document.title))
+    .slice(0, limit)
 }
 
 /** Turns a heading into the anchor `rehype-slug` generated for it. */

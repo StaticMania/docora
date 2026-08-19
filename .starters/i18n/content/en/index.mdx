@@ -4,12 +4,33 @@ description: Documentation built with Docora.
 layout: landing
 ---
 
-Welcome. This page is `content/en/index.mdx`, served at `/en` with the landing
-layout.
+::hero{announcement="Your docs are ready" announcement-to="/en/docs/getting-started/introduction" title="Beautiful documentation for Next.js and React." description="An open-source framework for TypeScript, Tailwind CSS and Markdown. Routing, search, SEO and i18n are built in — you write files on disk."}
 
-[Read the docs](/en/docs/getting-started/introduction)
+:::hero-actions
+::::cta{label="Get started" to="/en/docs/getting-started/introduction" icon="i-lucide-rocket"}
+::::
 
-## Multiple languages
+    ::::cta{label="Installation" to="/en/docs/getting-started/installation" variant="secondary" icon="i-lucide-download"}
+    ::::
 
-Each language is a folder under `content/`. This site ships English and French —
-use the globe in the header to switch. The switcher keeps you on the same page.
+:::
+
+:::hero-preview{filename="content/en/docs/getting-started.mdx"}
+
+```mdx
+---
+title: Getting started
+description: Scaffold a site and start writing.
+---
+
+::note
+Every file under `content/` is a route.
+::
+
+Write Markdown, drop in callouts, and the sidebar
+picks the page up on its own.
+```
+
+:::
+
+::

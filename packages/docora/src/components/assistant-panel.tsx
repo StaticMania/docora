@@ -18,7 +18,7 @@ const TOOL_LABELS: Record<string, string> = {
   'tool-get-page': 'Reading a page',
 }
 
-function ToolStep({ type, state }: { type: string; state?: string }) {
+function ToolStep({ type, state }: Readonly<{ type: string; state?: string }>) {
   const label = TOOL_LABELS[type] ?? 'Working'
   const done = state === 'output-available' || state === 'output-error'
 
@@ -39,7 +39,7 @@ function ToolStep({ type, state }: { type: string; state?: string }) {
  * token would be wasteful, so links and inline code are handled here and the
  * rest is rendered as text.
  */
-function AnswerText({ text, link: Anchor }: { text: string; link: ElementType }) {
+function AnswerText({ text, link: Anchor }: Readonly<{ text: string; link: ElementType }>) {
   const chunks = text.split(/(\[[^\]]+\]\([^)]+\)|`[^`]+`)/g)
 
   return (
@@ -181,7 +181,11 @@ export function AssistantPanel() {
 
                   if (part.type.startsWith('tool-')) {
                     return (
-                      <ToolStep key={index} type={part.type} state={(part as { state?: string }).state} />
+                      <ToolStep
+                        key={index}
+                        type={part.type}
+                        state={(part as { state?: string }).state}
+                      />
                     )
                   }
 

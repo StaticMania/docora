@@ -9,7 +9,12 @@ interface ComponentNode {
   children?: unknown[]
 }
 
-function toElement(state: State, node: ComponentNode, tagName: string, properties: Element['properties'] = {}): Element {
+function toElement(
+  state: State,
+  node: ComponentNode,
+  tagName: string,
+  properties: Element['properties'] = {},
+): Element {
   return {
     type: 'element',
     tagName,
@@ -28,7 +33,8 @@ function toElement(state: State, node: ComponentNode, tagName: string, propertie
  * types, so the MDC entries are attached with a cast.
  */
 export const mdcHandlers = {
-  containerComponent: (state: State, node: ComponentNode) => toElement(state, node, node.name ?? 'div'),
+  containerComponent: (state: State, node: ComponentNode) =>
+    toElement(state, node, node.name ?? 'div'),
   textComponent: (state: State, node: ComponentNode) => toElement(state, node, node.name ?? 'span'),
   leafComponent: (state: State, node: ComponentNode) => toElement(state, node, node.name ?? 'div'),
   /** `#name` blocks inside a component become named slots. */

@@ -12,8 +12,8 @@ Every colour, radius and font is a CSS variable. Redefine any of them after the
 theme import — no configuration, no build step:
 
 ```css [app/globals.css]
-@import "tailwindcss";
-@import "docora/styles.css";
+@import 'tailwindcss';
+@import 'docora/styles.css';
 
 :root {
   --primary: var(--color-blue-500);
@@ -29,25 +29,25 @@ The palette is a zinc neutral ramp with an emerald primary, in these semantic
 roles.
 
 ::field-group
-  :::field{name="--background / --foreground" type="colour"}
-  Page background and body text.
-  :::
+:::field{name="--background / --foreground" type="colour"}
+Page background and body text.
+:::
 
-  :::field{name="--highlighted / --toned / --dimmed" type="colour"}
-  Headings, secondary text and the quietest text.
-  :::
+:::field{name="--highlighted / --toned / --dimmed" type="colour"}
+Headings, secondary text and the quietest text.
+:::
 
-  :::field{name="--muted / --elevated / --accented" type="colour"}
-  Surfaces, in increasing contrast.
-  :::
+:::field{name="--muted / --elevated / --accented" type="colour"}
+Surfaces, in increasing contrast.
+:::
 
-  :::field{name="--border / --border-accented" type="colour"}
-  Rules, and rules on hover.
-  :::
+:::field{name="--border / --border-accented" type="colour"}
+Rules, and rules on hover.
+:::
 
-  :::field{name="--primary / --primary-foreground" type="colour"}
-  Accent colour and text placed on it.
-  :::
+:::field{name="--primary / --primary-foreground" type="colour"}
+Accent colour and text placed on it.
+:::
 ::
 
 ## Typography
@@ -74,43 +74,38 @@ export default function RootLayout({ children }) {
 Layouts take React nodes for the parts most sites want to change:
 
 ::field-group
-  :::field{name="header" type="ReactNode"}
-  Replaces the whole header, on both `DocsLayout` and `LandingLayout`.
-  :::
+:::field{name="header" type="ReactNode"}
+Replaces the whole header, on both `DocsLayout` and `LandingLayout`.
+:::
 
-  :::field{name="footer" type="ReactNode"}
-  Replaces the whole footer.
-  :::
+:::field{name="footer" type="ReactNode"}
+Replaces the whole footer.
+:::
 ::
 
 `SiteHeader` itself takes narrower slots, so you can keep the search, language
 and colour-mode controls while changing the rest:
 
 ::field-group
-  :::field{name="logo" type="ReactNode"}
-  Replaces the logo and site name.
-  :::
+:::field{name="logo" type="ReactNode"}
+Replaces the logo and site name.
+:::
 
-  :::field{name="cta" type="ReactNode"}
-  Rendered after the navigation links.
-  :::
+:::field{name="cta" type="ReactNode"}
+Rendered after the navigation links.
+:::
 
-  :::field{name="children" type="ReactNode"}
-  Rendered at the far right, before the language and colour-mode controls.
-  :::
+:::field{name="children" type="ReactNode"}
+Rendered at the far right, before the language and colour-mode controls.
+:::
 ::
 
 ```tsx
 import { DocsLayout, SiteHeader } from 'docora'
 
-<DocsLayout
+;<DocsLayout
   toc={toc}
-  header={
-    <SiteHeader
-      logo={<MyWordmark />}
-      cta={<a href="/pricing">Pricing</a>}
-    />
-  }
+  header={<SiteHeader logo={<MyWordmark />} cta={<a href="/pricing">Pricing</a>} />}
 >
   {content}
 </DocsLayout>

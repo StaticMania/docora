@@ -7,7 +7,7 @@ import { useDocsConfig } from '../config/context'
 import type { NavLink } from '../config/types'
 import { cn } from '../utils/cn'
 
-function FooterLink({ link }: { link: NavLink }) {
+function FooterLink({ link }: Readonly<{ link: NavLink }>) {
   const external = link.external ?? link.href.startsWith('http')
 
   return (
@@ -50,7 +50,7 @@ function Brand() {
   )
 }
 
-export function SiteFooter({ className }: { className?: string }) {
+export function SiteFooter({ className }: Readonly<{ className?: string }>) {
   const config = useDocsConfig()
   const credits = config.footer?.credits
   const links = config.footer?.links ?? []
@@ -73,7 +73,9 @@ export function SiteFooter({ className }: { className?: string }) {
           <div className="max-w-xs">
             <Brand />
             {config.site.description && (
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">{config.site.description}</p>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                {config.site.description}
+              </p>
             )}
           </div>
 
@@ -88,7 +90,9 @@ export function SiteFooter({ className }: { className?: string }) {
               {groups.map(group => (
                 <div key={group.title ?? 'links'} className="flex flex-col gap-3">
                   {group.title && (
-                    <p className="text-xs font-medium tracking-wide text-dimmed uppercase">{group.title}</p>
+                    <p className="text-xs font-medium tracking-wide text-dimmed uppercase">
+                      {group.title}
+                    </p>
                   )}
                   {group.links.map(link => (
                     <FooterLink key={link.href} link={link} />

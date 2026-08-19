@@ -6,7 +6,7 @@ import { useAssistant } from '../assistant/context'
 import { cn } from '../utils/cn'
 
 /** Floating button that opens the assistant. Absent when it is not configured. */
-export function AssistantTrigger({ className }: { className?: string }) {
+export function AssistantTrigger({ className }: Readonly<{ className?: string }>) {
   const { enabled, setOpen } = useAssistant()
 
   if (!enabled) return null
@@ -30,7 +30,7 @@ export function AssistantTrigger({ className }: { className?: string }) {
  * Asks the assistant about the page being read. Rendered under the table of
  * contents.
  */
-export function ExplainWithAi({ className }: { className?: string }) {
+export function ExplainWithAi({ className }: Readonly<{ className?: string }>) {
   const { enabled, ask } = useAssistant()
 
   if (!enabled) return null

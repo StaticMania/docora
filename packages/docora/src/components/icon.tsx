@@ -112,11 +112,11 @@ export function normalizeIconName(name: string): string | undefined {
   return undefined
 }
 
-export interface IconProps {
+export type IconProps = Readonly<{
   /** A lucide name (`folder-tree`) or Iconify name (`i-lucide-folder-tree`). */
   name: string
   className?: string
-}
+}>
 
 export function Icon({ name, className }: IconProps) {
   const resolved = normalizeIconName(name)

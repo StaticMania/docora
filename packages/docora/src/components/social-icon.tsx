@@ -42,7 +42,7 @@ const BRAND_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
   ),
 }
 
-export function SocialIcon({ network, ...props }: IconProps & { network: SocialKey }) {
+export function SocialIcon({ network, ...props }: Readonly<IconProps & { network: SocialKey }>) {
   const Icon = BRAND_ICONS[network]
   return Icon ? <Icon {...props} /> : <Link2 {...props} />
 }

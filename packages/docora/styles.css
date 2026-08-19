@@ -17,7 +17,7 @@
 
 @theme {
   /* `DocsRoot` loads Public Sans and binds it to --docs-font-sans. */
-  --font-sans: var(--docs-font-sans, "Public Sans"), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--docs-font-sans, 'Public Sans'), ui-sans-serif, system-ui, sans-serif;
 
   /* Widens the container to 90rem. */
   --container-8xl: 90rem;
@@ -292,7 +292,7 @@
     margin-top: 0;
   }
 
-  .docs-steps > :is(h2, h3, h4) a[href^="#"] {
+  .docs-steps > :is(h2, h3, h4) a[href^='#'] {
     display: none;
   }
 

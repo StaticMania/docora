@@ -12,8 +12,8 @@ export default withDocora({})
 
 ```css
 /* app/globals.css */
-@import "tailwindcss";
-@import "docora/styles.css";
+@import 'tailwindcss';
+@import 'docora/styles.css';
 ```
 
 ```ts
@@ -223,7 +223,7 @@ Shipped components: `callout` (plus `note`, `tip`, `warning`, `caution`),
 `video`, and the code wrappers `code-group`, `code-tree`, `code-collapse`,
 `code-preview`.
 
-Fenced code takes a filename and line range in its meta — ``` ```ts [next.config.ts]{3-5} ``` —
+Fenced code takes a filename and line range in its meta — ` `ts [next.config.ts]{3-5} ``` —
 and every block gets a copy button.
 
 The table of contents uses a "circuit" rail: a masked SVG path that steps

@@ -1,29 +1,26 @@
 'use client'
-
-import { Children, isValidElement, type ReactNode } from 'react'
 import { Tabs as TabsPrimitive } from 'radix-ui'
+import { Children, isValidElement, type ReactNode } from 'react'
 
 import { Icon } from '../components/icon'
 import { cn } from '../utils/cn'
 
-export interface TabsItemProps {
+export type TabsItemProps = Readonly<{
   children?: ReactNode
   label?: string
   icon?: string
   className?: string
-}
+}>
 
-/** Rendered by `Tabs`, which reads the label and icon off each child. */
 export function TabsItem({ children }: TabsItemProps) {
   return <>{children}</>
 }
 
-export interface TabsProps {
+export type TabsProps = Readonly<{
   children?: ReactNode
-  /** Optional labels; each `tabs-item` can also carry its own `label`. */
   items?: string[] | string
   className?: string
-}
+}>
 
 export function Tabs({ children, items, className }: TabsProps) {
   const panels = Children.toArray(children).filter(isValidElement<TabsItemProps>)

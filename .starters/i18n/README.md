@@ -14,9 +14,9 @@ Open http://localhost:3000.
 
 Every file under `content/` becomes a route:
 
-| File                                              | Route                                |
-| ------------------------------------------------- | ------------------------------------ |
-| `content/index.mdx`                                | `/`                                  |
+| File                                                | Route                                |
+| --------------------------------------------------- | ------------------------------------ |
+| `content/index.mdx`                                 | `/`                                  |
 | `content/docs/1.getting-started/1.introduction.mdx` | `/docs/getting-started/introduction` |
 
 A numeric prefix sets sidebar order and is stripped from the route. A folder

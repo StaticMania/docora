@@ -2,14 +2,13 @@ import type { ReactNode } from 'react'
 
 import { cn } from '../utils/cn'
 
-export interface FieldProps {
+export type FieldProps = Readonly<{
   children?: ReactNode
   name?: string
   type?: string
-  /** Accepts the string `"true"` that MDC attributes produce. */
   required?: boolean | string
   className?: string
-}
+}>
 
 export function Field({ children, name, type, required, className }: FieldProps) {
   const isRequired = required === true || required === 'true' || required === ''
@@ -22,11 +21,20 @@ export function Field({ children, name, type, required, className }: FieldProps)
         {isRequired && <span className="text-xs font-medium text-destructive">required</span>}
       </p>
 
-      <div className="mt-1 text-muted-foreground [&>:first-child]:mt-0 [&>:last-child]:mb-0">{children}</div>
+      <div className="mt-1 text-muted-foreground [&>:first-child]:mt-0 [&>:last-child]:mb-0">
+        {children}
+      </div>
     </div>
   )
 }
 
-export function FieldGroup({ children, className }: { children?: ReactNode; className?: string }) {
-  return <div className={cn('my-5 divide-y divide-border border-y border-border', className)}>{children}</div>
+export function FieldGroup({
+  children,
+  className,
+}: Readonly<{ children?: ReactNode; className?: string }>) {
+  return (
+    <div className={cn('my-5 divide-y divide-border border-y border-border', className)}>
+      {children}
+    </div>
+  )
 }

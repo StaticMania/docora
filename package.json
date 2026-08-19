@@ -14,13 +14,21 @@
     "playground:build": "pnpm --filter playground build",
     "build": "pnpm --filter create-docora build && pnpm run docs:build",
     "typecheck": "pnpm -r --parallel typecheck",
-    "verify": "pnpm run typecheck && pnpm run build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "verify": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run build",
     "release:theme": "pnpm --filter docora publish --access public",
     "release:cli": "pnpm --filter create-docora publish --access public",
     "clean": "rimraf --glob \"**/node_modules\" \"**/.next\" \"**/dist\""
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.1",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.6",
     "rimraf": "^6.0.1",
     "typescript": "^5.9.3"
   },

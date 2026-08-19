@@ -25,7 +25,8 @@ export interface NavItem {
  * Known social networks get a built-in brand icon; anything else falls back to
  * a generic link icon.
  */
-export type SocialKey = 'github' | 'x' | 'discord' | 'linkedin' | 'youtube' | 'bluesky' | (string & {})
+export type SocialKey =
+  'github' | 'x' | 'discord' | 'linkedin' | 'youtube' | 'bluesky' | (string & {})
 
 export interface DocsConfig {
   /** Multi-language routing. Content moves under `content/{locale}/`. */

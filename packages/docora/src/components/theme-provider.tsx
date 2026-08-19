@@ -8,10 +8,10 @@ import type { DocsConfig } from '../config/types'
 export function ThemeProvider({
   colorMode,
   children,
-}: {
+}: Readonly<{
   colorMode?: DocsConfig['colorMode']
   children: ReactNode
-}) {
+}>) {
   return (
     <NextThemesProvider
       attribute="class"

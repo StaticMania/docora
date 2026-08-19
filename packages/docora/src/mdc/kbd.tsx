@@ -1,12 +1,11 @@
 import type { ReactNode } from 'react'
-
 import { cn } from '../utils/cn'
 
-export interface KbdProps {
+export type KbdProps = Readonly<{
   children?: ReactNode
   value?: string
   className?: string
-}
+}>
 
 const KEYS: Record<string, string> = {
   meta: '⌘',

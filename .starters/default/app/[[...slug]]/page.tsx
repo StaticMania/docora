@@ -1,13 +1,20 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { DocsLayout, DocsPage, DocsPager, LandingLayout, compileMdxFile, createPageMetadata } from 'docora'
+import {
+  DocsLayout,
+  DocsPage,
+  DocsPager,
+  LandingLayout,
+  compileMdxFile,
+  createPageMetadata,
+} from 'docora'
 
 import docsConfig from '../../docs.config'
 import { source } from '../../lib/source'
 
-interface PageProps {
+type PageProps = Readonly<{
   params: Promise<{ slug?: string[] }>
-}
+}>
 
 export async function generateStaticParams() {
   return source.getStaticParams()

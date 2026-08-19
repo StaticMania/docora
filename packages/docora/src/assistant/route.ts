@@ -9,11 +9,7 @@ import {
 
 import type { DocsConfig } from '../config/types'
 import type { DocsSource } from '../content/index'
-import {
-  DEFAULT_ASSISTANT_MODEL,
-  DEFAULT_SYSTEM_PROMPT,
-  isAssistantEnabled,
-} from './config'
+import { DEFAULT_ASSISTANT_MODEL, DEFAULT_SYSTEM_PROMPT, isAssistantEnabled } from './config'
 import { createAssistantTools } from './tools'
 
 /** How many tool round-trips the model may take before it must answer. */

@@ -26,7 +26,9 @@ export function toSearchableText(markdown: string): string {
 
 /** Headings, so results can deep-link to the right section. */
 export function extractHeadings(markdown: string): { text: string; depth: number }[] {
-  const body = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '').replace(/```[\s\S]*?```/g, '')
+  const body = markdown
+    .replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '')
+    .replace(/```[\s\S]*?```/g, '')
 
   return [...body.matchAll(/^(#{2,4})\s+(.+)$/gm)].map(match => ({
     depth: match[1]!.length,

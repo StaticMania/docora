@@ -26,5 +26,20 @@ export default defineDocsConfig({
 
   footer: {
     credits: 'Built with Docora',
+    columns: [
+      {
+        title: 'Docs',
+        links: [
+          { label: 'Introduction', href: '/en/docs/getting-started/introduction' },
+          { label: 'Installation', href: '/en/docs/getting-started/installation' },
+        ],
+      },
+      {
+        title: 'Resources',
+        links: [
+          { label: 'llms.txt', href: '/llms.txt' },
+        ],
+      },
+    ],
   },
 })

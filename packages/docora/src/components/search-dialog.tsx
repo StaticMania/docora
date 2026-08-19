@@ -14,12 +14,12 @@ import type { SearchIndex } from '../search/types'
 import { cn } from '../utils/cn'
 import { Icon } from './icon'
 
-export interface SearchDialogProps {
+export type SearchDialogProps = Readonly<{
   open: boolean
   onOpenChange: (open: boolean) => void
   /** Where the index is served from. */
   endpoint?: string
-}
+}>
 
 type ThemeValue = 'system' | 'light' | 'dark'
 
@@ -29,7 +29,9 @@ type PaletteItem =
   | { kind: 'result'; result: SearchResult }
 
 function resultHref(result: SearchResult): string {
-  return result.heading ? `${result.document.path}#${headingSlug(result.heading.text)}` : result.document.path
+  return result.heading
+    ? `${result.document.path}#${headingSlug(result.heading.text)}`
+    : result.document.path
 }
 
 /** The first page a nav node opens — itself, or the first descendant with a href. */
@@ -62,14 +64,14 @@ function PaletteRow({
   icon,
   label,
   selected,
-}: {
+}: Readonly<{
   active: boolean
   onMouseEnter: () => void
   onClick: () => void
   icon: ReactNode
   label: string
   selected?: boolean
-}) {
+}>) {
   return (
     <button
       type="button"
@@ -89,9 +91,11 @@ function PaletteRow({
   )
 }
 
-function PaletteHeading({ children }: { children: ReactNode }) {
+function PaletteHeading({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <p className="px-3 py-1.5 text-[11px] font-medium tracking-wide text-dimmed uppercase">{children}</p>
+    <p className="px-3 py-1.5 text-[11px] font-medium tracking-wide text-dimmed uppercase">
+      {children}
+    </p>
   )
 }
 
@@ -116,7 +120,9 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
 
     setStatus('loading')
     fetch(endpoint)
-      .then(response => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
+      .then(response =>
+        response.ok ? response.json() : Promise.reject(new Error(String(response.status))),
+      )
       .then((data: SearchIndex) => {
         setIndex(data)
         setStatus('idle')
@@ -275,7 +281,9 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
 
                     <span className="min-w-0 flex-1">
                       <span className="flex items-center gap-1.5 text-sm font-medium text-highlighted">
-                        <span className="truncate">{result.heading?.text ?? result.document.title}</span>
+                        <span className="truncate">
+                          {result.heading?.text ?? result.document.title}
+                        </span>
                         {result.document.section && (
                           <span className="shrink-0 text-xs font-normal text-dimmed">
                             {result.document.section}
@@ -352,7 +360,8 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
 
           <div className="flex items-center gap-3 border-t border-border px-4 py-2 text-[11px] text-dimmed">
             <span>
-              <kbd className="font-sans">↑</kbd> <kbd className="font-sans">↓</kbd> {messages.searchNavigate}
+              <kbd className="font-sans">↑</kbd> <kbd className="font-sans">↓</kbd>{' '}
+              {messages.searchNavigate}
             </span>
             <span>
               <kbd className="font-sans">↵</kbd> {messages.searchOpen}

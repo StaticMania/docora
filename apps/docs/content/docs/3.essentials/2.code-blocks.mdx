@@ -46,8 +46,8 @@ export default withDocora({
 Add `line-numbers` to number every line:
 
 ```css [app/globals.css] line-numbers
-@import "tailwindcss";
-@import "docora/styles.css";
+@import 'tailwindcss';
+@import 'docora/styles.css';
 ```
 
 ## Advanced
@@ -93,8 +93,8 @@ export default defineDocsConfig({
 ```
 
 ```css [app/globals.css]
-@import "tailwindcss";
-@import "docora/styles.css";
+@import 'tailwindcss';
+@import 'docora/styles.css';
 ```
 
 ::
@@ -106,8 +106,8 @@ Collapse a long file behind a toggle:
 ::code-collapse
 
 ```css [app/globals.css]
-@import "tailwindcss";
-@import "docora/styles.css";
+@import 'tailwindcss';
+@import 'docora/styles.css';
 
 :root {
   --primary: var(--color-blue-500);
@@ -119,7 +119,7 @@ Collapse a long file behind a toggle:
 }
 
 body {
-  font-feature-settings: "cv02", "cv03";
+  font-feature-settings: 'cv02', 'cv03';
 }
 ```
 
@@ -135,6 +135,7 @@ default slot and the source in `#code`:
 `inline code`
 
 #code
+
 ```mdc
 `inline code`
 ```

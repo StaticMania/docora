@@ -9,23 +9,31 @@ export type CalloutColor = 'neutral' | 'info' | 'success' | 'warning' | 'error'
 const COLORS: Record<CalloutColor, string> = {
   neutral: 'border-border bg-muted text-foreground [--callout-accent:var(--color-highlighted)]',
   info: 'border-sky-500/25 bg-sky-500/10 text-sky-700 dark:text-sky-300 [--callout-accent:var(--color-sky-500)] dark:[--callout-accent:var(--color-sky-400)]',
-  success: 'border-primary/25 bg-primary/10 text-emerald-700 dark:text-emerald-300 [--callout-accent:var(--primary)]',
-  warning: 'border-amber-500/25 bg-amber-500/10 text-amber-800 dark:text-amber-300 [--callout-accent:var(--color-amber-500)] dark:[--callout-accent:var(--color-amber-400)]',
-  error: 'border-destructive/25 bg-destructive/10 text-red-700 dark:text-red-300 [--callout-accent:var(--destructive)]',
+  success:
+    'border-primary/25 bg-primary/10 text-emerald-700 dark:text-emerald-300 [--callout-accent:var(--primary)]',
+  warning:
+    'border-amber-500/25 bg-amber-500/10 text-amber-800 dark:text-amber-300 [--callout-accent:var(--color-amber-500)] dark:[--callout-accent:var(--color-amber-400)]',
+  error:
+    'border-destructive/25 bg-destructive/10 text-red-700 dark:text-red-300 [--callout-accent:var(--destructive)]',
 }
 
-export interface CalloutProps {
+export type CalloutProps = Readonly<{
   children?: ReactNode
-  /** Iconify or lucide icon name. Each shortcut supplies its own default. */
   icon?: string
   color?: CalloutColor
-  /** Turns the whole callout into a link. */
   to?: string
   target?: string
   className?: string
-}
+}>
 
-export function Callout({ children, icon, color = 'neutral', to, target, className }: CalloutProps) {
+export function Callout({
+  children,
+  icon,
+  color = 'neutral',
+  to,
+  target,
+  className,
+}: CalloutProps) {
   const body = (
     <>
       {icon && <Icon name={icon} className="size-4 shrink-0 text-(--callout-accent)" />}

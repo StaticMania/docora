@@ -14,14 +14,14 @@ import { PageLinks } from './edit-link'
 import { Icon } from './icon'
 import { circuitRailStyle, TOC_LINK_HEIGHT_REM } from './toc-rail'
 
-export interface TableOfContentsProps {
+export type TableOfContentsProps = Readonly<{
   items: TocEntry[]
   /** Page path relative to the content directory, for the edit link. */
   relativePath?: string
   /** Page title, used to pre-fill a reported issue. */
   title?: string
   className?: string
-}
+}>
 
 interface FlatLink {
   id: string
@@ -37,11 +37,11 @@ function TocList({
   nodes,
   level,
   activeIds,
-}: {
+}: Readonly<{
   nodes: TocNode[]
   level: number
   activeIds: Set<string>
-}) {
+}>) {
   return (
     <ul className={cn('min-w-0', level > 0 ? 'ms-3' : 'ps-6.5')}>
       {nodes.map(node => (
@@ -86,7 +86,10 @@ export function TableOfContents({ items, relativePath, title, className }: Table
     <div className={cn('flex flex-col gap-6 text-sm', className)}>
       {tree.length > 0 && (
         <nav aria-labelledby="toc-heading">
-          <p id="toc-heading" className="-mt-1.5 mb-2 flex h-8 items-center text-sm font-semibold text-highlighted">
+          <p
+            id="toc-heading"
+            className="-mt-1.5 mb-2 flex h-8 items-center text-sm font-semibold text-highlighted"
+          >
             {config.toc?.title ?? messages.tocTitle}
           </p>
 
@@ -110,15 +113,27 @@ export function TableOfContents({ items, relativePath, title, className }: Table
         </nav>
       )}
 
-      <div className={cn('flex flex-col gap-3', tree.length > 0 && 'border-t border-dashed border-border pt-6')}>
+      <div
+        className={cn(
+          'flex flex-col gap-3',
+          tree.length > 0 && 'border-t border-dashed border-border pt-6',
+        )}
+      >
         <PageLinks relativePath={relativePath} title={title} />
         {config.assistant?.explainWithAi !== false && <ExplainWithAi />}
       </div>
 
       {bottom?.links && bottom.links.length > 0 && (
-        <div className={cn('flex flex-col gap-6', tree.length > 0 && 'border-t border-dashed border-border pt-6')}>
+        <div
+          className={cn(
+            'flex flex-col gap-6',
+            tree.length > 0 && 'border-t border-dashed border-border pt-6',
+          )}
+        >
           <div>
-            {bottom.title && <p className="mb-2 text-sm font-semibold text-highlighted">{bottom.title}</p>}
+            {bottom.title && (
+              <p className="mb-2 text-sm font-semibold text-highlighted">{bottom.title}</p>
+            )}
 
             <ul className="space-y-1">
               {bottom.links.map(link => {
@@ -133,7 +148,9 @@ export function TableOfContents({ items, relativePath, title, className }: Table
                     >
                       {link.icon && <Icon name={link.icon} className="size-4 shrink-0" />}
                       <span className="truncate">{link.label}</span>
-                      {external && <ArrowUpRight className="size-3 shrink-0 self-start" aria-hidden />}
+                      {external && (
+                        <ArrowUpRight className="size-3 shrink-0 self-start" aria-hidden />
+                      )}
                     </Link>
                   </li>
                 )

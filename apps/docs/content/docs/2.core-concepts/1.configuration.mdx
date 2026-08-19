@@ -84,21 +84,21 @@ footer: {
 The theme ships a zinc neutral ramp with an emerald primary, in these semantic
 roles.
 
-| Token          | Light    | Dark      |
-| -------------- | -------- | --------- |
-| `background`   | white    | zinc-900  |
-| `foreground`   | zinc-700 | zinc-200  |
-| `highlighted`  | zinc-900 | white     |
-| `muted`        | zinc-50  | zinc-800  |
-| `elevated`     | zinc-100 | zinc-800  |
-| `border`       | zinc-200 | zinc-800  |
-| `primary`      | emerald-500 | emerald-400 |
+| Token         | Light       | Dark        |
+| ------------- | ----------- | ----------- |
+| `background`  | white       | zinc-900    |
+| `foreground`  | zinc-700    | zinc-200    |
+| `highlighted` | zinc-900    | white       |
+| `muted`       | zinc-50     | zinc-800    |
+| `elevated`    | zinc-100    | zinc-800    |
+| `border`      | zinc-200    | zinc-800    |
+| `primary`     | emerald-500 | emerald-400 |
 
 Override any of them in your own stylesheet, after the theme import:
 
 ```css
-@import "tailwindcss";
-@import "docora/styles.css";
+@import 'tailwindcss';
+@import 'docora/styles.css';
 
 :root {
   --primary: var(--color-blue-500);
@@ -118,9 +118,11 @@ Override any of them in your own stylesheet, after the theme import:
 
 ```ts
 navigation: [
-  { label: 'Getting Started', icon: 'rocket', children: [
-    { label: 'Introduction', href: '/docs', icon: 'house' },
-  ] },
+  {
+    label: 'Getting Started',
+    icon: 'rocket',
+    children: [{ label: 'Introduction', href: '/docs', icon: 'house' }],
+  },
 ]
 ```
 

@@ -12,12 +12,12 @@ const COLORS: Record<BadgeColor, string> = {
   error: 'bg-destructive/10 text-destructive',
 }
 
-export interface BadgeProps {
+export type BadgeProps = Readonly<{
   children?: ReactNode
   label?: string
   color?: BadgeColor
   className?: string
-}
+}>
 
 export function Badge({ children, label, color = 'primary', className }: BadgeProps) {
   return (

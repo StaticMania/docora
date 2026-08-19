@@ -10,7 +10,7 @@ import { useDocsConfig } from '../config/context'
 import type { TocEntry } from '../mdx/toc'
 import { cn } from '../utils/cn'
 
-export interface DocsLayoutProps {
+export type DocsLayoutProps = Readonly<{
   children: ReactNode
   /** Headings of the current document, from `compileMdx`. */
   toc?: TocEntry[]
@@ -21,10 +21,17 @@ export interface DocsLayoutProps {
   /** The page being rendered, for the edit and issue links. */
   page?: { relativePath?: string; title?: string }
   className?: string
-}
+}>
 
 /** Documentation chrome: header, sidebar, content column, table of contents, footer. */
-export function DocsLayout({ children, toc = [], header, footer, page, className }: DocsLayoutProps) {
+export function DocsLayout({
+  children,
+  toc = [],
+  header,
+  footer,
+  page,
+  className,
+}: DocsLayoutProps) {
   const config = useDocsConfig()
 
   const navigation = config.navigation ?? []

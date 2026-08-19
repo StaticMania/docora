@@ -4,18 +4,33 @@ description: Documentation built with Docora.
 layout: landing
 ---
 
-Welcome. This page is `content/index.mdx`, rendered with the landing layout —
-header and footer, no sidebar.
+::hero{announcement="Your docs are ready" announcement-to="/docs/getting-started/introduction" title="Beautiful documentation for Next.js and React." description="An open-source framework for TypeScript, Tailwind CSS and Markdown. Routing, search, SEO and i18n are built in — you write files on disk."}
 
-[Read the docs](/docs/getting-started/introduction)
+:::hero-actions
+::::cta{label="Get started" to="/docs/getting-started/introduction" icon="i-lucide-rocket"}
+::::
 
-## Getting started
+    ::::cta{label="Installation" to="/docs/getting-started/installation" variant="secondary" icon="i-lucide-download"}
+    ::::
 
-Everything under `content/` becomes a route. Add an `.mdx` file and it appears
-in the sidebar; there are no page files to write.
+:::
 
-## Make it yours
+:::hero-preview{filename="content/docs/getting-started.mdx"}
 
-Edit `docs.config.ts` to change the site name, header links, socials and
-footer. Drop `layout: landing` from a document's frontmatter to give it the
-documentation chrome instead.
+```mdx
+---
+title: Getting started
+description: Scaffold a site and start writing.
+---
+
+::note
+Every file under `content/` is a route.
+::
+
+Write Markdown, drop in callouts, and the sidebar
+picks the page up on its own.
+```
+
+:::
+
+::

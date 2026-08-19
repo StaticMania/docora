@@ -8,7 +8,13 @@ import { useMessages } from '../i18n/context'
 import { useSearch } from './search-provider'
 
 /** Opens the search palette. Also reachable with the keyboard shortcut. */
-export function SearchButton({ className, iconOnly = false }: { className?: string; iconOnly?: boolean }) {
+export function SearchButton({
+  className,
+  iconOnly = false,
+}: Readonly<{
+  className?: string
+  iconOnly?: boolean
+}>) {
   const { setOpen } = useSearch()
   const messages = useMessages()
   const [modifier, setModifier] = useState('CTRL')

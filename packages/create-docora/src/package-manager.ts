@@ -10,7 +10,9 @@ export function isPackageManager(value: string): value is PackageManager {
  * Whatever ran this command. npm, pnpm, yarn and bun all identify themselves
  * in `npm_config_user_agent`, so `pnpm create docs` scaffolds a pnpm project.
  */
-export function detectPackageManager(userAgent = process.env.npm_config_user_agent): PackageManager {
+export function detectPackageManager(
+  userAgent = process.env.npm_config_user_agent,
+): PackageManager {
   const name = userAgent?.split('/')[0]
   return name && isPackageManager(name) ? name : 'npm'
 }

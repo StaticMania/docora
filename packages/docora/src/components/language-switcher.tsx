@@ -9,7 +9,7 @@ import { pathForLocale } from '../i18n/paths'
 import { cn } from '../utils/cn'
 
 /** Switches locale while staying on the equivalent page. */
-export function LanguageSwitcher({ className }: { className?: string }) {
+export function LanguageSwitcher({ className }: Readonly<{ className?: string }>) {
   const { locale, locales, i18n } = useLocale()
   const messages = useMessages()
   const pathname = usePathname()
@@ -49,7 +49,10 @@ export function LanguageSwitcher({ className }: { className?: string }) {
                   : 'text-muted-foreground data-highlighted:bg-elevated data-highlighted:text-highlighted',
               )}
             >
-              <Check className={cn('size-3.5 shrink-0', entry.code !== locale && 'invisible')} aria-hidden />
+              <Check
+                className={cn('size-3.5 shrink-0', entry.code !== locale && 'invisible')}
+                aria-hidden
+              />
               {entry.name}
             </DropdownMenu.Item>
           ))}

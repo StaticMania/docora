@@ -100,7 +100,9 @@ export function createSkillsFileRoute(skillsDir: string) {
     async generateStaticParams() {
       const skills = await readSkills(skillsDir)
 
-      return skills.flatMap(skill => skill.files.map(file => ({ slug: [skill.name, ...file.split('/')] })))
+      return skills.flatMap(skill =>
+        skill.files.map(file => ({ slug: [skill.name, ...file.split('/')] })),
+      )
     },
 
     async GET(_request: Request, context: { params: Promise<{ slug: string[] }> }) {
@@ -120,7 +122,10 @@ export function createSkillsFileRoute(skillsDir: string) {
       const type = relative.endsWith('.md') ? 'text/markdown' : 'text/plain'
 
       return new Response(contents, {
-        headers: { 'content-type': `${type}; charset=utf-8`, 'cache-control': 'public, max-age=3600' },
+        headers: {
+          'content-type': `${type}; charset=utf-8`,
+          'cache-control': 'public, max-age=3600',
+        },
       })
     },
   }

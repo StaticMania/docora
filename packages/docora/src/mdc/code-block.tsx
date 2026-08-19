@@ -1,25 +1,22 @@
 'use client'
 
-import { useRef, useState, type HTMLAttributes, type ReactNode } from 'react'
 import { Check, Copy } from 'lucide-react'
+import { useRef, useState, type HTMLAttributes, type ReactNode } from 'react'
 
 import { Icon } from '../components/icon'
 import { iconForFilename } from '../mdx/code-meta'
 import { cn } from '../utils/cn'
 
-export interface CodeBlockProps extends HTMLAttributes<HTMLElement> {
-  children?: ReactNode
-  /** Set from `[filename]` / `title="…"` in the fence meta. */
-  'data-filename'?: string
-  'data-language'?: string
-  'data-line-numbers'?: string
-  'data-rehype-pretty-code-figure'?: string
-}
+export type CodeBlockProps = Readonly<
+  HTMLAttributes<HTMLElement> & {
+    children?: ReactNode
+    'data-filename'?: string
+    'data-language'?: string
+    'data-line-numbers'?: string
+    'data-rehype-pretty-code-figure'?: string
+  }
+>
 
-/**
- * Wraps every highlighted fence: optional filename header, copy button, and
- * the markup rehype-pretty-code produced.
- */
 export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
   const filename = props['data-filename']
   const language = props['data-language']
@@ -34,9 +31,7 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
       await navigator.clipboard.writeText(text)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch {
-      // Clipboard access can be denied; leaving the button idle is enough.
-    }
+    } catch {}
   }
 
   return (
@@ -46,7 +41,10 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
     >
       {filename && (
         <div className="docs-code-header relative flex items-center gap-1.5 rounded-t-md border border-border border-b-0 bg-background px-4 py-3 pe-12">
-          <Icon name={iconForFilename(filename)} className="size-4 shrink-0 text-muted-foreground" />
+          <Icon
+            name={iconForFilename(filename)}
+            className="size-4 shrink-0 text-muted-foreground"
+          />
           <span className="truncate text-sm/6 text-highlighted">{filename}</span>
         </div>
       )}

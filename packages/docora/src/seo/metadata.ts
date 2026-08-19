@@ -26,7 +26,8 @@ export interface PageMetadataOptions {
 export function createPageMetadata({ config, page, alternates }: PageMetadataOptions): Metadata {
   const siteName = config.seo?.title ?? config.site.name
   const title = page?.title
-  const description = page?.frontmatter?.description ?? config.seo?.description ?? config.site.description
+  const description =
+    page?.frontmatter?.description ?? config.seo?.description ?? config.site.description
   const path = page?.path ?? '/'
   const canonical = absoluteUrl(config, path)
 
@@ -50,7 +51,12 @@ export function createPageMetadata({ config, page, alternates }: PageMetadataOpt
     ...(title ? { title } : {}),
     ...(description ? { description } : {}),
     ...(canonical || hasLanguages
-      ? { alternates: { ...(canonical ? { canonical } : {}), ...(hasLanguages ? { languages } : {}) } }
+      ? {
+          alternates: {
+            ...(canonical ? { canonical } : {}),
+            ...(hasLanguages ? { languages } : {}),
+          },
+        }
       : {}),
     openGraph: {
       type: 'website',
