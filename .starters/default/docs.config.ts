@@ -33,9 +33,7 @@ export default defineDocsConfig({
       },
       {
         title: 'Resources',
-        links: [
-          { label: 'llms.txt', href: '/llms.txt' },
-        ],
+        links: [{ label: 'llms.txt', href: '/llms.txt' }],
       },
     ],
   },

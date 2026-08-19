@@ -59,9 +59,9 @@ export default defineDocsConfig({
         title: 'Docs',
         links: [
           { label: 'Introduction', href: '/docs/getting-started/introduction' },
-          { label: 'Installation', href: '/docs/getting-started/installation' },
           { label: 'Configuration', href: '/docs/core-concepts/configuration' },
-          { label: 'Components', href: '/docs/essentials/components' },
+          { label: 'Theme', href: '/docs/core-concepts/theme' },
+          { label: 'Customization', href: '/docs/core-concepts/customization' },
         ],
       },
       {

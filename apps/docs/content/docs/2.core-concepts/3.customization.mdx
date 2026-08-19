@@ -1,0 +1,328 @@
+---
+title: Customization
+description: Swap layout slots, register MDX components, or assemble your own chrome.
+icon: pencil
+---
+
+Docora does not auto-replace files by name the way a Nuxt layer does. You
+customise by passing React nodes into the layouts the catch-all already
+renders, or by composing the exported pieces yourself.
+
+Three levels, from a config field to a from-scratch shell:
+
+1. **`docs.config.ts`** — logo, header links, footer columns, TOC community
+   links, colour mode. No React required.
+2. **Slots** — `header`, `footer`, `logo`, `cta` and `SiteHeader`'s
+   `children`. Keep search, language and colour-mode controls.
+3. **Composition** — import `SiteHeader`, `SidebarNav`, `TableOfContents` and
+   assemble a layout of your own.
+
+::tip{to="/docs/core-concepts/theme"}
+Recolouring tokens, swapping the font and pinning light or dark is
+[theming](/docs/core-concepts/theme). This page is about structure and
+components.
+::
+
+## Header
+
+`SiteHeader` is the default for both `DocsLayout` and `LandingLayout`. Config
+covers the common cases; slots cover the rest.
+
+### Logo
+
+Set `header.logo` when you have image files. Light and dark swap with the
+colour mode; `className` is applied to both `<img>` tags (for example
+`h-8` to enlarge it):
+
+```ts [docs.config.ts]
+header: {
+  title: 'Acme',
+  logo: {
+    light: '/logo.svg',
+    dark: '/logo-dark.svg',
+    alt: 'Acme',
+    className: 'h-8',
+  },
+}
+```
+
+To replace the wordmark entirely — an SVG component, a link that is not `/`,
+the title omitted — pass `logo` to `SiteHeader`:
+
+```tsx
+import { DocsLayout, SiteHeader } from 'docora'
+
+<DocsLayout
+  toc={toc}
+  header={<SiteHeader logo={<MyWordmark />} />}
+>
+```
+
+### Call to action
+
+`cta` renders after the header navigation links. Use it for a “Get started”
+button or an extra internal link:
+
+```tsx
+<SiteHeader
+  cta={
+    <a
+      href="/docs/getting-started/introduction"
+      className="hidden rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground lg:inline-flex"
+    >
+      Get started
+    </a>
+  }
+/>
+```
+
+### Extra controls
+
+`children` render at the far right, **before** socials, the language switcher
+and the colour-mode toggle. A status badge or a “Sign in” link belongs here so
+the built-in controls stay in their usual place.
+
+```tsx
+<SiteHeader>
+  <a href="/login" className="px-2 text-sm text-muted-foreground hover:text-foreground">
+    Sign in
+  </a>
+</SiteHeader>
+```
+
+### Replacing the whole header
+
+Pass `header` to `DocsLayout` or `LandingLayout` to swap the entire bar —
+including search. The catch-all that compiles your content is the place to do
+it:
+
+```tsx [app/[[...slug]]/page.tsx]
+<DocsLayout
+  toc={toc}
+  header={<SiteHeader logo={<MyWordmark />} cta={<PricingLink />} />}
+>
+```
+
+Search, socials, language and colour mode stay unless you pass a completely
+custom `header` node that does not include `SiteHeader`.
+
+The mobile drawer (`MobileNav`) is inside `SiteHeader`. Replacing the header
+means you also take over the small-screen menu.
+
+## Footer
+
+Config is enough for most sites. `credits` sit on the copyright row, `links`
+is a flat list, `columns` groups links under headings. Omit all three and the
+footer does not render.
+
+```ts [docs.config.ts]
+footer: {
+  credits: 'Built with Docora',
+  columns: [
+    {
+      title: 'Docs',
+      links: [{ label: 'Introduction', href: '/docs/getting-started/introduction' }],
+    },
+  ],
+}
+```
+
+The left side always shows the same logo and site name as the header, plus
+`site.description` when it is set. Pass `footer` to replace the whole band:
+
+```tsx
+<DocsLayout toc={toc} footer={<MyFooter />}>
+```
+
+## Documentation chrome
+
+`DocsLayout` is header, sidebar, content column, table of contents and footer.
+Each aside appears only when it has something to show.
+
+::field-group
+:::field{name="header" type="ReactNode"}
+Replaces the whole header. Same slot on `LandingLayout`.
+:::
+
+:::field{name="footer" type="ReactNode"}
+Replaces the whole footer.
+:::
+
+:::field{name="toc" type="TocEntry[]"}
+Headings from `compileMdxFile`. Hidden when empty or when
+`toc.enabled` is `false`.
+:::
+
+:::field{name="page" type="{ relativePath?, title? }"}
+Feeds “Edit this page” and “Report an issue” under the TOC.
+:::
+::
+
+### Sidebar
+
+The tree comes from `config.navigation`, which the root layout normally fills
+with `source.getNavigation()`. A node with `children` and no `href` is a
+section heading; a node with an `href` is a link. Icons are lucide names.
+
+There is no “left aside top” slot. To put something above the tree, compose
+`SidebarNav` in a layout of your own — see [Replacing a layout](#replacing-a-layout-entirely).
+
+### Table of contents
+
+The right aside is `TableOfContents`. Active headings light up in `--primary`,
+and a circuit rail tracks whichever headings are on screen.
+
+Under the list, in order:
+
+- **Page links** — edit-on-GitHub and report-an-issue, from `github.url` and
+  the `page` prop
+- **Explain with AI** — hidden when `assistant.explainWithAi` is `false`
+- **Community links** — `toc.bottom.links` in config
+
+```ts [docs.config.ts]
+toc: {
+  title: 'On this page',
+  bottom: {
+    title: 'Community',
+    links: [
+      { label: 'Report an issue', href: 'https://github.com/acme/docs/issues', icon: 'book-open' },
+    ],
+  },
+}
+```
+
+To replace the aside entirely, skip `DocsLayout` and render `TableOfContents`
+— or nothing — yourself.
+
+### Page title
+
+`DocsPage` draws the section label, title and description above the compiled
+MDX. Pass only `children` to hide that block, which is what the landing layout
+does so a `::hero` is not duplicated.
+
+```tsx
+<DocsPage title={frontmatter.title} description={frontmatter.description} section={section}>
+  {content}
+</DocsPage>
+```
+
+### Prev / next
+
+`DocsPager` sits under the article. `source.getSurround(page.path)` supplies
+the neighbours from the sidebar order.
+
+## Extra MDX components
+
+Pass your own components to `compileMdxFile`. They are merged over the theme's,
+so you can add to the set or override a built-in (`Note`, `Card`, `h2`, …):
+
+```tsx [app/[[...slug]]/page.tsx]
+const { content } = await compileMdxFile(page.filePath, {
+  components: { Pricing: MyPricingTable, pricing: MyPricingTable },
+})
+```
+
+They become available in every document by name:
+
+```mdc
+::pricing
+::
+```
+
+::note
+MDC lowercases component names, so register both spellings — `Pricing` and
+`pricing` — if you want JSX and MDC to reach the same component.
+::
+
+The catch-all is also where you wrap a page in a different layout:
+`frontmatter.layout === 'landing'` already switches to `LandingLayout`. Add
+your own frontmatter keys the same way.
+
+## Icons
+
+`icon` on a navigation item, TOC link or MDC component takes a lucide name in
+kebab-case. Iconify-style names (`i-lucide-rocket`) are accepted and stripped
+to the same id.
+
+```ts
+navigation: [
+  {
+    label: 'Getting Started',
+    icon: 'rocket',
+    children: [{ label: 'Introduction', href: '/docs', icon: 'house' }],
+  },
+]
+```
+
+Around thirty common documentation icons are bundled and render on the server;
+any other lucide name is loaded lazily on the client. Collections other than
+lucide fall back to a generic mark.
+
+Put custom artwork in `public/` and reference it as an image, or pass an SVG
+component through a slot:
+
+```tsx
+<SiteHeader logo={<img src="/logo.svg" alt="Acme" className="h-6 w-auto" />} />
+```
+
+In MDX, `:icon{name="rocket"}` renders the same `Icon` component the chrome
+uses.
+
+## Replacing a layout entirely
+
+The layouts are ordinary components. If none of the slots fit, import the
+pieces and assemble your own:
+
+```tsx
+import {
+  SidebarNav,
+  SiteFooter,
+  SiteHeader,
+  TableOfContents,
+  useDocsConfig,
+} from 'docora'
+
+export function WideDocsLayout({ children, toc }) {
+  const config = useDocsConfig()
+
+  return (
+    <div className="flex min-h-svh flex-col">
+      <SiteHeader />
+      <div className="mx-auto flex w-full max-w-8xl flex-1 gap-8 px-4">
+        <aside className="hidden w-64 shrink-0 lg:block">
+          <SidebarNav items={config.navigation ?? []} />
+        </aside>
+        <main className="min-w-0 flex-1 py-8">{children}</main>
+        <aside className="hidden w-60 shrink-0 xl:block">
+          <TableOfContents items={toc} />
+        </aside>
+      </div>
+      <SiteFooter />
+    </div>
+  )
+}
+```
+
+`useDocsConfig()` gives any client component the site configuration, so a
+replacement can read the same settings the built-in one does.
+
+`LandingLayout` is the same idea without the asides — header, a `max-w-6xl`
+main column, footer. Pass `header` / `footer` there too, or skip it and render
+those pieces around a marketing page of your own.
+
+## Custom App Router pages
+
+Docora is a theme on top of the App Router. Routes you add under `app/` take
+precedence over the content catch-all, so a React page, an API route or a
+middleware file works as it would in any Next.js app.
+
+```bash
+app/
+├── [[...slug]]/page.tsx   # content catch-all
+├── about/page.tsx         # custom page at /about
+└── api/preview/route.ts   # API route
+```
+
+Those pages still sit inside `DocsRoot`, so they inherit colour mode, search
+and the site config. Wrap them in `DocsLayout` or `LandingLayout` if you want
+the same chrome as the markdown pages.

@@ -1,0 +1,243 @@
+---
+title: Theme
+description: Recolour the site with CSS variables. Tailwind v4 and next-themes do the rest.
+icon: paint-roller
+---
+
+Docora is a Next.js theme package. Appearance lives in CSS variables, not in a
+component config object. Import the stylesheet, then redefine any token — no
+build step, no extra plugin.
+
+```css [app/globals.css]
+@import 'tailwindcss';
+@import 'docora/styles.css';
+```
+
+`withDocora` transpiles the theme sources so Tailwind can scan them. `DocsRoot`
+mounts colour-mode and font providers around the rest of the tree.
+
+::tip{to="/docs/core-concepts/customization"}
+Changing a colour or font is theming. Swapping a header slot, registering an
+MDX component, or assembling your own chrome is [customization](/docs/core-concepts/customization).
+::
+
+## How it is wired
+
+Three pieces cooperate:
+
+1. **`docora/styles.css`** — semantic tokens on `:root` and `.dark`, mapped
+   into Tailwind through `@theme inline`.
+2. **`ThemeProvider`** — `next-themes` puts a `class` on `<html>` (`light` or
+   `dark`). The stylesheet uses `@custom-variant dark (&:is(.dark *))`, so
+   utilities like `dark:bg-elevated` follow that class.
+3. **`docsFont`** — Public Sans, loaded by `DocsRoot` through `next/font` and
+   bound to `--docs-font-sans`.
+
+Override tokens in your own stylesheet **after** the theme import. Later
+declarations win; you never fork the package.
+
+## Override tokens
+
+```css [app/globals.css]
+@import 'tailwindcss';
+@import 'docora/styles.css';
+
+:root {
+  --primary: var(--color-blue-500);
+  --primary-foreground: oklch(100% 0 0);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --primary: var(--color-blue-400);
+  --primary-foreground: oklch(21% 0.006 285.885);
+}
+```
+
+You can also extend Tailwind's own `@theme` for fonts, breakpoints and extra
+colour ramps — those sit beside the semantic aliases, they do not replace them:
+
+```css [app/globals.css]
+@import 'tailwindcss';
+@import 'docora/styles.css';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --breakpoint-3xl: 1920px;
+}
+```
+
+::note
+`--font-sans` is what Tailwind's `font-sans` utility reads. The theme default
+is `var(--docs-font-sans, 'Public Sans')`. Point `--docs-font-sans` at another
+`next/font` variable if you want the font file loaded by Next rather than by
+CSS. See [Typography](#typography).
+::
+
+## Colors
+
+The palette is a zinc neutral ramp with an emerald primary. Components never
+hard-code those hues — they use semantic roles, so one override recolours the
+header, sidebar, callouts and code chrome together.
+
+::field-group
+:::field{name="--background / --foreground" type="colour"}
+Page background and body text.
+:::
+
+:::field{name="--highlighted / --toned / --dimmed" type="colour"}
+Headings, secondary text and the quietest text.
+:::
+
+:::field{name="--muted-foreground" type="colour"}
+Captions, placeholders and inactive nav.
+:::
+
+:::field{name="--muted / --elevated / --accented" type="colour"}
+Surfaces, in increasing contrast. Cards, hover states, the footer band.
+:::
+
+:::field{name="--border / --border-accented" type="colour"}
+Rules, and rules on hover.
+:::
+
+:::field{name="--primary / --primary-foreground" type="colour"}
+Accent colour and text placed on it. Links, active nav, the TOC rail.
+:::
+
+:::field{name="--destructive" type="colour"}
+Error states and removed diff lines in code blocks.
+:::
+::
+
+Defaults:
+
+| Token                | Light     | Dark      |
+| -------------------- | --------- | --------- |
+| `background`         | white     | zinc-900  |
+| `foreground`         | zinc-700  | zinc-200  |
+| `highlighted`        | zinc-900  | white     |
+| `toned`              | zinc-600  | zinc-300  |
+| `muted-foreground`   | zinc-500  | zinc-400  |
+| `dimmed`             | zinc-400  | zinc-500  |
+| `muted`              | zinc-50   | zinc-800  |
+| `elevated`           | zinc-100  | zinc-800  |
+| `accented`           | zinc-200  | zinc-700  |
+| `border`             | zinc-200  | zinc-800  |
+| `border-accented`    | zinc-300  | zinc-700  |
+| `primary`            | emerald-500 | emerald-400 |
+| `destructive`        | red-500   | red-400   |
+
+`@theme inline` exposes each of those as a Tailwind colour, so the same names
+work in class names:
+
+```tsx
+<div className="bg-background text-foreground border-border">
+  <h2 className="text-highlighted">Heading</h2>
+  <a className="text-primary">A link</a>
+  <button className="bg-elevated hover:bg-accented">Quiet action</button>
+</div>
+```
+
+`ring` follows `--primary`. `card`, `popover`, `secondary`, `accent` and
+`input` are aliases onto the same semantic set, so shadcn-style utilities keep
+working if you drop extra components into the app.
+
+## Color mode
+
+`next-themes` drives a `class` on `<html>`. Design tokens flip under `.dark`.
+
+```ts [docs.config.ts]
+colorMode: {
+  default: 'system', // 'system' | 'light' | 'dark'
+  forced: undefined, // pin to 'light' or 'dark' and hide the toggle
+}
+```
+
+`default` is the initial mode for a visitor with no stored preference.
+`forced` pins the site to one mode — the header toggle and the search-palette
+theme commands hide themselves when you set it.
+
+The toggle lives in `SiteHeader`. The search palette (`Cmd`/`Ctrl`+`K`) also
+lists System, Light and Dark when a query is empty.
+
+## Typography
+
+`DocsRoot` loads **Public Sans** through `next/font` and binds it to
+`--docs-font-sans`. Load a different `next/font` on the same variable and pass
+its class to `DocsRoot`:
+
+```tsx [app/layout.tsx]
+import { Inter } from 'next/font/google'
+import { DocsRoot } from 'docora'
+
+const inter = Inter({ subsets: ['latin'], variable: '--docs-font-sans' })
+
+export default function RootLayout({ children }) {
+  return (
+    <DocsRoot config={docsConfig} className={inter.variable}>
+      {children}
+    </DocsRoot>
+  )
+}
+```
+
+Or set `--font-sans` in `@theme` if the face is already available to CSS.
+
+Headings render in `--highlighted`. Body copy uses `--foreground`. Inline code
+and fences use `--font-mono` (system monospace unless you set one).
+
+## Radius and layout
+
+::field-group
+:::field{name="--radius" type="length"}
+Base corner radius. Defaults to `0.25rem`. Tailwind's `rounded-sm` / `md` /
+`lg` / `xl` are derived from it.
+:::
+
+:::field{name="--docs-header-height" type="length"}
+Header height (`4rem`). Sticky sidebar and TOC pin directly beneath it.
+:::
+
+:::field{name="--container-8xl" type="length"}
+Widest docs container (`90rem`). `SiteHeader`, `DocsLayout` and `SiteFooter`
+use `max-w-8xl`.
+:::
+::
+
+```css
+:root {
+  --radius: 0.5rem;
+}
+```
+
+## Code highlighting
+
+Fenced blocks are highlighted by Shiki through `rehype-pretty-code`, with both
+palettes compiled in:
+
+- light: `github-light`
+- dark: `github-dark`
+
+The stylesheet paints `--shiki-light` by default and `--shiki-dark` under
+`.dark`, so a fence flips with the rest of the page. Highlighted lines, focused
+lines and diffs mix `--primary` or `--destructive` over the surface.
+
+Those options live on `prettyCodeOptions` if you compile MDX yourself and want
+to swap the Shiki themes.
+
+## Using tokens in your own components
+
+Any React you add — a header CTA, an MDX shortcode, an extra App Router page —
+should use the semantic utilities rather than raw zinc/emerald classes. Then a
+token override in `globals.css` restyles your pieces with the built-in ones.
+
+```tsx
+export function ReleaseBadge() {
+  return (
+    <span className="rounded-md border border-border bg-elevated px-2 py-0.5 text-xs text-highlighted">
+      v1
+    </span>
+  )
+}
+```

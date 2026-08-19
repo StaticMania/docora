@@ -1,64 +1,52 @@
 ---
 title: Introduction
-description: What the theme gives you, and what is still being built.
+description: Welcome to Docora, an open source documentation framework.
 icon: house
 ---
 
-The theme package ships the chrome around your content: the page shell, the
-header, the navigation tree, the table of contents and the colour-mode toggle.
-Your app supplies MDX files and a `docs.config.ts`.
+Welcome to **Docora**, an open source documentation framework built with
+[Next.js](https://nextjs.org), [React](https://react.dev),
+[Tailwind CSS](https://tailwindcss.com) and [MDX](https://mdxjs.com).
 
-## Layouts
+## What is Docora?
 
-Three layouts cover the whole surface:
+Docora is an open source documentation framework on top of the App Router.
+The chrome — header, sidebar, table of contents, search and colour mode —
+ships ready. You write Markdown with
+[MDC syntax](https://content.nuxt.com/docs/files/markdown#mdc-syntax) in a
+`content/` folder and keep a single `docs.config.ts`.
 
-- `DocsRoot` — the `<html>` / `<body>` shell, mounting the colour-mode and
-  configuration providers
-- `DocsLayout` — header, sidebar, content column, table of contents, footer
-- `LandingLayout` — header and footer only, for the home page
+It is built with:
 
-`DocsPage` renders the title block above the compiled MDX.
+::card-group
+:::card{title="Next.js" icon="i-lucide-layers" to="https://nextjs.org" target="_blank"}
+App Router, Server Components and a catch-all that compiles your content.
+:::
 
-## Navigation
+:::card{title="React" icon="i-lucide-blocks" to="https://react.dev" target="_blank"}
+React 19 components for layouts, search, the table of contents and MDC blocks.
+:::
 
-The sidebar reads `navigation` from the site configuration.
+:::card{title="Tailwind CSS" icon="i-lucide-wind" to="https://tailwindcss.com" target="_blank"}
+v4 design tokens. Recolour the site by redefining CSS variables.
+:::
 
-### Sections and pages
+:::card{title="MDX" icon="i-lucide-file-code" to="https://mdxjs.com" target="_blank"}
+Markdown with components. JSX still works when a page needs it.
+:::
+::
 
-Sections are nodes with `children` and no `href`; pages are nodes with an
-`href`. The active page is matched against the current pathname.
+## Key Features
 
-### Icons
+The pieces a documentation site usually has to assemble by hand:
 
-Both take an `icon`, a lucide name in kebab-case. Common documentation icons
-are bundled and render on the server; anything else loads lazily.
-
-## Table of contents
-
-### How headings are collected
-
-Headings are collected while the document compiles. `rehype-slug` assigns each
-one an `id`, a small rehype plugin records them, and `compileMdx` returns them
-alongside the rendered content:
-
-```ts
-const { content, frontmatter, toc } = await compileMdxFile('content/docs/index.mdx')
-```
-
-### How the list is rendered
-
-`buildTocTree` nests `###` headings under the `##` they follow, and every
-heading currently on screen is highlighted — including the parent of an active
-subheading.
-
-## Colour mode
-
-`next-themes` drives a `class` on `<html>`, and the design tokens flip under
-`.dark`. Pin the site to one mode with `colorMode.forced` — the toggle hides
-itself when you do.
-
-## Still to come
-
-Search is a stub until Phase 4, and every page here still has its own route
-file. Phase 2 replaces those with a single catch-all route that walks the
-content directory.
+- **Next.js 16.** App Router and Server Components — every file under `content/` is a route.
+- **React 19 and TypeScript.** Published as source, with no extra build step.
+- **Tailwind CSS v4.** Override semantic tokens (`--primary`, `--background`, …) in your stylesheet.
+- **MDC on MDX.** Callouts, cards, tabs and steps by name — the same [MDC](https://content.nuxt.com/docs/files/markdown#mdc-syntax) syntax as Nuxt Content.
+- **Auto-generated navigation.** Sidebar, pager and labels from the folder tree; numeric prefixes set order, not the URL.
+- **Full-text search.** A compile-time command palette — no service or hosted index.
+- **SEO by default.** Canonicals, sitemap, robots and Open Graph images from `docs.config.ts`.
+- **Dark mode.** Tokens flip under `.dark` via `next-themes`.
+- **Internationalisation.** A folder per locale for routes, sidebar, search and UI strings.
+- **Built for agents.** `llms.txt`, raw Markdown routes, an MCP server and an in-page assistant.

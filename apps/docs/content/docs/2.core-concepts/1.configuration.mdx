@@ -81,36 +81,9 @@ footer: {
 
 ## Palette and typography
 
-The theme ships a zinc neutral ramp with an emerald primary, in these semantic
-roles.
-
-| Token         | Light       | Dark        |
-| ------------- | ----------- | ----------- |
-| `background`  | white       | zinc-900    |
-| `foreground`  | zinc-700    | zinc-200    |
-| `highlighted` | zinc-900    | white       |
-| `muted`       | zinc-50     | zinc-800    |
-| `elevated`    | zinc-100    | zinc-800    |
-| `border`      | zinc-200    | zinc-800    |
-| `primary`     | emerald-500 | emerald-400 |
-
-Override any of them in your own stylesheet, after the theme import:
-
-```css
-@import 'tailwindcss';
-@import 'docora/styles.css';
-
-:root {
-  --primary: var(--color-blue-500);
-}
-
-.dark {
-  --primary: var(--color-blue-400);
-}
-```
-
-`DocsRoot` loads **Public Sans** through `next/font` and binds it to
-`--docs-font-sans`. Point that variable at another font to replace it.
+Colours, radius and the font are CSS variables, not config keys. The defaults
+are a zinc ramp with an emerald primary and Public Sans. Redefine any token
+after `@import 'docora/styles.css'` — see [Theme](/docs/core-concepts/theme).
 
 ## Icons
 
