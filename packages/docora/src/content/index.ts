@@ -13,8 +13,8 @@ export interface DocsSourceOptions {
   contentDir: string
   /**
    * Directory whose children make up the sidebar, relative to the content
-   * root. Defaults to `docs` when that folder exists, matching Docus: a
-   * landing page at `/` and documentation under `/docs`.
+   * root. Defaults to `docs` when that folder exists: a landing page at `/`
+   * and documentation under `/docs`.
    */
   navigationRoot?: string
   /**

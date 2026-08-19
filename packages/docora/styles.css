@@ -5,9 +5,9 @@
  *   @import "tailwindcss";
  *   @import "docora/styles.css";
  *
- * The palette mirrors Docus: a zinc neutral ramp with an emerald primary,
- * using the same semantic roles Nuxt UI exposes (bg / elevated / accented,
- * text / muted / dimmed / highlighted).
+ * A zinc neutral ramp with an emerald primary, using the same semantic
+ * roles Nuxt UI exposes (bg / elevated / accented, text / muted / dimmed /
+ * highlighted).
  */
 
 /* Tailwind only scans the app it runs in, so point it at the theme sources too. */
@@ -20,7 +20,7 @@
   /* `DocsRoot` loads Public Sans and binds it to --docs-font-sans. */
   --font-sans: var(--docs-font-sans, "Public Sans"), ui-sans-serif, system-ui, sans-serif;
 
-  /* Docus widens the Nuxt UI container to 90rem. */
+  /* Widens the container to 90rem. */
   --container-8xl: 90rem;
 }
 
@@ -111,36 +111,125 @@
 
 @layer base {
   /*
-   * Shiki runs with `defaultColor: false`, so it emits both palettes as custom
-   * properties and the colour mode decides which one applies.
+   * Pretty Code emits both palettes as `--shiki-light` / `--shiki-dark`.
+   * `data-theme` is a space-separated list of theme names.
    */
-  .shiki,
-  .shiki span {
+  code[data-theme*=' '],
+  code[data-theme*=' '] span {
     color: var(--shiki-light);
     background-color: transparent;
   }
 
-  .dark .shiki,
-  .dark .shiki span {
+  .dark code[data-theme*=' '],
+  .dark code[data-theme*=' '] span {
     color: var(--shiki-dark);
   }
 
-  /* `{1,3-5}` in a fence's meta marks lines through Shiki's transformer. */
-  .shiki .line.highlighted {
-    display: inline-block;
-    width: calc(100% + 2rem);
-    margin-inline: -1rem;
+  .docs-code pre {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-muted);
+    padding-block: 0.75rem;
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+
+  .docs-code-has-header pre {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .docs-code:has([data-rehype-pretty-code-caption]) pre {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  /* Title is rendered as the React header; captions stay as a footer. */
+  .docs-code [data-rehype-pretty-code-title] {
+    display: none;
+  }
+
+  .docs-code [data-rehype-pretty-code-caption] {
+    border: 1px solid var(--color-border);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    background-color: var(--color-background);
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    color: var(--color-muted-foreground);
+  }
+
+  .docs-code-has-header [data-rehype-pretty-code-caption] {
+    border-bottom-left-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+  }
+
+  .docs-code [data-line] {
     padding-inline: 1rem;
+    min-height: 1.5rem;
+  }
+
+  /* `{1,3-5}` in a fence's meta, or `// [!code highlight]`. */
+  .docs-code [data-highlighted-line],
+  .docs-code [data-line].highlighted {
     background-color: color-mix(in oklch, var(--primary) 12%, transparent);
     box-shadow: inset 2px 0 var(--primary);
   }
 
-  .docs-line-numbers .line {
-    counter-increment: docs-line;
+  .docs-code [data-highlighted-chars] {
+    border-radius: 0.25rem;
+    background-color: color-mix(in oklch, var(--primary) 18%, transparent);
+    padding-inline: 0.15em;
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--primary) 18%, transparent);
   }
 
-  .docs-line-numbers .line::before {
-    content: counter(docs-line);
+  .docs-code [data-line].diff.add {
+    background-color: color-mix(in oklch, var(--primary) 14%, transparent);
+  }
+
+  .docs-code [data-line].diff.remove {
+    background-color: color-mix(in oklch, var(--destructive) 14%, transparent);
+  }
+
+  .docs-code [data-line].highlighted.warning {
+    background-color: color-mix(in oklch, oklch(79% 0.15 85) 18%, transparent);
+    box-shadow: inset 2px 0 oklch(79% 0.15 85);
+  }
+
+  .docs-code [data-line].highlighted.error {
+    background-color: color-mix(in oklch, var(--destructive) 14%, transparent);
+    box-shadow: inset 2px 0 var(--destructive);
+  }
+
+  .docs-code pre.has-focused [data-line]:not(.focused) {
+    opacity: 0.55;
+    filter: blur(0.25px);
+    transition:
+      filter 0.35s ease,
+      opacity 0.35s ease;
+  }
+
+  .docs-code pre.has-focused:hover [data-line] {
+    opacity: 1;
+    filter: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .docs-code pre.has-focused [data-line]:not(.focused) {
+      filter: none;
+    }
+  }
+
+  code[data-line-numbers] {
+    counter-reset: line;
+  }
+
+  code[data-line-numbers] > [data-line]::before {
+    content: counter(line);
+    counter-increment: line;
     display: inline-block;
     width: 1.5rem;
     margin-inline-end: 1rem;
@@ -148,8 +237,16 @@
     color: var(--color-dimmed);
   }
 
-  .docs-line-numbers {
-    counter-reset: docs-line;
+  code[data-line-numbers-max-digits='2'] > [data-line]::before {
+    width: 1.75rem;
+  }
+
+  code[data-line-numbers-max-digits='3'] > [data-line]::before {
+    width: 2.25rem;
+  }
+
+  code[data-line-numbers-max-digits='4'] > [data-line]::before {
+    width: 2.75rem;
   }
 
   /*

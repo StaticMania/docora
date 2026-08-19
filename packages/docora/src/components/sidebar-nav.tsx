@@ -15,7 +15,7 @@ export interface SidebarNavProps {
   className?: string
 }
 
-/** Shared row geometry: `size-5` icons and `py-1.5` give Docus's 2rem rows. */
+/** Shared row geometry: `size-5` icons and `py-1.5` give 2rem rows. */
 const ROW = 'group relative flex w-full items-center gap-1.5 px-2.5 py-1.5 text-sm'
 
 function NavTree({ items, level, onNavigate }: { items: NavItem[]; level: number; onNavigate?: () => void }) {

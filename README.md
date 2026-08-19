@@ -6,14 +6,14 @@ Docora is an open-source documentation framework for Next.js and React, built wi
 TypeScript, Tailwind CSS, and Markdown. Create fast, beautiful, SEO-friendly
 documentation sites with minimal configuration.
 
-| Path                     | Role                                                           | Docus equivalent |
-| ------------------------ | -------------------------------------------------------------- | ---------------- |
-| `packages/docora`        | Publishable theme: layouts, content pipeline, MDC, search, SEO | `layer/`         |
-| `packages/create-docora` | `npx create-docora my-docs` scaffolder                         | `cli/`           |
-| `apps/docs`              | The documentation site, built with the theme                   | `docs/`          |
-| `apps/playground`        | Scratch app for developing the theme                           | `playground/`    |
-| `.starters/default`      | Single-language template the CLI copies                        | `.starters/`     |
-| `.starters/i18n`         | Multi-language template                                        | `.starters/`     |
+| Path                     | Role                                           |
+| ------------------------ | ---------------------------------------------- |
+| `packages/docora`        | Publishable theme: layouts, content pipeline, MDC, search, SEO |
+| `packages/create-docora` | `npx create-docora my-docs` scaffolder         |
+| `apps/docs`              | The documentation site, built with the theme   |
+| `apps/playground`        | Scratch app for developing the theme           |
+| `.starters/default`      | Single-language template the CLI copies        |
+| `.starters/i18n`         | Multi-language template                        |
 
 ## Develop
 

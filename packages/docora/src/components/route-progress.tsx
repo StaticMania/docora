@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 
 import { startsNavigation } from './route-progress-target'
 
-/** Nuxt's loading-indicator defaults, which Docus uses unchanged. */
+/** Nuxt's loading-indicator defaults. */
 const DURATION = 2000
 const THROTTLE = 200
 const HIDE_DELAY = 500

@@ -5,13 +5,16 @@ import {
   BookOpen,
   Bot,
   Box,
+  Braces,
   Brain,
   CircleAlert,
   CircleHelp,
   Code,
+  Container,
   Download,
   Eye,
   FileText,
+  FileCode,
   Flag,
   FolderTree,
   GitBranch,
@@ -25,6 +28,7 @@ import {
   Lightbulb,
   Link2,
   List,
+  Package,
   Palette,
   Pencil,
   Puzzle,
@@ -52,12 +56,15 @@ const BUNDLED_ICONS: Record<string, LucideIcon> = {
   'book-open': BookOpen,
   bot: Bot,
   box: Box,
+  braces: Braces,
   brain: Brain,
   'circle-alert': CircleAlert,
   'circle-help': CircleHelp,
   code: Code,
+  container: Container,
   download: Download,
   eye: Eye,
+  'file-code': FileCode,
   'file-text': FileText,
   flag: Flag,
   'folder-tree': FolderTree,
@@ -72,6 +79,7 @@ const BUNDLED_ICONS: Record<string, LucideIcon> = {
   lightbulb: Lightbulb,
   link: Link2,
   list: List,
+  package: Package,
   palette: Palette,
   pencil: Pencil,
   puzzle: Puzzle,
@@ -88,9 +96,9 @@ const BUNDLED_ICONS: Record<string, LucideIcon> = {
 }
 
 /**
- * Accepts both plain lucide names (`rocket`) and the Iconify-style names Docus
- * content uses (`i-lucide-rocket`). Collections other than lucide are not
- * bundled, so they fall back to a generic mark rather than breaking the page.
+ * Accepts both plain lucide names (`rocket`) and Iconify-style names
+ * (`i-lucide-rocket`). Collections other than lucide are not bundled, so they
+ * fall back to a generic mark rather than breaking the page.
  */
 export function normalizeIconName(name: string): string | undefined {
   if (!name) return undefined

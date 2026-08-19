@@ -23,7 +23,13 @@ export type { DocsConfig, NavItem, NavLink, SocialKey } from './config/types'
 export { defaultMdxComponents, getMdxComponents, mdxShortcodes } from './mdx/components'
 export * from './mdc/index'
 export { mdcHandlers } from './mdx/mdc'
-export { transformerCodeMeta, iconForFilename } from './mdx/code-meta'
+export {
+  transformerCodeMeta,
+  iconForFilename,
+  filterCodeMeta,
+  prettyCodeOptions,
+  rehypePrettyCodeFigure,
+} from './mdx/code-meta'
 export { compileMdx, compileMdxFile, type CompileMdxOptions, type CompiledMdx } from './mdx/compile'
 export { splitFrontmatter, type Frontmatter } from './mdx/frontmatter'
 export { buildTocTree, type TocEntry, type TocNode } from './mdx/toc'

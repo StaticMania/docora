@@ -12,8 +12,8 @@ const X_NESTED = 10.5
 const JOG = 6
 
 /**
- * Builds the "circuit" rail Docus uses: a single stroked path that runs beside
- * the headings and steps sideways where the list changes depth.
+ * Builds the "circuit" rail: a single stroked path that runs beside the
+ * headings and steps sideways where the list changes depth.
  *
  * The path is applied as a mask, so the grey track and the coloured active
  * segment are both plain divs clipped to this shape.

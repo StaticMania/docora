@@ -196,7 +196,7 @@ images; without it those are omitted rather than emitted as relative URLs.
 ## MDC syntax
 
 Documents are markdown with [MDC](https://content.nuxt.com/docs/files/markdown#mdc-syntax)
-on top, the same authoring syntax Docus uses, so components need no imports:
+on top, so components need no imports:
 
 ```mdc
 ::note{icon="i-lucide-info"}
@@ -226,16 +226,16 @@ Shipped components: `callout` (plus `note`, `tip`, `warning`, `caution`),
 Fenced code takes a filename and line range in its meta — ``` ```ts [nuxt.config.ts]{3-5} ``` —
 and every block gets a copy button.
 
-The table of contents uses the same "circuit" rail Nuxt UI draws for Docus: a
-masked SVG path that steps sideways where the heading list changes depth, with a
-coloured segment spanning whichever headings are on screen. `DocsRoot` also
-mounts a route-change progress bar modelled on Nuxt's loading indicator.
+The table of contents uses a "circuit" rail: a masked SVG path that steps
+sideways where the heading list changes depth, with a coloured segment spanning
+whichever headings are on screen. `DocsRoot` also mounts a route-change
+progress bar modelled on Nuxt's loading indicator.
 
-The palette mirrors Docus — a zinc neutral ramp with an emerald primary, in the
-semantic roles Nuxt UI exposes (`background`, `elevated`, `accented`,
-`foreground`, `muted-foreground`, `dimmed`, `highlighted`). `DocsRoot` loads
-Public Sans through `next/font` and binds it to `--docs-font-sans`; redefine any
-token after the stylesheet import to reskin the theme.
+The palette is a zinc neutral ramp with an emerald primary, in the semantic
+roles Nuxt UI exposes (`background`, `elevated`, `accented`, `foreground`,
+`muted-foreground`, `dimmed`, `highlighted`). `DocsRoot` loads Public Sans
+through `next/font` and binds it to `--docs-font-sans`; redefine any token
+after the stylesheet import to reskin the theme.
 
 MDX is compiled on the server at render time rather than through a bundler
 loader, so pages can be produced from any file on disk — the groundwork for the

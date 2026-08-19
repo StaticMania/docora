@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react'
 /**
  * Tracks every heading currently on screen, in document order.
  *
- * Mirrors Nuxt UI's `useScrollspy`, which Docus builds its table of contents
- * on: a plain viewport observer with no margin, and when nothing is in view —
+ * A plain viewport observer with no margin, and when nothing is in view —
  * mid-way through a long section — the previous set is kept so the highlight
  * never blinks out.
  */

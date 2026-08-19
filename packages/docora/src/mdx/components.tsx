@@ -123,7 +123,8 @@ export const defaultMdxComponents: MDXComponents = {
       {...props}
     />
   ),
-  pre: CodeBlock,
+  figure: props =>
+    'data-rehype-pretty-code-figure' in props ? <CodeBlock {...props} /> : <figure {...props} />,
   table: props => (
     <div className="mt-6 w-full overflow-x-auto">
       <table className="w-full border-collapse text-sm" {...props} />

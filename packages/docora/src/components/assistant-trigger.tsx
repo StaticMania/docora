@@ -28,7 +28,7 @@ export function AssistantTrigger({ className }: { className?: string }) {
 
 /**
  * Asks the assistant about the page being read. Rendered under the table of
- * contents, mirroring Docus.
+ * contents.
  */
 export function ExplainWithAi({ className }: { className?: string }) {
   const { enabled, ask } = useAssistant()
