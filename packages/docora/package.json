@@ -12,7 +12,8 @@
     "next.mjs",
     "next.d.ts",
     "styles.css",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "exports": {
     ".": "./src/index.ts",

@@ -9,7 +9,8 @@
   },
   "files": [
     "dist",
-    "templates"
+    "templates",
+    "LICENSE"
   ],
   "scripts": {
     "build": "node scripts/copy-templates.mjs && tsup",
