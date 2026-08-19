@@ -86,7 +86,7 @@ export function TableOfContents({ items, relativePath, title, className }: Table
     <div className={cn('flex flex-col gap-6 text-sm', className)}>
       {tree.length > 0 && (
         <nav aria-labelledby="toc-heading">
-          <p id="toc-heading" className="mb-2 flex items-center py-1 text-sm font-semibold text-highlighted">
+          <p id="toc-heading" className="-mt-1.5 mb-2 flex h-8 items-center text-sm font-semibold text-highlighted">
             {config.toc?.title ?? messages.tocTitle}
           </p>
 

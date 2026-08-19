@@ -3,7 +3,7 @@ import path from 'node:path'
 import type { NavItem } from '../config/types'
 import type { I18nConfig } from '../i18n/types'
 import { localeFromPath, pathForLocale } from '../i18n/paths'
-import { buildNavigation, findSurround } from './navigation'
+import { buildNavigation, findSection, findSurround } from './navigation'
 import { parseOrderPrefix } from './slug'
 import { findDirectory, flattenPages, readContentTree, type ContentDirectory } from './tree'
 import type { ContentPage, PageSurround } from './types'
@@ -30,6 +30,8 @@ export interface DocsSource {
   /** Sidebar for a locale, or the whole site when i18n is off. */
   getNavigation(locale?: string): Promise<NavItem[]>
   getSurround(path: string): Promise<PageSurround>
+  /** Sidebar section heading the page sits under, shown above the page title. */
+  getSection(path: string): Promise<string | undefined>
   /** Every route, shaped for `generateStaticParams`. */
   getStaticParams(): Promise<{ slug: string[] }[]>
   /** Locales this document exists in, as `code -> path`, for hreflang. */
@@ -96,6 +98,10 @@ export function createDocsSource({ contentDir, navigationRoot, i18n }: DocsSourc
       return findSurround(await getNavigation(localeFromPath(currentPath, i18n)), currentPath)
     },
 
+    async getSection(currentPath) {
+      return findSection(await getNavigation(localeFromPath(currentPath, i18n)), currentPath)
+    },
+
     async getAlternates(currentPath) {
       if (!i18n) return {}
 
@@ -121,7 +127,7 @@ export function defaultContentDir(): string {
   return path.join(process.cwd(), 'content')
 }
 
-export { buildNavigation, findSurround, flattenNavigation } from './navigation'
+export { buildNavigation, findSection, findSurround, flattenNavigation, sectionsByPath } from './navigation'
 export { readContentTree, flattenPages, findDirectory, type ContentDirectory } from './tree'
 export { humanize, parseOrderPrefix, slugToPath, stripExtension } from './slug'
 export type { ContentPage, DirectoryMeta, PageFrontmatter, PageSurround } from './types'

@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises'
 
 import type { DocsConfig } from '../config/types'
-import type { NavItem } from '../config/types'
 import type { DocsSource } from '../content/index'
+import { sectionsByPath } from '../content/navigation'
 import type { ContentPage } from '../content/types'
 import { localeFromPath } from '../i18n/paths'
 import { splitFrontmatter } from '../mdx/frontmatter'
@@ -10,16 +10,6 @@ import { rawPath } from './raw'
 
 function absolute(config: DocsConfig, path: string): string {
   return config.site.url ? new URL(path, config.site.url).toString() : path
-}
-
-/** path -> the sidebar section it sits under, so headings read like the site. */
-function sectionsByPath(items: NavItem[], section?: string, map = new Map<string, string>()) {
-  for (const item of items) {
-    if (item.href && section) map.set(item.href, section)
-    if (item.children) sectionsByPath(item.children, item.label, map)
-  }
-
-  return map
 }
 
 /**
@@ -47,7 +37,7 @@ export function createLlmsTxtRoute(source: DocsSource, config: DocsConfig) {
       const groups = new Map<string, ContentPage[]>()
       for (const page of pages) {
         const locale = localeFromPath(page.path, config.i18n)
-        const section = sections.get(page.path) ?? 'Overview'
+        const section = sections.get(page.path) || 'Overview'
         const key = locale ? `${section} (${locale})` : section
 
         groups.set(key, [...(groups.get(key) ?? []), page])

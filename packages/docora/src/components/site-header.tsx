@@ -67,42 +67,49 @@ export function SiteHeader({ children, logo, cta, className }: SiteHeaderProps) 
         className,
       )}
     >
-      <div className="mx-auto flex h-full w-full max-w-8xl items-center gap-3 px-4 sm:px-6">
-        <MobileNav />
-        {logo ?? <Logo />}
-
-        {links.length > 0 && (
-          <nav aria-label="Main" className="ml-4 hidden items-center gap-4 lg:flex">
-            {links.map(link => {
-              const external = link.external ?? link.href.startsWith('http')
-              const isActive = !external && (pathname === link.href || pathname.startsWith(`${link.href}/`))
-
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  className={cn(
-                    'text-sm transition-colors',
-                    isActive ? 'font-medium text-foreground' : 'text-muted-foreground hover:text-foreground',
-                  )}
-                >
-                  {link.label}
-                </Link>
-              )
-            })}
-          </nav>
+      <div
+        className={cn(
+          'mx-auto flex h-full w-full max-w-8xl items-center gap-3 px-4 sm:px-6',
+          showSearch && 'md:grid md:grid-cols-[1fr_minmax(0,28rem)_1fr]',
         )}
+      >
+        <div className="flex min-w-0 items-center gap-3">
+          <MobileNav />
+          {logo ?? <Logo />}
 
-        {cta}
+          {links.length > 0 && (
+            <nav aria-label="Main" className="ml-4 hidden items-center gap-4 lg:flex">
+              {links.map(link => {
+                const external = link.external ?? link.href.startsWith('http')
+                const isActive = !external && (pathname === link.href || pathname.startsWith(`${link.href}/`))
+
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                    className={cn(
+                      'text-sm transition-colors',
+                      isActive ? 'font-medium text-foreground' : 'text-muted-foreground hover:text-foreground',
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
+            </nav>
+          )}
+
+          {cta}
+        </div>
 
         {showSearch && (
-          <div className="mx-auto hidden w-full max-w-md px-4 md:block">
+          <div className="hidden h-full items-center justify-center md:flex">
             <SearchButton className="w-full" />
           </div>
         )}
 
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ml-auto flex items-center justify-end gap-1 md:ml-0">
           {showSearch && <SearchButton className="md:hidden" iconOnly />}
           {children}
 

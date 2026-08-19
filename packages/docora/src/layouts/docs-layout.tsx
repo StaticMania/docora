@@ -42,10 +42,10 @@ export function DocsLayout({ children, toc = [], header, footer, page, className
           </aside>
         )}
 
-        <main className={cn('min-w-0 flex-1 py-10 lg:py-14', className)}>{children}</main>
+        <main className={cn('min-w-0 flex-1 py-8', className)}>{children}</main>
 
         {hasToc && (
-          <aside className="sticky top-16 hidden h-[calc(100svh-4rem)] w-60 shrink-0 overflow-y-auto py-10 xl:block">
+          <aside className="sticky top-16 hidden h-[calc(100svh-4rem)] w-60 shrink-0 overflow-y-auto py-8 xl:block">
             <TableOfContents items={toc} relativePath={page?.relativePath} title={page?.title} />
           </aside>
         )}

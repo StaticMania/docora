@@ -16,7 +16,9 @@ export function DocsPage({ children, title, description, section }: DocsPageProp
     <article className="w-full">
       {hasHeader && (
         <header className="mb-8 border-b border-border pb-8">
-          {section && <p className="mb-2 text-sm font-medium text-primary">{section}</p>}
+          {section && (
+            <p className="-mt-1.5 mb-2 flex h-8 items-center text-sm font-semibold text-primary">{section}</p>
+          )}
           {title && <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>}
           {description && <p className="mt-3 text-lg text-muted-foreground">{description}</p>}
         </header>

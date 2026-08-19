@@ -36,9 +36,10 @@ export default async function Page({ params }: PageProps) {
   if (!page) notFound()
 
   const { content, frontmatter, toc } = await compileMdxFile(page.filePath)
+  const section = await source.getSection(page.path)
 
   const body = (
-    <DocsPage title={frontmatter.title} description={frontmatter.description}>
+    <DocsPage title={frontmatter.title} description={frontmatter.description} section={section}>
       {content}
     </DocsPage>
   )

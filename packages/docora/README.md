@@ -60,10 +60,11 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 
   const { content, frontmatter, toc } = await compileMdxFile(page.filePath)
   const { prev, next } = await source.getSurround(page.path)
+  const section = await source.getSection(page.path)
 
   return (
     <DocsLayout toc={toc}>
-      <DocsPage title={frontmatter.title} description={frontmatter.description}>
+      <DocsPage title={frontmatter.title} description={frontmatter.description} section={section}>
         {content}
       </DocsPage>
       <DocsPager prev={prev} next={next} />

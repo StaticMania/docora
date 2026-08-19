@@ -35,13 +35,14 @@ export default async function Page({ params }: PageProps) {
     )
   }
 
+  const { prev, next } = await source.getSurround(page.path)
+  const section = await source.getSection(page.path)
+
   const body = (
-    <DocsPage title={frontmatter.title} description={frontmatter.description}>
+    <DocsPage title={frontmatter.title} description={frontmatter.description} section={section}>
       {content}
     </DocsPage>
   )
-
-  const { prev, next } = await source.getSurround(page.path)
 
   return (
     <DocsLayout toc={toc} page={{ relativePath: page.relativePath, title: page.title }}>

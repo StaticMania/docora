@@ -68,6 +68,25 @@ export function flattenNavigation(items: NavItem[]): NavItem[] {
   return items.flatMap(item => (item.children ? flattenNavigation(item.children) : item.href ? [item] : []))
 }
 
+/**
+ * Map each link href to the section heading it sits under.
+ * Top-level pages map to an empty string.
+ */
+export function sectionsByPath(items: NavItem[], section?: string, map = new Map<string, string>()): Map<string, string> {
+  for (const item of items) {
+    if (item.href) map.set(item.href, section ?? '')
+    if (item.children) sectionsByPath(item.children, item.label, map)
+  }
+
+  return map
+}
+
+/** The sidebar section a path sits under, if any. */
+export function findSection(items: NavItem[], currentPath: string): string | undefined {
+  const section = sectionsByPath(items).get(currentPath)
+  return section || undefined
+}
+
 /** The previous and next links around a path, for the pager. */
 export function findSurround(items: NavItem[], currentPath: string): PageSurround {
   const links = flattenNavigation(items)
