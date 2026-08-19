@@ -34,23 +34,36 @@ export function Hero({
   className,
 }: HeroProps) {
   const pill = announcement && (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/80 px-3 py-1 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-sm">
+      <span className="size-1.5 rounded-full bg-primary" aria-hidden />
       {announcement}
       {announcementTo && <ArrowRight className="size-3" aria-hidden />}
     </span>
   )
 
   return (
-    <section className={cn('relative isolate pt-10 pb-16 text-center sm:pt-16 sm:pb-24', className)}>
-      {/* Soft radial wash behind the headline. */}
+    <section className={cn('relative isolate pt-10 pb-8 text-center sm:pt-16 sm:pb-12', className)}>
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-24 -z-10 h-[28rem] opacity-70"
-        style={{
-          background:
-            'radial-gradient(50% 50% at 50% 40%, color-mix(in oklch, var(--primary) 22%, transparent) 0%, transparent 100%)',
-        }}
-      />
+        className="pointer-events-none absolute inset-x-0 -top-32 -z-10 h-[32rem] overflow-hidden"
+      >
+        <div
+          className="absolute inset-0 opacity-80"
+          style={{
+            background:
+              'radial-gradient(48% 55% at 50% 28%, color-mix(in oklch, var(--primary) 24%, transparent) 0%, transparent 70%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.45]"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)',
+            backgroundSize: '3.5rem 3.5rem',
+            maskImage: 'radial-gradient(ellipse at center, black 20%, transparent 72%)',
+          }}
+        />
+      </div>
 
       {announcement && (
         <div className="mb-6 flex justify-center">
@@ -76,7 +89,7 @@ export function Hero({
         </p>
       )}
 
-      {children && <div className="mt-10 [&>:first-child]:mt-0">{children}</div>}
+      {children && <div className="mt-10 flex flex-col items-stretch gap-12 [&>:first-child]:mt-0">{children}</div>}
     </section>
   )
 }
@@ -85,6 +98,37 @@ export function Hero({
 export function HeroActions({ children, className }: { children?: ReactNode; className?: string }) {
   return (
     <div className={cn('flex flex-wrap items-center justify-center gap-3', className)}>{children}</div>
+  )
+}
+
+export interface HeroPreviewProps {
+  children?: ReactNode
+  /** Label in the window chrome, typically a filename. */
+  filename?: string
+  className?: string
+}
+
+/** Framed code (or any preview) sitting under the hero actions. */
+export function HeroPreview({ children, filename, className }: HeroPreviewProps) {
+  return (
+    <div
+      className={cn(
+        'mx-auto w-full max-w-3xl overflow-hidden rounded-xl border border-border bg-muted text-start shadow-xl shadow-black/5',
+        className,
+      )}
+    >
+      <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
+        <span className="size-2.5 rounded-full bg-border-accented" aria-hidden />
+        <span className="size-2.5 rounded-full bg-border-accented" aria-hidden />
+        <span className="size-2.5 rounded-full bg-border-accented" aria-hidden />
+        {filename && (
+          <span className="ml-2 truncate font-mono text-xs text-muted-foreground">{filename}</span>
+        )}
+      </div>
+      <div className="[&_.docs-code]:my-0 [&_.docs-code-header]:hidden [&_.docs-code_pre]:rounded-none [&_.docs-code_pre]:border-0">
+        {children}
+      </div>
+    </div>
   )
 }
 
@@ -106,16 +150,71 @@ export function Cta({ children, label, to = '#', icon, variant = 'primary', clas
       href={to}
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
       className={cn(
-        'inline-flex h-11 items-center gap-2 rounded-md px-5 text-sm font-medium transition-colors',
+        'inline-flex h-11 items-center gap-2 rounded-lg px-5 text-sm font-medium transition-all',
         variant === 'primary'
-          ? 'bg-primary text-primary-foreground hover:opacity-90'
-          : 'border border-border text-highlighted hover:border-border-accented hover:bg-elevated',
+          ? 'bg-primary text-primary-foreground shadow-sm hover:opacity-90'
+          : 'border border-border bg-background/60 text-highlighted shadow-sm backdrop-blur-sm hover:border-border-accented hover:bg-elevated',
         className,
       )}
     >
       {icon && <Icon name={icon} className="size-4 shrink-0" />}
       {label ?? children}
     </Link>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/* Logo cloud and stats                                                       */
+/* -------------------------------------------------------------------------- */
+
+export function LogoCloud({ children, className }: { children?: ReactNode; className?: string }) {
+  return (
+    <div
+      className={cn(
+        'flex flex-wrap items-center justify-center gap-x-8 gap-y-3 py-6 text-sm text-muted-foreground',
+        className,
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+
+export interface LogoProps {
+  children?: ReactNode
+  label?: string
+  icon?: string
+  className?: string
+}
+
+export function Logo({ children, label, icon, className }: LogoProps) {
+  return (
+    <span className={cn('inline-flex items-center gap-2 font-medium', className)}>
+      {icon && <Icon name={icon} className="size-4 shrink-0" />}
+      {label ?? children}
+    </span>
+  )
+}
+
+export function StatGrid({ children, className }: { children?: ReactNode; className?: string }) {
+  return (
+    <div className={cn('grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4', className)}>{children}</div>
+  )
+}
+
+export interface StatProps {
+  children?: ReactNode
+  value?: string
+  label?: string
+  className?: string
+}
+
+export function Stat({ children, value, label, className }: StatProps) {
+  return (
+    <div className={cn('rounded-xl border border-border bg-muted/40 px-4 py-5 text-center', className)}>
+      {value && <p className="text-lg font-semibold tracking-tight text-highlighted sm:text-xl">{value}</p>}
+      <p className="mt-1 text-sm text-pretty text-muted-foreground">{label ?? children}</p>
+    </div>
   )
 }
 
@@ -163,23 +262,31 @@ export interface FeatureProps {
 export function Feature({ children, title, icon, to, className }: FeatureProps) {
   const body = (
     <>
-      {icon && (
-        <span className="mb-4 inline-flex size-9 items-center justify-center rounded-md border border-border bg-muted">
-          <Icon name={icon} className="size-4.5 text-primary" />
-        </span>
-      )}
+      <div className="mb-4 flex items-start justify-between gap-3">
+        {icon && (
+          <span className="inline-flex size-10 items-center justify-center rounded-lg border border-border bg-muted text-primary">
+            <Icon name={icon} className="size-4.5" />
+          </span>
+        )}
+        {to && (
+          <ArrowRight
+            className="mt-1 size-4 shrink-0 text-dimmed opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+            aria-hidden
+          />
+        )}
+      </div>
 
       {title && <p className="font-semibold text-highlighted">{title}</p>}
 
-      <div className="mt-1.5 text-sm text-muted-foreground [&>:first-child]:mt-0 [&>:last-child]:mb-0">
+      <div className="mt-1.5 text-sm leading-6 text-muted-foreground [&>:first-child]:mt-0 [&>:last-child]:mb-0">
         {children}
       </div>
     </>
   )
 
   const classes = cn(
-    'rounded-lg border border-border p-5 transition-colors',
-    to && 'hover:border-primary/40',
+    'rounded-xl border border-border bg-background/40 p-5 transition-colors',
+    to && 'group hover:border-primary/40 hover:bg-elevated/40',
     className,
   )
 
@@ -232,10 +339,19 @@ export function CtaSection({
   return (
     <section
       className={cn(
-        'my-16 rounded-xl border border-border bg-muted px-6 py-12 text-center sm:px-12',
+        'relative isolate my-16 overflow-hidden rounded-2xl border border-border px-6 py-14 text-center sm:px-12 sm:py-16',
         className,
       )}
     >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-muted"
+        style={{
+          backgroundImage:
+            'radial-gradient(60% 80% at 50% 0%, color-mix(in oklch, var(--primary) 16%, transparent), transparent 70%)',
+        }}
+      />
+
       {title && <h2 className="text-2xl font-bold tracking-tight text-balance sm:text-3xl">{title}</h2>}
       {description && (
         <p className="mx-auto mt-3 max-w-xl text-pretty text-muted-foreground">{description}</p>

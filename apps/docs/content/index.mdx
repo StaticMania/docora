@@ -4,7 +4,7 @@ description: Beautiful documentation for Next.js and React.
 layout: landing
 ---
 
-::hero{announcement="Docora 0.1" announcement-to="/docs/getting-started/introduction" title="Beautiful documentation for Next.js and React." description="An open-source documentation framework built with TypeScript, Tailwind CSS and Markdown. Fast, beautiful, SEO-friendly docs with minimal configuration."}
+::hero{announcement="Docora 0.1 is out" announcement-to="/docs/getting-started/introduction" title="Beautiful documentation for Next.js and React." description="An open-source framework for TypeScript, Tailwind CSS and Markdown. Routing, search, SEO and i18n are built in — you write files on disk."}
 
 :::hero-actions
 ::::cta{label="Get started" to="/docs/getting-started/introduction" icon="i-lucide-rocket"}
@@ -15,9 +15,45 @@ layout: landing
 
 :::
 
+:::hero-preview{filename="content/docs/getting-started.mdx"}
+
+```mdx
+---
+title: Getting started
+description: Scaffold a site and start writing.
+---
+
+::note
+Every file under `content/` is a route.
 ::
 
-::section{eyebrow="Why Docora" title="Everything a documentation site needs" description="Routing, navigation, search, SEO and internationalisation are built in. You write Markdown."}
+Write Markdown, drop in callouts, and the sidebar
+picks the page up on its own.
+```
+
+:::
+
+::
+
+::logo-cloud
+:::logo{label="Next.js" icon="i-lucide-box"}
+:::
+
+:::logo{label="React" icon="i-lucide-puzzle"}
+:::
+
+:::logo{label="TypeScript" icon="i-lucide-code"}
+:::
+
+:::logo{label="Tailwind CSS" icon="i-lucide-palette"}
+:::
+
+:::logo{label="MDX" icon="i-lucide-file-text"}
+:::
+
+::
+
+::section{eyebrow="Why Docora" title="Everything a documentation site needs" description="A Next.js theme, not a CMS. You keep the App Router, the content folder, and a single config file."}
 
 :::feature-grid
 ::::feature{title="File-based routing" icon="i-lucide-folder-tree" to="/docs/getting-started/project-structure"}
@@ -40,7 +76,7 @@ order and never appear in the URL.
     one config file.
     ::::
 
-    ::::feature{title="Internationalisation" icon="i-lucide-languages"}
+    ::::feature{title="Internationalisation" icon="i-lucide-languages" to="/docs/getting-started/project-structure"}
     A folder per locale. Routes, sidebar, pager, search and interface strings
     all follow, with hreflang emitted for you.
     ::::
@@ -54,28 +90,92 @@ order and never appear in the URL.
 
 ::
 
-::section{eyebrow="Authoring" title="Write Markdown, get a component" description="MDC syntax keeps the source readable while the page stays rich."}
+::section{eyebrow="Authoring" title="Write Markdown, get a component" description="MDC keeps the source readable. The page stays rich — callouts, cards, tabs, steps and code that does more than highlight."}
 
-:::feature-grid{cols="2"}
-::::feature{title="Callouts, cards, tabs and steps" icon="i-lucide-blocks"}
-Every prose component is available by name. Nothing to import, nothing to
-register.
+:::code-preview
+
+::::note
+Drop an `.mdx` file into `content/` and the route appears on its own.
 ::::
 
-    ::::feature{title="Code blocks that do more" icon="i-lucide-code"}
-    Filenames, line highlighting, grouped tabs, collapsible blocks and a copy
-    button on every fence.
+::::tip{to="/docs/essentials/components"}
+Prose components are available by name. Nothing to import, nothing to register.
+::::
+
+#code
+```mdc
+::note
+Drop an `.mdx` file into `content/` and the route appears on its own.
+::
+
+::tip{to="/docs/essentials/components"}
+Prose components are available by name. Nothing to import, nothing to register.
+::
+```
+
+:::
+
+:::feature-grid{cols="2"}
+::::feature{title="Callouts, cards, tabs and steps" icon="i-lucide-blocks" to="/docs/essentials/components"}
+Every prose component is available by name. Accordion, fields, video and
+collapsible blocks ship alongside them.
+::::
+
+    ::::feature{title="Code blocks that do more" icon="i-lucide-code" to="/docs/essentials/code-blocks"}
+    Filenames, line highlighting, grouped tabs, collapsible blocks, file trees
+    and a copy button on every fence.
     ::::
 
 :::
 
 ::
 
-::section{eyebrow="Get going" title="Up and running in one command" description="Scaffold a site, start the dev server, and start writing."}
+::section{eyebrow="Project shape" title="A Next.js app, a content folder" description="Scaffolding gives you an App Router project. Add pages as files; keep using anything else Next.js already does."}
+
+:::code-tree{default-value="docs.config.ts"}
+
+```ts [docs.config.ts]
+import { defineDocsConfig } from 'docora'
+
+export default defineDocsConfig({
+  site: {
+    name: 'Acme',
+    description: 'Acme documentation',
+  },
+})
+```
+
+```mdx [content/docs/1.getting-started/1.introduction.mdx]
+---
+title: Introduction
+description: What the theme gives you.
+icon: house
+---
+
+The theme ships the chrome. You supply MDX
+and a `docs.config.ts`.
+```
+
+```bash [content/]
+content/
+├── index.mdx                 # /
+└── docs/
+    └── 1.getting-started/
+        └── 1.introduction.mdx
+```
+
+:::
+
+::
+
+::section{eyebrow="Get going" title="Up and running in one command" description="Scaffold a site, start the dev server, and start writing. Node.js 20.9 or later is required."}
 
 :::steps{level="3"}
 
 ### Create a project
+
+The CLI detects your package manager and can scaffold a single-language or
+i18n starter.
 
 ```bash [Terminal]
 npx create-docora my-docs
@@ -87,10 +187,67 @@ npx create-docora my-docs
 cd my-docs && npm run dev
 ```
 
+Preview the site at [http://localhost:3000](http://localhost:3000).
+
 ### Add a page
 
 Drop an `.mdx` file into `content/` and the route and sidebar entry appear on
-their own.
+their own. Head to [Project structure](/docs/getting-started/project-structure)
+when you want folders, prefixes and locales.
+
+:::
+
+::
+
+::section{eyebrow="Guides" title="Where to go next" description="Pick a path. Each guide is a file in the repo, the same way your docs will be."}
+
+:::card-group
+::::card{title="Installation" icon="i-lucide-download" to="/docs/getting-started/installation"}
+Scaffold a site, or wire the theme into an existing Next.js app.
+::::
+
+    ::::card{title="Configuration" icon="i-lucide-settings" to="/docs/core-concepts/configuration"}
+    Site name, header links, navigation, search and footer — one typed object.
+    ::::
+
+    ::::card{title="Customization" icon="i-lucide-palette" to="/docs/core-concepts/customization"}
+    Recolour the tokens, or replace a layout slot entirely.
+    ::::
+
+    ::::card{title="AI and agents" icon="i-lucide-bot" to="/docs/ai/llms-txt"}
+    `llms.txt`, an MCP server and skills so tools can read the corpus.
+    ::::
+
+:::
+
+::
+
+::section{eyebrow="FAQ" title="Questions, answered" description="Short answers for the things people usually ask before they scaffold."}
+
+:::accordion
+
+::::accordion-item{label="Do I need a CMS?" icon="i-lucide-circle-help"}
+No. Pages are Markdown files. Git is the workflow, and you can still add
+ordinary App Router routes next to the catch-all when a page needs custom
+React.
+::::
+
+    ::::accordion-item{label="Can I add this to an existing Next.js app?" icon="i-lucide-circle-help"}
+    Yes. Docora is a theme package. Install `docora`, wrap Next config with
+    `withDocora`, and point it at a `content/` folder. See
+    [Installation](/docs/getting-started/installation).
+    ::::
+
+    ::::accordion-item{label="How does search work?" icon="i-lucide-circle-help"}
+    The index is built when the site compiles. There is no hosted search
+    service and nothing extra to deploy. Open it from the header or with
+    :kbd{value="Ctrl"} :kbd{value="K"}.
+    ::::
+
+    ::::accordion-item{label="Can language models read the docs?" icon="i-lucide-circle-help"}
+    Yes. Every site exposes `/llms.txt`, full-corpus `/llms-full.txt`, raw
+    Markdown at `/raw/{path}.md`, and an MCP server at `/mcp`.
+    ::::
 
 :::
 
