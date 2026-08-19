@@ -36,19 +36,19 @@ picks the page up on its own.
 ::
 
 ::logo-cloud
-:::logo{label="Next.js" icon="i-lucide-box"}
+:::logo{label="Next.js" src="/nextjs.svg" invert}
 :::
 
-:::logo{label="React" icon="i-lucide-puzzle"}
+:::logo{label="React" src="/reactjs.svg"}
 :::
 
-:::logo{label="TypeScript" icon="i-lucide-code"}
+:::logo{label="TypeScript" src="/typescript.svg"}
 :::
 
-:::logo{label="Tailwind CSS" icon="i-lucide-palette"}
+:::logo{label="Tailwind CSS" src="/tailwind.svg"}
 :::
 
-:::logo{label="MDX" icon="i-lucide-file-text"}
+:::logo{label="MDX" src="/mdx.svg"}
 :::
 
 ::
@@ -103,6 +103,7 @@ Prose components are available by name. Nothing to import, nothing to register.
 ::::
 
 #code
+
 ```mdc
 ::note
 Drop an `.mdx` file into `content/` and the route appears on its own.
@@ -112,8 +113,6 @@ Drop an `.mdx` file into `content/` and the route appears on its own.
 Prose components are available by name. Nothing to import, nothing to register.
 ::
 ```
-
-:::
 
 :::feature-grid{cols="2"}
 ::::feature{title="Callouts, cards, tabs and steps" icon="i-lucide-blocks" to="/docs/essentials/components"}
@@ -132,17 +131,17 @@ collapsible blocks ship alongside them.
 
 ::section{eyebrow="Project shape" title="A Next.js app, a content folder" description="Scaffolding gives you an App Router project. Add pages as files; keep using anything else Next.js already does."}
 
-:::code-tree{default-value="docs.config.ts"}
+:::code-tree{default-value="docs.config.ts" class="mx-auto max-w-3xl"}
 
 ```ts [docs.config.ts]
-import { defineDocsConfig } from 'docora'
+import { defineDocsConfig } from "docora";
 
 export default defineDocsConfig({
   site: {
-    name: 'Acme',
-    description: 'Acme documentation',
+    name: "Acme",
+    description: "Acme documentation",
   },
-})
+});
 ```
 
 ```mdx [content/docs/1.getting-started/1.introduction.mdx]
@@ -152,15 +151,26 @@ description: What the theme gives you.
 icon: house
 ---
 
-The theme ships the chrome. You supply MDX
-and a `docs.config.ts`.
+Every file under `content/` is a route.
+Numeric prefixes order the sidebar
+and never appear in the URL.
+```
+
+```tsx [app/layout.tsx]
+import { DocsRoot } from "docora";
+import docsConfig from "../docs.config";
+
+export default function RootLayout({ children }) {
+  return <DocsRoot config={docsConfig}>{children}</DocsRoot>;
+}
 ```
 
 ```bash [content/]
 content/
-├── index.mdx                 # /
+├── index.mdx
 └── docs/
     └── 1.getting-started/
+        ├── .navigation.yml
         └── 1.introduction.mdx
 ```
 

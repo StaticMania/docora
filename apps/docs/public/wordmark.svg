@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 152 32" fill="none" role="img" aria-label="Docora">
+  <defs>
+    <linearGradient id="docora-wordmark" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34D399" />
+      <stop offset="1" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7.5" fill="url(#docora-wordmark)" />
+  <path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M8 6h7a10 10 0 0 1 0 20H8V6Zm5 5v10h2a5 5 0 0 0 0-10h-2Z" />
+  <text x="44" y="23" font-family="'Public Sans', ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="700" letter-spacing="-0.8" fill="currentColor">Docora</text>
+</svg>

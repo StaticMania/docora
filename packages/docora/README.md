@@ -223,16 +223,16 @@ Shipped components: `callout` (plus `note`, `tip`, `warning`, `caution`),
 `video`, and the code wrappers `code-group`, `code-tree`, `code-collapse`,
 `code-preview`.
 
-Fenced code takes a filename and line range in its meta — ``` ```ts [nuxt.config.ts]{3-5} ``` —
+Fenced code takes a filename and line range in its meta — ``` ```ts [next.config.ts]{3-5} ``` —
 and every block gets a copy button.
 
 The table of contents uses a "circuit" rail: a masked SVG path that steps
 sideways where the heading list changes depth, with a coloured segment spanning
 whichever headings are on screen. `DocsRoot` also mounts a route-change
-progress bar modelled on Nuxt's loading indicator.
+progress bar during client-side navigation.
 
-The palette is a zinc neutral ramp with an emerald primary, in the semantic
-roles Nuxt UI exposes (`background`, `elevated`, `accented`, `foreground`,
+The palette is a zinc neutral ramp with an emerald primary, in these semantic
+roles (`background`, `elevated`, `accented`, `foreground`,
 `muted-foreground`, `dimmed`, `highlighted`). `DocsRoot` loads Public Sans
 through `next/font` and binds it to `--docs-font-sans`; redefine any token
 after the stylesheet import to reskin the theme.

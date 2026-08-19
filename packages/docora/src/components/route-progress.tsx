@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 
 import { startsNavigation } from './route-progress-target'
 
-/** Nuxt's loading-indicator defaults. */
+/** Duration, throttle and hide timings for the bar. */
 const DURATION = 2000
 const THROTTLE = 200
 const HIDE_DELAY = 500
@@ -13,7 +13,7 @@ const RESET_DELAY = 400
 /** Give up and complete the bar if a navigation never lands. */
 const SAFETY_TIMEOUT = DURATION * 3
 
-/** Nuxt's `defaultEstimatedProgress`: fast at first, then asymptotic. */
+/** Fast at first, then asymptotic. */
 function estimatedProgress(elapsed: number): number {
   const completion = (elapsed / DURATION) * 100
   return ((2 / Math.PI) * 100 * Math.atan(completion / 50))

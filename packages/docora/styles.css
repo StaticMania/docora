@@ -5,9 +5,8 @@
  *   @import "tailwindcss";
  *   @import "docora/styles.css";
  *
- * A zinc neutral ramp with an emerald primary, using the same semantic
- * roles Nuxt UI exposes (bg / elevated / accented, text / muted / dimmed /
- * highlighted).
+ * A zinc neutral ramp with an emerald primary, using semantic roles
+ * (bg / elevated / accented, text / muted / dimmed / highlighted).
  */
 
 /* Tailwind only scans the app it runs in, so point it at the theme sources too. */
@@ -63,7 +62,6 @@
 }
 
 :root {
-  /* Nuxt UI's --ui-radius. */
   --radius: 0.25rem;
   /* Header height; the sticky asides pin directly beneath it. */
   --docs-header-height: 4rem;

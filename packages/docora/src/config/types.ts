@@ -79,6 +79,8 @@ export interface DocsConfig {
   footer?: {
     credits?: string
     links?: NavLink[]
+    /** Grouped link columns. Prefer this over a flat `links` list. */
+    columns?: { title: string; links: NavLink[] }[]
   }
 
   /** In-page AI chat. Only appears when a gateway credential is configured. */

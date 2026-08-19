@@ -59,8 +59,20 @@ links that use them arrive in Phase 8.
 
 ## footer
 
-`credits` on the left, `links` on the right. Omit both and the footer does not
-render.
+`credits` sit on the copyright row. `links` is a flat list; `columns` groups
+links under headings. Omit all three and the footer does not render.
+
+```ts
+footer: {
+  credits: 'Built with Docora',
+  columns: [
+    {
+      title: 'Docs',
+      links: [{ label: 'Introduction', href: '/docs/getting-started/introduction' }],
+    },
+  ],
+}
+```
 
 ## colorMode
 
@@ -69,8 +81,8 @@ render.
 
 ## Palette and typography
 
-The theme ships a zinc neutral ramp with an emerald primary, in the semantic
-roles Nuxt UI exposes.
+The theme ships a zinc neutral ramp with an emerald primary, in these semantic
+roles.
 
 | Token          | Light    | Dark      |
 | -------------- | -------- | --------- |
@@ -117,8 +129,10 @@ any other name is loaded lazily on the client.
 
 ## search
 
-The palette is on by default. `enabled: false` removes it and its trigger, and
-`endpoint` points at a different route if you serve the index elsewhere.
+The palette is on by default. With an empty query it lists the top-level
+documentation groups and colour-mode commands. `enabled: false` removes it and
+its trigger, and `endpoint` points at a different route if you serve the index
+elsewhere.
 
 ```ts
 search: { enabled: true, endpoint: '/api/search' }

@@ -17,13 +17,24 @@ export const OG_SIZE = { width: 1200, height: 630 }
  *
  * Title and description come from the query string, so one route serves every
  * page and Next can prerender the results.
+ *
+ * The site's logo is drawn on the card when `header.logo` is set; relative
+ * paths are resolved against the incoming request, so no absolute URL has to
+ * be configured for this to work.
  */
-export function createOgRoute(config: DocsConfig) {
+export function createOgRoute(config: DocsConfig, options: { logo?: string } = {}) {
   return {
     async GET(request: Request) {
-      const { searchParams } = new URL(request.url)
+      const { searchParams, origin } = new URL(request.url)
       const title = searchParams.get('title') ?? config.site.name
       const description = searchParams.get('description') ?? config.site.description ?? ''
+
+      const logoSource = options.logo ?? config.header?.logo?.dark ?? config.header?.logo?.light
+      const logo = logoSource
+        ? logoSource.startsWith('http') || logoSource.startsWith('data:')
+          ? logoSource
+          : new URL(logoSource, origin).toString()
+        : undefined
 
       return new ImageResponse(
         (
@@ -40,9 +51,16 @@ export function createOgRoute(config: DocsConfig) {
               backgroundImage: 'radial-gradient(circle at 85% 15%, #10b98133, transparent 55%)',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              <div style={{ width: 14, height: 14, borderRadius: 999, backgroundColor: '#34d399' }} />
-              <div style={{ fontSize: 28, color: '#a1a1aa', letterSpacing: -0.5 }}>{config.site.name}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+              {logo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={logo} width={64} height={64} alt="" />
+              ) : (
+                <div style={{ width: 14, height: 14, borderRadius: 999, backgroundColor: '#34d399' }} />
+              )}
+              <div style={{ fontSize: 32, color: '#e4e4e7', fontWeight: 600, letterSpacing: -0.5 }}>
+                {config.site.name}
+              </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>

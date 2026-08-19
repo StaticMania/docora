@@ -22,6 +22,6 @@ export default defineDocsConfig({
   },
 
   footer: {
-    credits: `Built with Docora · ${new Date().getFullYear()}`,
+    credits: 'Built with Docora',
   },
 });

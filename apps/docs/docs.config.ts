@@ -11,6 +11,10 @@ export default defineDocsConfig({
   },
 
   header: {
+    logo: {
+      light: '/logo.svg',
+      alt: 'Docora',
+    },
     links: [],
   },
 
@@ -50,9 +54,24 @@ export default defineDocsConfig({
 
   footer: {
     credits: "Built with Docora",
-    links: [
-      { label: "Docs", href: "/docs/getting-started/introduction" },
-      { label: "GitHub", href: "https://github.com/StaticMania/docora" },
+    columns: [
+      {
+        title: "Docs",
+        links: [
+          { label: "Introduction", href: "/docs/getting-started/introduction" },
+          { label: "Installation", href: "/docs/getting-started/installation" },
+          { label: "Configuration", href: "/docs/core-concepts/configuration" },
+          { label: "Components", href: "/docs/essentials/components" },
+        ],
+      },
+      {
+        title: "Resources",
+        links: [
+          { label: "GitHub", href: "https://github.com/StaticMania/docora" },
+          { label: "Report an issue", href: "https://github.com/StaticMania/docora/issues" },
+          { label: "llms.txt", href: "/llms.txt" },
+        ],
+      },
     ],
   },
 });

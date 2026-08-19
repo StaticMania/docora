@@ -16,10 +16,12 @@ export interface CodeTreeProps {
   defaultValue?: string
   'default-value'?: string
   className?: string
+  /** MDC `{class="…"}` lands here rather than on `className`. */
+  class?: string
 }
 
 /** File tree beside the selected file's contents. */
-export function CodeTree({ children, className, ...props }: CodeTreeProps) {
+export function CodeTree({ children, className, class: htmlClass, ...props }: CodeTreeProps) {
   const blocks = Children.toArray(children).filter(isValidElement<CodeChildProps>)
   const names = blocks.map((block, index) => block.props['data-filename'] ?? `File ${index + 1}`)
 
@@ -30,7 +32,13 @@ export function CodeTree({ children, className, ...props }: CodeTreeProps) {
   if (blocks.length === 0) return null
 
   return (
-    <div className={cn('my-5 overflow-hidden rounded-md border border-border bg-muted sm:flex', className)}>
+    <div
+      className={cn(
+        'my-5 overflow-hidden rounded-xl border border-border bg-muted shadow-xl shadow-black/5 sm:flex',
+        className,
+        htmlClass,
+      )}
+    >
       <div className="shrink-0 border-b border-border p-2 sm:w-56 sm:border-e sm:border-b-0">
         {names.map((name, index) => (
           <button
@@ -38,10 +46,10 @@ export function CodeTree({ children, className, ...props }: CodeTreeProps) {
             type="button"
             onClick={() => setActive(index)}
             className={cn(
-              'flex w-full items-center gap-1.5 rounded-sm px-2 py-1 text-start text-xs transition-colors',
+              'flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-start text-xs transition-colors',
               index === active
                 ? 'bg-elevated font-medium text-primary'
-                : 'text-muted-foreground hover:text-highlighted',
+                : 'text-muted-foreground hover:bg-elevated/50 hover:text-highlighted',
             )}
           >
             <Icon name={iconForFilename(name)} className="size-3.5 shrink-0" />

@@ -16,6 +16,12 @@ export interface Messages {
   searchNavigate: string
   searchOpen: string
   searchClose: string
+  searchLinks: string
+  searchTheme: string
+  themeSystem: string
+  themeLight: string
+  themeDark: string
+  close: string
   tocTitle: string
   previous: string
   next: string

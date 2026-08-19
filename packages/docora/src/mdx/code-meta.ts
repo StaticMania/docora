@@ -12,8 +12,8 @@ import { visit } from 'unist-util-visit'
 /**
  * Turns fence extras into the meta rehype-pretty-code understands:
  *
- * ```ts [nuxt.config.ts]
- * ```ts [nuxt.config.ts]{1,3-5}
+ * ```ts [next.config.ts]
+ * ```ts [next.config.ts]{1,3-5}
  * ```ts [app.css] line-numbers
  * ```
  */
@@ -98,8 +98,8 @@ export const prettyCodeOptions: PrettyCodeOptions = {
  * Shiki pipeline can render a header. Prefer Pretty Code for compiled docs;
  * this remains for anyone highlighting with Shiki directly.
  *
- * ```ts [nuxt.config.ts]
- * ```ts [nuxt.config.ts]{1,3-5}
+ * ```ts [next.config.ts]
+ * ```ts [next.config.ts]{1,3-5}
  * ```
  */
 export function transformerCodeMeta(): ShikiTransformer {
@@ -148,6 +148,8 @@ const NAMED_ICONS: Record<string, string> = {
 }
 
 export function iconForFilename(filename: string): string {
+  if (filename.endsWith('/')) return 'folder'
+
   const lower = filename.toLowerCase()
   if (NAMED_ICONS[lower]) return NAMED_ICONS[lower]!
 
