@@ -1,0 +1,55 @@
+---
+title: Components
+description: Callouts, cards, accordions and other MDC blocks.
+icon: puzzle
+---
+
+[MDC syntax](https://content.nuxt.com/docs/files/markdown#mdc-syntax) puts
+components in your Markdown with no imports.
+
+## Accordion
+
+::accordion
+:::accordion-item{label="What is Docora?" icon="i-lucide-circle-help"}
+A documentation framework for Next.js: a theme, a CLI and starters. Content is
+Markdown; routing comes from the file tree.
+:::
+
+:::accordion-item{label="Where do pages live?" icon="i-lucide-circle-help"}
+Under `content/{locale}/`. Create a folder with `.navigation.yml` to add a
+sidebar section like this one.
+:::
+::
+
+## Badge
+
+::badge
+**v0.0.1**
+::
+
+## Callouts
+
+::note
+Extra context that is not a warning.
+::
+
+::tip{to="/en/docs/getting-started/writing-content"}
+More patterns — steps, tabs and cards — are on
+[Writing content](/en/docs/getting-started/writing-content).
+::
+
+::warning
+Something the reader should not skip.
+::
+
+## Cards
+
+::card-group
+:::card{title="Markdown" icon="i-lucide-heading-1" to="/en/docs/essentials/markdown"}
+Titles, lists, tables and keyboard shortcuts.
+:::
+
+:::card{title="Code blocks" icon="i-lucide-code" to="/en/docs/essentials/code-blocks"}
+Filenames, highlighted lines and a copy button.
+:::
+::

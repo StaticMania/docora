@@ -1,0 +1,51 @@
+---
+title: Code Blocks
+description: Filenames, highlighted lines and copy buttons.
+icon: code
+---
+
+Inline code looks like `defineDocsConfig`. Fenced blocks are highlighted at
+build time and get a copy button on hover.
+
+## Filename
+
+Put a name in brackets and it appears in the header:
+
+```ts [docs.config.ts]
+import { defineDocsConfig } from 'docora'
+
+export default defineDocsConfig({
+  site: { name: 'My Docs' },
+})
+```
+
+## Highlighted lines
+
+Append line numbers in braces to draw attention to part of a snippet:
+
+```ts [next.config.ts]{3-5}
+import { withDocora } from 'docora/next'
+
+export default withDocora({
+  contentDir: 'content',
+})
+```
+
+## Line numbers
+
+Add `line-numbers` to number every line:
+
+```css [app/globals.css] line-numbers
+@import 'tailwindcss';
+@import 'docora/styles.css';
+
+:root {
+  --primary: oklch(69.6% 0.17 162.48);
+}
+```
+
+::tip{to="/en/docs/essentials/components"}
+Wrap several snippets in tabs when the same step differs by package manager.
+See [Components](/en/docs/essentials/components) and
+[Writing content](/en/docs/getting-started/writing-content).
+::

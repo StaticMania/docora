@@ -6,6 +6,7 @@ export default defineConfig({
   outExtension: () => ({ js: '.mjs' }),
   target: 'node20',
   clean: true,
-  // The CLI has no runtime dependencies, so nothing needs bundling in.
+  // Bundle Clack/nypm so `npx create-docora` stays a single file.
+  noExternal: [/.*/],
   banner: { js: '#!/usr/bin/env node' },
 })

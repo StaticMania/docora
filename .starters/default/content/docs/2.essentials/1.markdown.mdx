@@ -1,0 +1,43 @@
+---
+title: Markdown
+description: Titles, lists, tables and the rest of standard Markdown.
+icon: heading-1
+---
+
+Documents are Markdown. Headings become anchors and fill the table of contents.
+
+## Text
+
+| Style         | Syntax           | Output         |
+| ------------- | ---------------- | -------------- |
+| Bold          | `**bold**`       | **bold**       |
+| Italic        | `_italic_`       | _italic_       |
+| Inline code   | `` `code` ``     | `code`         |
+| Link          | `[label](/docs)` | [label](/docs/getting-started/introduction) |
+
+Press :kbd{value="Ctrl"} :kbd{value="K"} to open search.
+
+## Lists
+
+- First item
+- Second item
+  - Nested item
+- [x] Task that is done
+- [ ] Task still open
+
+1. Create a file under `content/`
+2. Give it a title in frontmatter
+3. The sidebar picks it up on its own
+
+## Tables
+
+| Convention        | Effect                        |
+| ----------------- | ----------------------------- |
+| `1.` prefix       | Sets sidebar order            |
+| `.navigation.yml` | Sets a section title and icon |
+| `navigation: false` | Hides a page from the sidebar |
+
+::tip{to="/docs/essentials/components"}
+MDC components sit on top of Markdown — callouts, cards, tabs and steps need
+no imports. See [Components](/docs/essentials/components).
+::

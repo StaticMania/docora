@@ -1,0 +1,100 @@
+---
+title: Writing Content
+description: Markdown, MDC components and a few patterns to copy.
+icon: pencil
+---
+
+Documents are Markdown with [MDC syntax](https://content.nuxt.com/docs/files/markdown#mdc-syntax)
+on top, so components need no imports.
+
+## Callouts
+
+::note
+Use `note` for extra context that is not a warning.
+::
+
+::tip
+`tip` highlights a recommended approach.
+::
+
+::warning
+`warning` flags something that can go wrong.
+::
+
+## Steps
+
+::steps{level="3"}
+
+### Create a file
+
+Add `content/docs/guides/1.overview.mdx`. The `1.` sets sidebar order.
+
+### Give the section a name
+
+Put a `.navigation.yml` in the folder:
+
+```yaml
+title: Guides
+icon: book-open
+```
+
+### Write the page
+
+Frontmatter sets the title, description and icon. Everything below is the body.
+
+::
+
+## Tabs and code
+
+::tabs
+:::tabs-item{label="npm" icon="i-lucide-package"}
+
+```bash [Terminal]
+npx create-docora my-docs
+```
+
+:::
+
+:::tabs-item{label="pnpm" icon="i-lucide-package"}
+
+```bash [Terminal]
+pnpm dlx create-docora my-docs
+```
+
+:::
+
+:::tabs-item{label="bun" icon="i-lucide-package"}
+
+```bash [Terminal]
+bunx create-docora my-docs
+```
+
+:::
+::
+
+Fences take a filename. Every block has a copy button:
+
+```ts [lib/source.ts]
+import { createDocsSource, defaultContentDir } from 'docora'
+
+export const source = createDocsSource({ contentDir: defaultContentDir() })
+```
+
+## Cards
+
+::card-group
+:::card{title="Project structure" icon="i-lucide-folder-tree" to="/docs/getting-started/project-structure"}
+How files become routes and sidebar sections.
+:::
+
+:::card{title="Configuration" icon="i-lucide-settings" to="/docs/getting-started/configuration"}
+Site name, header links, socials and footer.
+:::
+
+:::card{title="Components" icon="i-lucide-puzzle" to="/docs/essentials/components"}
+Accordions, badges and callouts in the Essentials section.
+:::
+::
+
+Delete these starter pages when you are ready — they are only here to show the
+patterns.

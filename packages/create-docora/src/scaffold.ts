@@ -1,4 +1,4 @@
-import { cp, readdir, readFile, rename, writeFile } from 'node:fs/promises'
+import { cp, readdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -33,6 +33,16 @@ export async function isUsableTarget(directory: string): Promise<boolean> {
 
   const entries = await readdir(directory)
   return entries.filter(entry => entry !== '.git' && entry !== '.DS_Store').length === 0
+}
+
+/** Clears a directory in place so `.` can be overridden without deleting the cwd. */
+export async function emptyDirectory(directory: string): Promise<void> {
+  if (!existsSync(directory)) return
+
+  const entries = await readdir(directory)
+  await Promise.all(
+    entries.map(entry => rm(path.join(directory, entry), { recursive: true, force: true })),
+  )
 }
 
 export interface ScaffoldOptions {

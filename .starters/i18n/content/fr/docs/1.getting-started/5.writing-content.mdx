@@ -1,0 +1,106 @@
+---
+title: Rédiger le contenu
+description: Markdown, composants MDC et quelques motifs à copier.
+icon: pencil
+---
+
+Les documents sont du Markdown avec la
+[syntaxe MDC](https://content.nuxt.com/docs/files/markdown#mdc-syntax) par-dessus,
+donc les composants n'ont pas besoin d'imports.
+
+## Encadrés
+
+::note
+Utilisez `note` pour un contexte qui n'est pas un avertissement.
+::
+
+::tip
+`tip` met en avant une approche recommandée.
+::
+
+::warning
+`warning` signale quelque chose qui peut mal tourner.
+::
+
+## Étapes
+
+::steps{level="3"}
+
+### Créer un fichier
+
+Ajoutez `content/fr/docs/guides/1.overview.mdx`. Le `1.` fixe l'ordre.
+
+### Nommer la section
+
+Placez un `.navigation.yml` dans le dossier :
+
+```yaml
+title: Guides
+icon: book-open
+```
+
+### Traduire
+
+Copiez le fichier dans `content/en/docs/guides/` et traduisez le corps. Les
+routes et le sélecteur de langue suivent automatiquement.
+
+::
+
+## Onglets et code
+
+::tabs
+:::tabs-item{label="npm" icon="i-lucide-package"}
+
+```bash [Terminal]
+npx create-docora my-docs -t i18n
+```
+
+:::
+
+:::tabs-item{label="pnpm" icon="i-lucide-package"}
+
+```bash [Terminal]
+pnpm dlx create-docora my-docs -t i18n
+```
+
+:::
+
+:::tabs-item{label="bun" icon="i-lucide-package"}
+
+```bash [Terminal]
+bunx create-docora my-docs -t i18n
+```
+
+:::
+::
+
+Les fences acceptent un nom de fichier. Chaque bloc a un bouton copier :
+
+```ts [lib/source.ts]
+import { createDocsSource, defaultContentDir } from 'docora'
+import docsConfig from '../docs.config'
+
+export const source = createDocsSource({
+  contentDir: defaultContentDir(),
+  i18n: docsConfig.i18n,
+})
+```
+
+## Cartes
+
+::card-group
+:::card{title="Structure du projet" icon="i-lucide-folder-tree" to="/fr/docs/getting-started/project-structure"}
+Comment les dossiers de locale deviennent des routes.
+:::
+
+:::card{title="Configuration" icon="i-lucide-settings" to="/fr/docs/getting-started/configuration"}
+Nom du site, locales, liens d'en-tête et pied de page.
+:::
+
+:::card{title="Composants" icon="i-lucide-puzzle" to="/fr/docs/essentials/components"}
+Accordéons, badges et encadrés dans la section Essentiels.
+:::
+::
+
+Supprimez ces pages d'exemple quand vous serez prêt — elles ne sont là que
+pour montrer les motifs.

@@ -1,0 +1,44 @@
+---
+title: Markdown
+description: Titres, listes, tableaux et le reste du Markdown standard.
+icon: heading-1
+---
+
+Les documents sont du Markdown. Les titres deviennent des ancres et remplissent
+la table des matières.
+
+## Texte
+
+| Style         | Syntaxe          | Rendu          |
+| ------------- | ---------------- | -------------- |
+| Gras          | `**gras**`       | **gras**       |
+| Italique      | `_italique_`     | _italique_     |
+| Code inline   | `` `code` ``     | `code`         |
+| Lien          | `[label](/fr/docs)` | [label](/fr/docs/getting-started/introduction) |
+
+Appuyez sur :kbd{value="Ctrl"} :kbd{value="K"} pour ouvrir la recherche.
+
+## Listes
+
+- Premier élément
+- Deuxième élément
+  - Élément imbriqué
+- [x] Tâche terminée
+- [ ] Tâche encore ouverte
+
+1. Créez un fichier sous `content/fr/`
+2. Donnez-lui un titre dans le frontmatter
+3. Copiez-le dans `content/en/` et traduisez-le
+
+## Tableaux
+
+| Convention        | Effet                                      |
+| ----------------- | ------------------------------------------ |
+| Préfixe `1.`      | Fixe l'ordre dans la barre latérale        |
+| `.navigation.yml` | Titre et icône de la section               |
+| `navigation: false` | Masque une page de la barre latérale     |
+
+::tip{to="/fr/docs/essentials/components"}
+Les composants MDC s'ajoutent au Markdown — encadrés, cartes, onglets et
+étapes sans imports. Voir [Composants](/fr/docs/essentials/components).
+::

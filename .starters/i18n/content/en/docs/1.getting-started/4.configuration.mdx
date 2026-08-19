@@ -1,0 +1,69 @@
+---
+title: Configuration
+description: Name, locales, links and footer live in one file.
+icon: settings
+---
+
+`docs.config.ts` is the only file you need to brand the site and list locales.
+Pass the result to `DocsRoot` in `app/layout.tsx`.
+
+```ts [docs.config.ts]
+import { defineDocsConfig } from 'docora'
+
+export default defineDocsConfig({
+  site: {
+    name: 'My Docs',
+    description: 'Documentation built with Docora.',
+  },
+  i18n: {
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', name: 'English' },
+      { code: 'fr', name: 'Français' },
+    ],
+  },
+  header: {
+    links: [{ label: 'Docs', href: '/en/docs/getting-started/introduction' }],
+  },
+})
+```
+
+## Common options
+
+::field-group
+:::field{name="site.name" type="string" required}
+Shown in the header and used as the metadata title.
+:::
+
+:::field{name="i18n.locales" type="Locale[]" required}
+Each `code` must match a folder under `content/`.
+:::
+
+:::field{name="i18n.defaultLocale" type="string"}
+The locale `/` redirects to. Usually `en`.
+:::
+
+:::field{name="header.links" type="NavLink[]"}
+Top-level links beside the logo. Prefix hrefs with the locale.
+:::
+
+:::field{name="socials" type="Record<string, string>"}
+Profile URLs. `github`, `x`, `discord` and others get brand marks.
+:::
+
+:::field{name="colorMode.forced" type="'light' | 'dark'"}
+Pins the site to one colour mode and hides the toggle.
+:::
+::
+
+Recolour the theme by redefining CSS variables in `app/globals.css` after the
+Docora import:
+
+```css [app/globals.css]
+@import 'tailwindcss';
+@import 'docora/styles.css';
+
+:root {
+  --primary: oklch(69.6% 0.17 162.48);
+}
+```

@@ -1,0 +1,64 @@
+---
+title: Project Structure
+description: How folders become routes and sidebar sections.
+icon: folder-tree
+---
+
+Every file under `content/{locale}/` is a page. There are no route files to
+write.
+
+```
+content/
+├── en/
+│   ├── index.mdx                 # Landing page (/en)
+│   └── docs/
+│       └── 1.getting-started/
+│           ├── .navigation.yml
+│           ├── 1.introduction.mdx
+│           └── 3.project-structure.mdx
+└── fr/
+    ├── index.mdx                 # Landing page (/fr)
+    └── docs/
+        └── 1.getting-started/
+            └── 1.introduction.mdx
+```
+
+| File                                                       | Route                                        |
+| ---------------------------------------------------------- | -------------------------------------------- |
+| `content/en/index.mdx`                                     | `/en`                                        |
+| `content/en/docs/1.getting-started/1.introduction.mdx`     | `/en/docs/getting-started/introduction`      |
+| `content/fr/docs/1.getting-started/1.introduction.mdx`     | `/fr/docs/getting-started/introduction`      |
+
+A numeric prefix sets sidebar order and is stripped from the URL. Each locale
+gets its own sidebar from its own folder.
+
+## Sections
+
+A folder becomes a sidebar section. Give it a title and icon with
+`.navigation.yml`:
+
+```yaml [content/en/docs/1.getting-started/.navigation.yml]
+title: Getting Started
+icon: rocket
+```
+
+Without one, the folder name is humanised — `getting-started` becomes
+**Getting Started**.
+
+## The rest of the project
+
+```
+my-docs/
+├── content/en/       # English pages
+├── content/fr/       # French pages
+├── app/              # Next.js App Router
+├── public/           # Static assets
+├── lib/source.ts     # Content source (told about locales)
+├── docs.config.ts    # Site name, i18n, header, footer
+└── next.config.ts    # Wrap with withDocora
+```
+
+::tip
+Copy `content/en` to add a language, then register it in `docs.config.ts`.
+Pages that only exist in one locale simply do not appear in the others.
+::

@@ -1,0 +1,69 @@
+---
+title: Configuration
+description: Nom, locales, liens et pied de page dans un seul fichier.
+icon: settings
+---
+
+`docs.config.ts` est le seul fichier nécessaire pour habiller le site et lister
+les locales. Passez le résultat à `DocsRoot` dans `app/layout.tsx`.
+
+```ts [docs.config.ts]
+import { defineDocsConfig } from 'docora'
+
+export default defineDocsConfig({
+  site: {
+    name: 'My Docs',
+    description: 'Documentation built with Docora.',
+  },
+  i18n: {
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', name: 'English' },
+      { code: 'fr', name: 'Français' },
+    ],
+  },
+  header: {
+    links: [{ label: 'Docs', href: '/fr/docs/getting-started/introduction' }],
+  },
+})
+```
+
+## Options courantes
+
+::field-group
+:::field{name="site.name" type="string" required}
+Affiché dans l'en-tête et utilisé comme titre des métadonnées.
+:::
+
+:::field{name="i18n.locales" type="Locale[]" required}
+Chaque `code` doit correspondre à un dossier sous `content/`.
+:::
+
+:::field{name="i18n.defaultLocale" type="string"}
+La locale vers laquelle `/` redirige. En général `en`.
+:::
+
+:::field{name="header.links" type="NavLink[]"}
+Liens à côté du logo. Préfixez les href avec la locale.
+:::
+
+:::field{name="socials" type="Record<string, string>"}
+URLs de profil. `github`, `x`, `discord` et d'autres ont une marque.
+:::
+
+:::field{name="colorMode.forced" type="'light' | 'dark'"}
+Fige le site sur un mode et masque le basculeur.
+:::
+::
+
+Recolorez le thème en redéfinissant les variables CSS dans `app/globals.css`
+après l'import Docora :
+
+```css [app/globals.css]
+@import 'tailwindcss';
+@import 'docora/styles.css';
+
+:root {
+  --primary: oklch(69.6% 0.17 162.48);
+}
+```

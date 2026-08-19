@@ -1,0 +1,65 @@
+---
+title: Structure du projet
+description: Comment les dossiers deviennent des routes et des sections.
+icon: folder-tree
+---
+
+Chaque fichier sous `content/{locale}/` est une page. Il n'y a pas de fichiers
+de route à écrire.
+
+```
+content/
+├── en/
+│   ├── index.mdx                 # Page d'accueil (/en)
+│   └── docs/
+│       └── 1.getting-started/
+│           ├── .navigation.yml
+│           ├── 1.introduction.mdx
+│           └── 3.project-structure.mdx
+└── fr/
+    ├── index.mdx                 # Page d'accueil (/fr)
+    └── docs/
+        └── 1.getting-started/
+            └── 1.introduction.mdx
+```
+
+| Fichier                                                    | Route                                        |
+| ---------------------------------------------------------- | -------------------------------------------- |
+| `content/fr/index.mdx`                                     | `/fr`                                        |
+| `content/en/docs/1.getting-started/1.introduction.mdx`     | `/en/docs/getting-started/introduction`      |
+| `content/fr/docs/1.getting-started/1.introduction.mdx`     | `/fr/docs/getting-started/introduction`      |
+
+Un préfixe numérique fixe l'ordre dans la barre latérale et disparaît de l'URL.
+Chaque locale a sa propre barre latérale, d'après son propre dossier.
+
+## Sections
+
+Un dossier devient une section. Donnez-lui un titre et une icône avec
+`.navigation.yml` :
+
+```yaml [content/fr/docs/1.getting-started/.navigation.yml]
+title: Démarrage
+icon: rocket
+```
+
+Sans fichier, le nom du dossier est humanisé — `getting-started` devient
+**Getting started**.
+
+## Le reste du projet
+
+```
+my-docs/
+├── content/en/       # Pages anglaises
+├── content/fr/       # Pages françaises
+├── app/              # App Router Next.js
+├── public/           # Fichiers statiques
+├── lib/source.ts     # Source de contenu (locales)
+├── docs.config.ts    # Nom, i18n, en-tête, pied de page
+└── next.config.ts    # Envelopper avec withDocora
+```
+
+::tip
+Copiez `content/en` pour ajouter une langue, puis déclarez-la dans
+`docs.config.ts`. Une page qui n'existe que dans une locale n'apparaît pas
+dans les autres.
+::

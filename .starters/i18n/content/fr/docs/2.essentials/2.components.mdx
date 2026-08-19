@@ -1,0 +1,55 @@
+---
+title: Composants
+description: Encadrés, cartes, accordéons et autres blocs MDC.
+icon: puzzle
+---
+
+La [syntaxe MDC](https://content.nuxt.com/docs/files/markdown#mdc-syntax) place
+des composants dans votre Markdown sans imports.
+
+## Accordéon
+
+::accordion
+:::accordion-item{label="Qu'est-ce que Docora ?" icon="i-lucide-circle-help"}
+Un framework de documentation pour Next.js : un thème, un CLI et des starters.
+Le contenu est du Markdown ; le routage vient de l'arbre de fichiers.
+:::
+
+:::accordion-item{label="Où vivent les pages ?" icon="i-lucide-circle-help"}
+Sous `content/{locale}/`. Créez un dossier avec `.navigation.yml` pour ajouter
+une section comme celle-ci.
+:::
+::
+
+## Badge
+
+::badge
+**v0.0.1**
+::
+
+## Encadrés
+
+::note
+Un contexte qui n'est pas un avertissement.
+::
+
+::tip{to="/fr/docs/getting-started/writing-content"}
+D'autres motifs — étapes, onglets et cartes — sont sur
+[Rédiger le contenu](/fr/docs/getting-started/writing-content).
+::
+
+::warning
+Quelque chose que le lecteur ne doit pas manquer.
+::
+
+## Cartes
+
+::card-group
+:::card{title="Markdown" icon="i-lucide-heading-1" to="/fr/docs/essentials/markdown"}
+Titres, listes, tableaux et raccourcis clavier.
+:::
+
+:::card{title="Blocs de code" icon="i-lucide-code" to="/fr/docs/essentials/code-blocks"}
+Noms de fichiers, lignes surlignées et bouton copier.
+:::
+::

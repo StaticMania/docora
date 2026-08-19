@@ -1,0 +1,59 @@
+---
+title: Project Structure
+description: How folders become routes and sidebar sections.
+icon: folder-tree
+---
+
+Every file under `content/` is a page. There are no route files to write.
+
+```
+content/
+├── index.mdx                 # Landing page (/)
+└── docs/
+    └── 1.getting-started/
+        ├── .navigation.yml   # Section title and icon
+        ├── 1.introduction.mdx
+        ├── 2.installation.mdx
+        └── 3.project-structure.mdx
+```
+
+| File                                                | Route                                      |
+| --------------------------------------------------- | ------------------------------------------ |
+| `content/index.mdx`                                 | `/`                                        |
+| `content/docs/1.getting-started/1.introduction.mdx` | `/docs/getting-started/introduction`       |
+| `content/docs/1.getting-started/3.project-structure.mdx` | `/docs/getting-started/project-structure` |
+
+A numeric prefix sets sidebar order and is stripped from the URL.
+
+## Sections
+
+A folder becomes a sidebar section. Give it a title and icon with
+`.navigation.yml`:
+
+```yaml [content/docs/1.getting-started/.navigation.yml]
+title: Getting Started
+icon: rocket
+```
+
+Without one, the folder name is humanised — `getting-started` becomes
+**Getting Started**.
+
+## The rest of the project
+
+```
+my-docs/
+├── content/          # Markdown pages
+├── app/              # Next.js App Router
+├── public/           # Static assets
+├── lib/source.ts     # Content source
+├── docs.config.ts    # Site name, header, footer
+└── next.config.ts    # Wrap with withDocora
+```
+
+You can still add ordinary App Router pages beside the catch-all — for example
+`app/about/page.tsx` is served at `/about`.
+
+::tip
+Rename this folder, add another section, or delete these starter pages. The
+sidebar follows whatever is on disk.
+::

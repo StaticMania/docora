@@ -1,0 +1,65 @@
+---
+title: Configuration
+description: Name, links and footer live in one file.
+icon: settings
+---
+
+`docs.config.ts` is the only file you need to brand the site. Pass the result
+to `DocsRoot` in `app/layout.tsx`.
+
+```ts [docs.config.ts]
+import { defineDocsConfig } from 'docora'
+
+export default defineDocsConfig({
+  site: {
+    name: 'My Docs',
+    description: 'Documentation built with Docora.',
+  },
+  header: {
+    links: [{ label: 'Docs', href: '/docs/getting-started/introduction' }],
+  },
+  socials: {
+    github: 'https://github.com/your-org/your-repo',
+  },
+})
+```
+
+## Common options
+
+::field-group
+:::field{name="site.name" type="string" required}
+Shown in the header and used as the metadata title.
+:::
+
+:::field{name="site.url" type="string"}
+Set this to enable canonical URLs, the sitemap and social images.
+:::
+
+:::field{name="header.links" type="NavLink[]"}
+Top-level links beside the logo.
+:::
+
+:::field{name="socials" type="Record<string, string>"}
+Profile URLs. `github`, `x`, `discord` and others get brand marks.
+:::
+
+:::field{name="footer.credits" type="string"}
+Copyright row at the bottom of every page.
+:::
+
+:::field{name="colorMode.forced" type="'light' | 'dark'"}
+Pins the site to one colour mode and hides the toggle.
+:::
+::
+
+Recolour the theme by redefining CSS variables in `app/globals.css` after the
+Docora import:
+
+```css [app/globals.css]
+@import 'tailwindcss';
+@import 'docora/styles.css';
+
+:root {
+  --primary: oklch(69.6% 0.17 162.48);
+}
+```

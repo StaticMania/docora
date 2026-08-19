@@ -32,6 +32,8 @@ export default defineDocsConfig({
         links: [
           { label: 'Introduction', href: '/en/docs/getting-started/introduction' },
           { label: 'Installation', href: '/en/docs/getting-started/installation' },
+          { label: 'Project structure', href: '/en/docs/getting-started/project-structure' },
+          { label: 'Components', href: '/en/docs/essentials/components' },
         ],
       },
       {

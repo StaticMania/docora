@@ -1,0 +1,105 @@
+---
+title: Writing Content
+description: Markdown, MDC components and a few patterns to copy.
+icon: pencil
+---
+
+Documents are Markdown with [MDC syntax](https://content.nuxt.com/docs/files/markdown#mdc-syntax)
+on top, so components need no imports.
+
+## Callouts
+
+::note
+Use `note` for extra context that is not a warning.
+::
+
+::tip
+`tip` highlights a recommended approach.
+::
+
+::warning
+`warning` flags something that can go wrong.
+::
+
+## Steps
+
+::steps{level="3"}
+
+### Create a file
+
+Add `content/en/docs/guides/1.overview.mdx`. The `1.` sets sidebar order.
+
+### Give the section a name
+
+Put a `.navigation.yml` in the folder:
+
+```yaml
+title: Guides
+icon: book-open
+```
+
+### Translate it
+
+Copy the file into `content/fr/docs/guides/` and translate the body. Routes and
+the language switcher follow automatically.
+
+::
+
+## Tabs and code
+
+::tabs
+:::tabs-item{label="npm" icon="i-lucide-package"}
+
+```bash [Terminal]
+npx create-docora my-docs -t i18n
+```
+
+:::
+
+:::tabs-item{label="pnpm" icon="i-lucide-package"}
+
+```bash [Terminal]
+pnpm dlx create-docora my-docs -t i18n
+```
+
+:::
+
+:::tabs-item{label="bun" icon="i-lucide-package"}
+
+```bash [Terminal]
+bunx create-docora my-docs -t i18n
+```
+
+:::
+::
+
+Fences take a filename. Every block has a copy button:
+
+```ts [lib/source.ts]
+import { createDocsSource, defaultContentDir } from 'docora'
+import docsConfig from '../docs.config'
+
+export const source = createDocsSource({
+  contentDir: defaultContentDir(),
+  i18n: docsConfig.i18n,
+})
+```
+
+## Cards
+
+::card-group
+:::card{title="Project structure" icon="i-lucide-folder-tree" to="/en/docs/getting-started/project-structure"}
+How locale folders become routes and sidebars.
+:::
+
+:::card{title="Configuration" icon="i-lucide-settings" to="/en/docs/getting-started/configuration"}
+Site name, locales, header links and footer.
+:::
+
+:::card{title="Components" icon="i-lucide-puzzle" to="/en/docs/essentials/components"}
+Accordions, badges and callouts in the Essentials section.
+:::
+::
+
+Delete these starter pages when you are ready — they are only here to show the
+patterns.

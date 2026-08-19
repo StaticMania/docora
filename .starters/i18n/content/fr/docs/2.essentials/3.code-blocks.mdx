@@ -1,0 +1,51 @@
+---
+title: Blocs de code
+description: Noms de fichiers, lignes surlignées et boutons copier.
+icon: code
+---
+
+Le code inline ressemble à `defineDocsConfig`. Les blocs fence sont colorés
+au build et ont un bouton copier au survol.
+
+## Nom de fichier
+
+Mettez un nom entre crochets : il apparaît dans l'en-tête.
+
+```ts [docs.config.ts]
+import { defineDocsConfig } from 'docora'
+
+export default defineDocsConfig({
+  site: { name: 'My Docs' },
+})
+```
+
+## Lignes surlignées
+
+Ajoutez des numéros de ligne entre accolades pour attirer l'attention :
+
+```ts [next.config.ts]{3-5}
+import { withDocora } from 'docora/next'
+
+export default withDocora({
+  contentDir: 'content',
+})
+```
+
+## Numéros de ligne
+
+Ajoutez `line-numbers` pour numéroter chaque ligne :
+
+```css [app/globals.css] line-numbers
+@import 'tailwindcss';
+@import 'docora/styles.css';
+
+:root {
+  --primary: oklch(69.6% 0.17 162.48);
+}
+```
+
+::tip{to="/fr/docs/essentials/components"}
+Regroupez plusieurs extraits dans des onglets quand l'étape change selon le
+gestionnaire de paquets. Voir [Composants](/fr/docs/essentials/components) et
+[Rédiger le contenu](/fr/docs/getting-started/writing-content).
+::
