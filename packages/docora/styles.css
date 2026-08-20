@@ -170,6 +170,17 @@
     min-height: 1.5rem;
   }
 
+  .docs-code-compact pre {
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    padding-block: 0.5rem;
+  }
+
+  .docs-code-compact [data-line] {
+    padding-inline: 0.75rem;
+    min-height: 1.25rem;
+  }
+
   /* `{1,3-5}` in a fence's meta, or `// [!code highlight]`. */
   .docs-code [data-highlighted-line],
   .docs-code [data-line].highlighted {

@@ -1,26 +1,38 @@
 'use client'
-
-import { useEffect, useRef, useState, type ElementType } from 'react'
 import { useChat } from '@ai-sdk/react'
 import { DefaultChatTransport } from 'ai'
+import { ArrowUp, ListX, Loader2, Search, Sparkles, Square, X } from 'lucide-react'
 import { Dialog } from 'radix-ui'
-import { ArrowUp, Loader2, Search, Sparkles, Square, X } from 'lucide-react'
-
+import { useEffect, useRef, useState } from 'react'
 import { DEFAULT_ASSISTANT_ENDPOINT } from '../assistant/config'
 import { useAssistant } from '../assistant/context'
 import { useDocsConfig } from '../config/context'
-import { getMdxComponents } from '../mdx/components'
 import { cn } from '../utils/cn'
+import { AssistantMarkdown } from './assistant-markdown'
 
-/** Keys match the tool names in `createAssistantTools`, prefixed by the SDK. */
-const TOOL_LABELS: Record<string, string> = {
-  'tool-search-docs': 'Searching the documentation',
-  'tool-get-page': 'Reading a page',
+const TOOL_LABELS: Record<string, { busy: string; done: string }> = {
+  'tool-search-docs': { busy: 'Searching the documentation', done: 'Searched the documentation' },
+  'tool-get-page': { busy: 'Reading a page', done: 'Read a page' },
 }
 
-function ToolStep({ type, state }: Readonly<{ type: string; state?: string }>) {
-  const label = TOOL_LABELS[type] ?? 'Working'
+function toolSuffix(input: unknown): string | undefined {
+  if (!input || typeof input !== 'object') return undefined
+
+  const record = input as Record<string, unknown>
+  for (const key of ['query', 'path', 'q']) {
+    const value = record[key]
+    if (typeof value === 'string' && value.trim()) return value
+  }
+}
+
+function ToolStep({
+  type,
+  state,
+  input,
+}: Readonly<{ type: string; state?: string; input?: unknown }>) {
+  const labels = TOOL_LABELS[type] ?? { busy: 'Working', done: 'Done' }
   const done = state === 'output-available' || state === 'output-error'
+  const suffix = toolSuffix(input)
 
   return (
     <p className="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -29,45 +41,10 @@ function ToolStep({ type, state }: Readonly<{ type: string; state?: string }>) {
       ) : (
         <Loader2 className="size-3 shrink-0 animate-spin" aria-hidden />
       )}
-      {done ? label : label + '...'}
-    </p>
-  )
-}
-
-/**
- * Answers arrive as markdown. Running the full MDX pipeline on every streamed
- * token would be wasteful, so links and inline code are handled here and the
- * rest is rendered as text.
- */
-function AnswerText({ text, link: Anchor }: Readonly<{ text: string; link: ElementType }>) {
-  const chunks = text.split(/(\[[^\]]+\]\([^)]+\)|`[^`]+`)/g)
-
-  return (
-    <p className="whitespace-pre-wrap">
-      {chunks.map((chunk, index) => {
-        const link = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(chunk)
-        if (link) {
-          return (
-            <Anchor key={index} href={link[2]}>
-              {link[1]}
-            </Anchor>
-          )
-        }
-
-        const code = /^`([^`]+)`$/.exec(chunk)
-        if (code) {
-          return (
-            <code
-              key={index}
-              className="rounded-sm border border-border bg-muted px-1 py-0.5 font-mono text-[0.85em]"
-            >
-              {code[1]}
-            </code>
-          )
-        }
-
-        return <span key={index}>{chunk}</span>
-      })}
+      <span className="min-w-0 truncate">
+        {done ? labels.done : `${labels.busy}...`}
+        {suffix ? <span className="text-dimmed"> · {suffix}</span> : null}
+      </span>
     </p>
   )
 }
@@ -78,15 +55,21 @@ export function AssistantPanel() {
   const [input, setInput] = useState('')
   const endRef = useRef<HTMLDivElement>(null)
 
-  const { messages, sendMessage, status, stop, error } = useChat({
+  const { messages, sendMessage, setMessages, status, stop, error } = useChat({
     transport: new DefaultChatTransport({
       api: config.assistant?.endpoint ?? DEFAULT_ASSISTANT_ENDPOINT,
     }),
   })
 
   const busy = status === 'submitted' || status === 'streaming'
+  const last = messages.at(-1)
+  const hasAssistantOutput =
+    last?.role === 'assistant' &&
+    last.parts.some(
+      part => (part.type === 'text' && part.text.length > 0) || part.type.startsWith('tool-'),
+    )
+  const showThinking = busy && !hasAssistantOutput
 
-  // A question raised elsewhere - "Explain with AI" - is sent once the panel opens.
   useEffect(() => {
     if (!open || !pending) return
 
@@ -96,12 +79,11 @@ export function AssistantPanel() {
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ block: 'end' })
-  }, [messages])
+  }, [messages, status])
 
   if (!enabled) return null
 
   const suggestions = config.assistant?.suggestions ?? []
-  const anchor = getMdxComponents().a as ElementType
 
   function submit(text: string) {
     const question = text.trim()
@@ -109,6 +91,11 @@ export function AssistantPanel() {
 
     sendMessage({ text: question })
     setInput('')
+  }
+
+  function clear() {
+    if (busy) stop()
+    setMessages([])
   }
 
   return (
@@ -121,9 +108,23 @@ export function AssistantPanel() {
             <Sparkles className="size-4 shrink-0 text-primary" aria-hidden />
             <Dialog.Title className="text-sm font-semibold text-highlighted">Ask AI</Dialog.Title>
 
+            {messages.length > 0 && (
+              <button
+                type="button"
+                onClick={clear}
+                aria-label="Clear chat"
+                className="ms-auto inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted"
+              >
+                <ListX className="size-4" />
+              </button>
+            )}
+
             <Dialog.Close
               aria-label="Close assistant"
-              className="ms-auto inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted"
+              className={cn(
+                'inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted',
+                messages.length === 0 && 'ms-auto',
+              )}
             >
               <X className="size-4" />
             </Dialog.Close>
@@ -160,9 +161,11 @@ export function AssistantPanel() {
               <div key={message.id} className={cn('mb-5', message.role === 'user' && 'text-end')}>
                 {message.parts.map((part, index) => {
                   if (part.type === 'text') {
+                    if (message.role === 'assistant' && part.text.length === 0) return null
+
                     return (
                       <div
-                        key={index}
+                        key={`${message.id}-text-${index}`}
                         className={cn(
                           'text-sm',
                           message.role === 'user'
@@ -173,7 +176,7 @@ export function AssistantPanel() {
                         {message.role === 'user' ? (
                           part.text
                         ) : (
-                          <AnswerText text={part.text} link={anchor} />
+                          <AssistantMarkdown text={part.text} />
                         )}
                       </div>
                     )
@@ -182,9 +185,10 @@ export function AssistantPanel() {
                   if (part.type.startsWith('tool-')) {
                     return (
                       <ToolStep
-                        key={index}
+                        key={`${message.id}-${part.type}-${index}`}
                         type={part.type}
                         state={(part as { state?: string }).state}
+                        input={'input' in part ? part.input : undefined}
                       />
                     )
                   }
@@ -193,6 +197,13 @@ export function AssistantPanel() {
                 })}
               </div>
             ))}
+
+            {showThinking && (
+              <p className="mb-5 flex items-center gap-1.5 text-xs text-muted-foreground">
+                <Loader2 className="size-3 shrink-0 animate-spin" aria-hidden />
+                Thinking...
+              </p>
+            )}
 
             {error && (
               <p className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">

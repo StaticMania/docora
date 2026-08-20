@@ -2,6 +2,7 @@ import {
   convertToModelMessages,
   createUIMessageStreamResponse,
   isStepCount,
+  smoothStream,
   streamText,
   toUIMessageStream,
   type UIMessage,
@@ -9,7 +10,7 @@ import {
 
 import type { DocsConfig } from '../config/types'
 import type { DocsSource } from '../content/index'
-import { DEFAULT_ASSISTANT_MODEL, DEFAULT_SYSTEM_PROMPT, isAssistantEnabled } from './config'
+import { DEFAULT_ASSISTANT_MODEL, defaultSystemPrompt, isAssistantEnabled } from './config'
 import { createAssistantTools } from './tools'
 
 /** How many tool round-trips the model may take before it must answer. */
@@ -50,9 +51,12 @@ export function createAssistantRoute(source: DocsSource, config: DocsConfig) {
 
       const result = streamText({
         model: config.assistant?.model ?? DEFAULT_ASSISTANT_MODEL,
-        system: config.assistant?.systemPrompt ?? DEFAULT_SYSTEM_PROMPT,
+        system: config.assistant?.systemPrompt ?? defaultSystemPrompt(config.site.name),
         messages: await convertToModelMessages(messages),
         stopWhen: isStepCount(MAX_STEPS),
+        prepareStep: ({ stepNumber }) =>
+          stepNumber >= MAX_STEPS - 1 ? { toolChoice: 'none' as const } : {},
+        experimental_transform: smoothStream(),
         tools: createAssistantTools(source, config),
       })
 
