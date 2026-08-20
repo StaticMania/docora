@@ -1,6 +1,6 @@
+import { Icon, cn } from 'docora'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
-import { Icon, cn } from 'docora'
 
 /** Shared page gutter. Sections stay full-bleed; only their content is bounded. */
 export function Container({
@@ -165,13 +165,6 @@ export function GridBackdrop({
             fade === 'radial'
               ? 'radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%)'
               : 'linear-gradient(to bottom, black, transparent 85%)',
-        }}
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(46% 50% at 50% 22%, color-mix(in oklch, var(--primary) 22%, transparent) 0%, transparent 72%)',
         }}
       />
     </div>

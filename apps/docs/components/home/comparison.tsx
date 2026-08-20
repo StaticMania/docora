@@ -21,7 +21,7 @@ export function Comparison() {
           description="Not every docs tool should make the same choices. These are ours, stated plainly, so you can tell in a minute whether they match your project."
         />
 
-        <div className="mx-auto mt-14 max-w-3xl overflow-hidden rounded-3xl border border-border bg-background shadow-xl shadow-black/5 dark:shadow-black/30">
+        <div className="mx-auto mt-14 max-w-4xl overflow-hidden rounded-2xl border border-border bg-background">
           <div className="flex items-center justify-between gap-3 border-b border-border bg-muted/60 px-6 py-4">
             <p className="text-sm font-semibold tracking-tight text-highlighted">Docora</p>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">

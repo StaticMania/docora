@@ -1,6 +1,6 @@
-import { Container, Section, SectionHeader } from './primitives'
-import { CodeSwitcher, type CodeSwitcherFile } from './code-switcher'
 import { highlight } from './code-surface'
+import { CodeSwitcher, type CodeSwitcherFile } from './code-switcher'
+import { Container, Section, SectionHeader } from './primitives'
 
 const FILES = [
   {
@@ -64,7 +64,7 @@ export async function ProjectShape() {
   )
 
   return (
-    <Section id="structure" tone="muted">
+    <Section id="structure">
       <Container>
         <SectionHeader
           eyebrow="Project shape"
@@ -73,7 +73,7 @@ export async function ProjectShape() {
           description="Scaffolding gives you an App Router project. Add pages as files; keep using anything else Next.js already does."
         />
 
-        <CodeSwitcher files={files} className="mt-14" />
+        <CodeSwitcher files={files} className="mx-auto mt-14 max-w-4xl" />
       </Container>
     </Section>
   )

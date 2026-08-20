@@ -1,8 +1,8 @@
-import Link from 'next/link'
 import { Icon } from 'docora'
+import Link from 'next/link'
 
-import { Button, Container, GridBackdrop } from './primitives'
 import { Window, bareCode, highlight } from './code-surface'
+import { Button, Container, GridBackdrop } from './primitives'
 
 const SOURCE = `---
 title: Getting started
@@ -75,7 +75,7 @@ export async function Hero() {
               <span className="size-1.5 rounded-full bg-primary" aria-hidden />
               New
             </span>
-            Docora 0.1 is out
+            Docora 0.0.1 is out
             <Icon
               name="arrow-right"
               className="size-3.5 transition-transform group-hover:translate-x-0.5"
@@ -83,55 +83,34 @@ export async function Hero() {
           </Link>
 
           <h1 className="mt-7 max-w-4xl text-4xl font-bold tracking-tight text-balance sm:text-6xl lg:text-7xl">
-            Documentation, built for{' '}
+            An Open Source Documentation {` `}
             <span className="bg-gradient-to-br from-primary to-primary/60 bg-clip-text text-transparent">
-              people and agents
+              Framework for React and Next.js
             </span>
-            .
           </h1>
 
           <p className="mt-6 max-w-2xl text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
-            An open-source Next.js framework for TypeScript, Tailwind CSS and Markdown. Routing,
-            search, SEO and i18n are built in. Every page also ships as an MCP server and an{' '}
-            <code className="rounded-md bg-elevated px-1.5 py-0.5 font-mono text-[0.85em] text-highlighted">
-              llms.txt
-            </code>{' '}
-            — so Cursor, Claude, and other AI tools can read your docs directly instead of guessing.
+            Built with TypeScript, Tailwind CSS and MDX — with routing, search, SEO, i18n and an MCP
+            server built in, so both people and AI tools can read your docs.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <Button href="/docs/getting-started/introduction" icon="rocket" size="lg">
+          <div className="mt-9 grid w-full grid-cols-1 gap-3 sm:inline-grid sm:w-auto sm:grid-cols-2">
+            <Button href="/docs/getting-started/introduction" icon="rocket" size="lg" className="w-full">
               Get started
             </Button>
-            <Button href="/docs/essentials/components" icon="blocks" variant="secondary" size="lg">
+            <Button
+              href="/docs/essentials/components"
+              icon="blocks"
+              variant="secondary"
+              size="lg"
+              className="w-full"
+            >
               Browse components
             </Button>
           </div>
-
-          <ul className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-            {STACK.map(item => (
-              <li
-                key={item.label}
-                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.src}
-                  alt=""
-                  className={`size-5 shrink-0 object-contain${item.invert ? ' dark:invert' : ''}`}
-                />
-                {item.label}
-              </li>
-            ))}
-          </ul>
         </div>
 
         <div className="relative mt-14 sm:mt-16">
-          <div
-            aria-hidden
-            className="absolute -inset-x-6 -top-6 -bottom-10 -z-10 rounded-[2rem] bg-gradient-to-b from-primary/10 to-transparent blur-2xl"
-          />
-
           <Window
             tabs={['getting-started.mdx', 'preview']}
             actions={

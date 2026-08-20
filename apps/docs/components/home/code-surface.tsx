@@ -1,17 +1,11 @@
-import type { ReactNode } from 'react'
 import { cn, compileMdx } from 'docora'
+import type { ReactNode } from 'react'
 
-/** Strips the standalone code-block chrome so a fence can sit inside a window. */
 export const bareCode =
   '[&_.docs-code]:my-0 [&_.docs-code-header]:hidden [&_.docs-code_pre]:rounded-none [&_.docs-code_pre]:border-0 [&_.docs-code_pre]:bg-transparent'
 
-/**
- * Runs a snippet through the same Shiki pipeline the docs use, so the marketing
- * page and the documentation highlight code identically.
- */
 export async function highlight(code: string, lang = 'tsx'): Promise<ReactNode> {
   const trimmed = code.replace(/^\n+|\n+$/g, '')
-  // Outrun any fence inside the snippet itself.
   const longest = Math.max(2, ...[...trimmed.matchAll(/^`{3,}/gm)].map(match => match[0].length))
   const fence = '`'.repeat(longest + 1)
 
@@ -21,7 +15,6 @@ export async function highlight(code: string, lang = 'tsx'): Promise<ReactNode> 
 
 export type WindowProps = Readonly<{
   children?: ReactNode
-  /** Shown next to the traffic lights. */
   filename?: string
   tabs?: readonly string[]
   actions?: ReactNode
@@ -29,7 +22,6 @@ export type WindowProps = Readonly<{
   bodyClassName?: string
 }>
 
-/** Editor-style frame: traffic lights, an optional filename, then the body. */
 export function Window({
   children,
   filename,
@@ -40,10 +32,7 @@ export function Window({
 }: WindowProps) {
   return (
     <div
-      className={cn(
-        'overflow-hidden rounded-2xl border border-border bg-background shadow-xl shadow-black/5 dark:shadow-black/30',
-        className,
-      )}
+      className={cn('overflow-hidden rounded-2xl border border-border bg-background', className)}
     >
       <div className="flex items-center gap-2 border-b border-border bg-muted/60 px-4 py-2.5">
         <span className="flex gap-1.5" aria-hidden>
@@ -84,20 +73,26 @@ export type CodeWindowProps = Readonly<{
   code: string
   lang?: string
   filename?: string
+  tabs?: readonly string[]
   className?: string
   bodyClassName?: string
 }>
 
-/** A `Window` whose body is a single highlighted fence. */
 export async function CodeWindow({
   code,
   lang = 'tsx',
   filename,
+  tabs,
   className,
   bodyClassName,
 }: CodeWindowProps) {
   return (
-    <Window filename={filename} className={className} bodyClassName={cn(bareCode, bodyClassName)}>
+    <Window
+      filename={filename}
+      tabs={tabs}
+      className={className}
+      bodyClassName={cn(bareCode, bodyClassName)}
+    >
       {await highlight(code, lang)}
     </Window>
   )
