@@ -57,7 +57,13 @@ export function createAssistantRoute(source: DocsSource, config: DocsConfig) {
       })
 
       return createUIMessageStreamResponse({
-        stream: toUIMessageStream({ stream: result.stream }),
+        stream: toUIMessageStream({
+          stream: result.stream,
+          onError: error => {
+            console.error('[docora assistant]', error)
+            return error instanceof Error ? error.message : 'The assistant failed to respond.'
+          },
+        }),
       })
     },
   }
