@@ -24,6 +24,8 @@ export default defineDocsConfig({
   },
 
   assistant: {
+    // Free-tier Gateway model; Claude Sonnet 5 requires paid credits.
+    model: 'google/gemini-2.5-flash',
     suggestions: [
       'How do I add a new page?',
       'How does the sidebar order work?',

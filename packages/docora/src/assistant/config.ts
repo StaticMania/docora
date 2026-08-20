@@ -1,7 +1,7 @@
 export interface AssistantConfig {
   /** Set to `false` to keep the assistant off even when a key is present. */
   enabled?: boolean
-  /** AI Gateway model string. Defaults to `anthropic/claude-sonnet-5`. */
+  /** AI Gateway model string. Defaults to `google/gemini-2.5-flash`. */
   model?: string
   /** Where the chat route is mounted. Defaults to `/api/assistant`. */
   endpoint?: string
@@ -13,7 +13,7 @@ export interface AssistantConfig {
   explainWithAi?: boolean
 }
 
-export const DEFAULT_ASSISTANT_MODEL = 'anthropic/claude-sonnet-5'
+export const DEFAULT_ASSISTANT_MODEL = 'google/gemini-2.5-flash'
 export const DEFAULT_ASSISTANT_ENDPOINT = '/api/assistant'
 
 /**

@@ -71,7 +71,7 @@ Set `false` to keep the assistant off even when a credential exists.
 :::
 
 :::field{name="assistant.model" type="string"}
-Any AI Gateway model string. Defaults to `anthropic/claude-sonnet-5`.
+Any AI Gateway model string. Defaults to `google/gemini-2.5-flash` (available on the AI Gateway free tier). Paid-tier models such as `anthropic/claude-sonnet-5` need purchased credits.
 :::
 
 :::field{name="assistant.suggestions" type="string[]"}
@@ -89,7 +89,7 @@ Set `false` to drop the button under the table of contents.
 
 ```ts [docs.config.ts]
 assistant: {
-  model: 'anthropic/claude-sonnet-5',
+  model: 'google/gemini-2.5-flash',
   suggestions: ['How do I add a new page?', 'How does sidebar order work?'],
 }
 ```
