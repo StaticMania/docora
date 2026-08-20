@@ -24,7 +24,7 @@ export function LanguageSwitcher({ className }: Readonly<{ className?: string }>
       <DropdownMenu.Trigger
         aria-label={messages.selectLanguage}
         className={cn(
-          'inline-flex h-8 items-center gap-1.5 rounded-md px-2 text-sm text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted',
+          'inline-flex h-8 items-center gap-1.5 rounded-full px-2 text-sm text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted',
           className,
         )}
       >

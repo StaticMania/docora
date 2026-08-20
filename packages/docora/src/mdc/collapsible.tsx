@@ -21,7 +21,7 @@ export function Collapsible({ children, name, open = false, className }: Collaps
       onOpenChange={setIsOpen}
       className={cn('my-5', className)}
     >
-      <CollapsiblePrimitive.Trigger className="group inline-flex items-center gap-1 rounded-md border border-border px-2.5 py-1 text-sm text-muted-foreground transition-colors hover:text-highlighted">
+      <CollapsiblePrimitive.Trigger className="group inline-flex items-center gap-1 rounded-full border border-border px-2.5 py-1 text-sm text-muted-foreground transition-colors hover:text-highlighted">
         {label}
         <ChevronDown
           className="size-3.5 transition-transform group-data-[state=open]:rotate-180"

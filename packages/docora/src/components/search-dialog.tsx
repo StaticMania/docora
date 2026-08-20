@@ -238,7 +238,7 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
             />
             <Dialog.Close
               aria-label={messages.close}
-              className="inline-flex size-7 shrink-0 items-center justify-center rounded-md text-dimmed transition-colors hover:bg-elevated hover:text-highlighted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+              className="inline-flex size-7 shrink-0 items-center justify-center rounded-full text-dimmed transition-colors hover:bg-elevated hover:text-highlighted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
               <X className="size-4" />
             </Dialog.Close>

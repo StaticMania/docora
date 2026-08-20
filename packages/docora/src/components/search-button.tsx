@@ -30,7 +30,7 @@ export function SearchButton({
         onClick={() => setOpen(true)}
         aria-label={messages.searchButton}
         className={cn(
-          'inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted',
+          'inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted',
           className,
         )}
       >
@@ -44,7 +44,7 @@ export function SearchButton({
       type="button"
       onClick={() => setOpen(true)}
       className={cn(
-        'inline-flex h-9 items-center gap-2 rounded-md border border-border bg-muted px-3 text-sm text-muted-foreground transition-colors hover:border-border-accented',
+        'inline-flex h-9 items-center gap-2 rounded-full border border-border bg-muted px-3 text-sm text-muted-foreground transition-colors hover:border-border-accented',
         className,
       )}
     >

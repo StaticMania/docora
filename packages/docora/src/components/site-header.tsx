@@ -123,7 +123,7 @@ export function SiteHeader({ children, logo, cta, className }: SiteHeaderProps) 
               target="_blank"
               rel="noreferrer"
               aria-label={socialLabels[network] ?? network}
-              className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted"
+              className="inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted"
             >
               <SocialIcon network={network} className="size-4" />
             </a>

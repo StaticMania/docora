@@ -43,7 +43,7 @@ export function CodeTree({ children, className, class: htmlClass, ...props }: Co
             type="button"
             onClick={() => setActive(index)}
             className={cn(
-              'flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-start text-xs transition-colors',
+              'flex w-full items-center gap-1.5 rounded-full px-2.5 py-1.5 text-start text-xs transition-colors',
               index === active
                 ? 'bg-elevated font-medium text-primary'
                 : 'text-muted-foreground hover:bg-elevated/50 hover:text-highlighted',
