@@ -1,6 +1,6 @@
 {
   "name": "docora",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "description": "Docora is an open-source documentation framework for Next.js and React, built with TypeScript, Tailwind CSS, and Markdown. Create fast, beautiful, SEO-friendly documentation sites with minimal configuration.",
   "license": "MIT",
