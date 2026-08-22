@@ -4,20 +4,18 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
 
+import Image from 'next/image'
 import { useDocsConfig } from '../config/context'
 import { cn } from '../utils/cn'
+import { LanguageSwitcher } from './language-switcher'
 import { MobileNav } from './mobile-nav'
 import { SearchButton } from './search-button'
-import { LanguageSwitcher } from './language-switcher'
 import { SocialIcon, socialLabels } from './social-icon'
 import { ThemeToggle } from './theme-toggle'
 
 export type SiteHeaderProps = Readonly<{
-  /** Rendered at the far right, before the language and theme controls. */
   children?: ReactNode
-  /** Replaces the default logo and site name. */
   logo?: ReactNode
-  /** Rendered after the navigation links — a call to action, say. */
   cta?: ReactNode
   className?: string
 }>
@@ -30,18 +28,20 @@ function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-70">
       {logo?.light && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           src={logo.light}
           alt={logo.alt ?? title}
+          width={24}
+          height={24}
           className={cn('h-6 w-auto', logo.dark && 'dark:hidden', logo.className)}
         />
       )}
       {logo?.dark && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           src={logo.dark}
           alt={logo.alt ?? title}
+          width={24}
+          height={24}
           className={cn('hidden h-6 w-auto dark:block', logo.className)}
         />
       )}
@@ -62,7 +62,6 @@ export function SiteHeader({ children, logo, cta, className }: SiteHeaderProps) 
   return (
     <header
       className={cn(
-        // The border is inside the 4rem so the sticky asides line up with it.
         'sticky top-0 z-40 box-border h-16 w-full border-b border-border bg-background/80 backdrop-blur-sm',
         className,
       )}
@@ -117,16 +116,16 @@ export function SiteHeader({ children, logo, cta, className }: SiteHeaderProps) 
           {children}
 
           {socials.map(([network, url]) => (
-            <a
+            <Link
               key={network}
-              href={url}
+              href={url ?? ''}
               target="_blank"
               rel="noreferrer"
               aria-label={socialLabels[network] ?? network}
-              className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted"
+              className="inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted"
             >
               <SocialIcon network={network} className="size-4" />
-            </a>
+            </Link>
           ))}
 
           <LanguageSwitcher />

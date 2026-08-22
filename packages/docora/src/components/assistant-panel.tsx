@@ -113,7 +113,7 @@ export function AssistantPanel() {
                 type="button"
                 onClick={clear}
                 aria-label="Clear chat"
-                className="ms-auto inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted"
+                className="ms-auto inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted"
               >
                 <ListX className="size-4" />
               </button>
@@ -122,7 +122,7 @@ export function AssistantPanel() {
             <Dialog.Close
               aria-label="Close assistant"
               className={cn(
-                'inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted',
+                'inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-elevated hover:text-highlighted',
                 messages.length === 0 && 'ms-auto',
               )}
             >
@@ -146,7 +146,7 @@ export function AssistantPanel() {
                         <button
                           type="button"
                           onClick={() => submit(suggestion)}
-                          className="w-full rounded-md border border-border px-3 py-2 text-start text-sm transition-colors hover:border-border-accented hover:text-highlighted"
+                          className="w-full rounded-full border border-border px-4 py-2 text-start text-sm transition-colors hover:border-border-accented hover:text-highlighted"
                         >
                           {suggestion}
                         </button>
@@ -241,7 +241,7 @@ export function AssistantPanel() {
                 type="button"
                 onClick={stop}
                 aria-label="Stop generating"
-                className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:text-highlighted"
+                className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:text-highlighted"
               >
                 <Square className="size-3.5" />
               </button>
@@ -250,7 +250,7 @@ export function AssistantPanel() {
                 type="submit"
                 disabled={!input.trim()}
                 aria-label="Send"
-                className="inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground transition-opacity disabled:opacity-40"
+                className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-opacity disabled:opacity-40"
               >
                 <ArrowUp className="size-4" />
               </button>

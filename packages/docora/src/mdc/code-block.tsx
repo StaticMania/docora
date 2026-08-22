@@ -68,7 +68,7 @@ export function CodeBlock({ children, className, compact = false, ...props }: Co
         onClick={copy}
         aria-label={copied ? 'Copied' : 'Copy code'}
         className={cn(
-          'absolute z-10 inline-flex items-center justify-center rounded-md border border-border bg-background text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100',
+          'absolute z-10 inline-flex items-center justify-center rounded-full border border-border bg-background text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100',
           compact ? 'end-2 top-1.5 size-6' : 'end-[11px] top-[11px] size-7',
         )}
       >

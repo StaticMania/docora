@@ -24,16 +24,11 @@ type FenceProps = {
   'data-language'?: string
 }
 
-/**
- * Close an unterminated fence so streaming answers still render as a code
- * block instead of leaking raw backticks onto the page.
- */
 export function stabilizeMarkdown(source: string): string {
   const fences = source.match(/^ {0,3}(`{3,}|~{3,})/gm) ?? []
   return fences.length % 2 === 1 ? `${source}\n\`\`\`` : source
 }
 
-/** Copy ` ```ts [docs.config.ts] ` filenames onto the hast node for the fence. */
 function remarkFenceMeta() {
   return (tree: { type: string }) => {
     visit(

@@ -31,12 +31,17 @@ export function createPageMetadata({ config, page, alternates }: PageMetadataOpt
   const path = page?.path ?? '/'
   const canonical = absoluteUrl(config, path)
 
+  const documentTitle = title
+    ? path === '/' || title === siteName
+      ? { absolute: title }
+      : title
+    : undefined
+
   const ogPath = config.seo?.ogImage ?? '/og'
   const ogParams = new URLSearchParams({ title: title ?? siteName })
   if (description) ogParams.set('description', description)
   const ogImage = absoluteUrl(config, `${ogPath}?${ogParams.toString()}`)
 
-  // hreflang entries, plus x-default pointing at the default locale.
   const languages: Record<string, string> = {}
   for (const [code, localePath] of Object.entries(alternates ?? {})) {
     languages[code] = absoluteUrl(config, localePath) ?? localePath
@@ -48,7 +53,7 @@ export function createPageMetadata({ config, page, alternates }: PageMetadataOpt
   const hasLanguages = Object.keys(languages).length > 0
 
   return {
-    ...(title ? { title } : {}),
+    ...(documentTitle ? { title: documentTitle } : {}),
     ...(description ? { description } : {}),
     ...(canonical || hasLanguages
       ? {
@@ -75,13 +80,11 @@ export function createPageMetadata({ config, page, alternates }: PageMetadataOpt
   }
 }
 
-/** Root-layout metadata: title template, defaults and `metadataBase`. */
 export function createRootMetadata(config: DocsConfig): Metadata {
   const siteName = config.seo?.title ?? config.site.name
   const template = config.seo?.titleTemplate ?? `%s · ${siteName}`
   const description = config.seo?.description ?? config.site.description
 
-  // No `page`, so this contributes the social cards and canonical only.
   const shared = createPageMetadata({ config })
 
   return {

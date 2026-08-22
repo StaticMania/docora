@@ -1,5 +1,5 @@
-import type { NextConfig } from 'next'
 import { withDocora } from 'docora/next'
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   async redirects() {

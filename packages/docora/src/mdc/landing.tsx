@@ -148,7 +148,7 @@ export function Cta({ children, label, to = '#', icon, variant = 'primary', clas
       href={to}
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
       className={cn(
-        'inline-flex h-11 items-center gap-2 rounded-lg px-5 text-sm font-medium transition-all',
+        'inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-medium transition-all',
         variant === 'primary'
           ? 'bg-primary text-primary-foreground shadow-sm hover:opacity-90'
           : 'border border-border bg-background/60 text-highlighted shadow-sm backdrop-blur-sm hover:border-border-accented hover:bg-elevated',

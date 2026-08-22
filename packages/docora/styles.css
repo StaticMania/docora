@@ -108,6 +108,9 @@
 }
 
 @layer base {
+  body {
+    @apply antialiased;
+  }
   /*
    * Pretty Code emits both palettes as `--shiki-light` / `--shiki-dark`.
    * `data-theme` is a space-separated list of theme names.

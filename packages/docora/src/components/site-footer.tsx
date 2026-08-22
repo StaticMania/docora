@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
 
 import { useDocsConfig } from '../config/context'
 import type { NavLink } from '../config/types'
@@ -105,7 +105,16 @@ export function SiteFooter({ className }: Readonly<{ className?: string }>) {
 
         <div className="mt-10 flex flex-col items-center gap-2 border-t border-border pt-6 text-xs text-dimmed sm:flex-row sm:justify-between">
           <p>
-            © {year} {config.site.name}
+            © {year} {config.site.name}. Inspired by{' '}
+            <Link
+              href="https://docus.dev"
+              target="_blank"
+              rel="noreferrer"
+              className="text-highlighted"
+            >
+              Docus
+            </Link>
+            .
           </p>
           {credits && <p>{credits}</p>}
         </div>
