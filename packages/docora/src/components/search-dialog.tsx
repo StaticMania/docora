@@ -1,11 +1,9 @@
 'use client'
-
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import { useRouter } from 'next/navigation'
-import { useTheme } from 'next-themes'
-import { Dialog } from 'radix-ui'
 import { Check, FileText, Hash, Monitor, Moon, Search, Sun, X } from 'lucide-react'
-
+import { useTheme } from 'next-themes'
+import { useRouter } from 'next/navigation'
+import { Dialog } from 'radix-ui'
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useDocsConfig } from '../config/context'
 import type { NavItem } from '../config/types'
 import { useLocale, useMessages } from '../i18n/context'
@@ -17,7 +15,6 @@ import { Icon } from './icon'
 export type SearchDialogProps = Readonly<{
   open: boolean
   onOpenChange: (open: boolean) => void
-  /** Where the index is served from. */
   endpoint?: string
 }>
 
@@ -34,7 +31,6 @@ function resultHref(result: SearchResult): string {
     : result.document.path
 }
 
-/** The first page a nav node opens — itself, or the first descendant with a href. */
 function firstHref(item: NavItem): string | undefined {
   if (item.href) return item.href
   if (!item.children) return undefined
@@ -219,7 +215,7 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
 
         <Dialog.Content
           onKeyDown={onKeyDown}
-          className="fixed top-[12vh] left-1/2 z-50 flex max-h-[70vh] w-[92vw] max-w-xl -translate-x-1/2 flex-col overflow-hidden rounded-lg border border-border bg-background shadow-2xl focus:outline-none"
+          className="fixed top-[12vh] left-1/2 z-50 flex max-h-[70vh] w-[92vw] max-w-xl -translate-x-1/2 flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl focus:outline-none"
         >
           <Dialog.Title className="sr-only">{messages.searchPlaceholder}</Dialog.Title>
           <Dialog.Description className="sr-only">
@@ -269,7 +265,7 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
                     onMouseEnter={() => setActive(position)}
                     onClick={() => go(resultHref(result))}
                     className={cn(
-                      'flex w-full items-start gap-2.5 rounded-md px-3 py-2 text-start transition-colors',
+                      'flex w-full items-start gap-2.5 rounded-lg px-3 py-2 text-start transition-colors',
                       position === active ? 'bg-elevated' : 'hover:bg-elevated/60',
                     )}
                   >

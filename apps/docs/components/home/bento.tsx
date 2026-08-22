@@ -1,6 +1,6 @@
+import { Icon, cn } from 'docora'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
-import { Icon, cn } from 'docora'
 
 import { Container, Section, SectionHeader } from './primitives'
 

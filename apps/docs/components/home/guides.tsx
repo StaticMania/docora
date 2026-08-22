@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import { Icon, cn } from 'docora'
+import Link from 'next/link'
 
 import { Container, Section, SectionHeader } from './primitives'
 
@@ -43,7 +43,7 @@ const GUIDES = [
 
 export function Guides() {
   return (
-    <Section id="guides" tone="muted">
+    <Section id="guides">
       <Container>
         <SectionHeader
           eyebrow="Guides"

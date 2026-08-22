@@ -101,7 +101,7 @@ export function AiSpotlight() {
               Built for agents
             </Eyebrow>
 
-            <h2 className="mt-5 text-3xl font-bold text-balance sm:text-4xl lg:text-5xl">
+            <h2 className="mt-5 text-3xl font-bold text-balance sm:text-4xl lg:text-5xl leading-tight">
               Your docs, queryable by <span className="text-primary">anything that reads MCP</span>.
             </h2>
 

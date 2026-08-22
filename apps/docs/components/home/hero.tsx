@@ -17,15 +17,6 @@ Write Markdown, drop in callouts, and the
 sidebar picks the page up on its own.
 `
 
-const STACK = [
-  { label: 'Next.js', src: '/nextjs.svg', invert: true },
-  { label: 'React', src: '/reactjs.svg', invert: false },
-  { label: 'TypeScript', src: '/typescript.svg', invert: false },
-  { label: 'Tailwind CSS', src: '/tailwind.svg', invert: false },
-  { label: 'MDX', src: '/mdx.svg', invert: true },
-]
-
-/** The rendered half of the split preview — the same source, as a page. */
 function RenderedPreview() {
   return (
     <div className="flex h-full flex-col gap-4 bg-background p-6">
@@ -95,7 +86,12 @@ export async function Hero() {
           </p>
 
           <div className="mt-9 grid w-full grid-cols-1 gap-3 sm:inline-grid sm:w-auto sm:grid-cols-2">
-            <Button href="/docs/getting-started/introduction" icon="rocket" size="lg" className="w-full">
+            <Button
+              href="/docs/getting-started/introduction"
+              icon="rocket"
+              size="lg"
+              className="w-full"
+            >
               Get started
             </Button>
             <Button

@@ -1,9 +1,9 @@
-import Link from 'next/link'
 import { Icon, cn } from 'docora'
+import Link from 'next/link'
 import type { ReactNode } from 'react'
 
-import { Container, Section, SectionHeader } from './primitives'
 import { CodeWindow } from './code-surface'
+import { Container, Section, SectionHeader } from './primitives'
 
 type Step = Readonly<{
   title: string
