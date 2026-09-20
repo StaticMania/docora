@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "docora": "^0.0.4",
+    "docora": "^0.0.5",
     "next": "^16.3.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
