@@ -10,6 +10,19 @@ and are published together.
 
 ## [Unreleased]
 
+## [0.0.5] - 2026-09-20
+
+`docora@0.0.5` · `create-docora@0.0.5`
+
+- New `search-docs` MCP tool. Agents can search the documentation and get ranked
+  matches with excerpts instead of listing every page first.
+- Sitemap `lastModified` now uses a page's frontmatter date, falling back to the
+  file's modification time on disk. Previously every page claimed it had changed
+  on every build.
+- Sitemaps for i18n sites now carry `hreflang` language alternates.
+- No CLI changes. `create-docora` ships to keep the shared version number and the
+  starter pins in step.
+
 ## [0.0.4] - 2026-08-23
 
 `docora@0.0.4` · `create-docora@0.0.4`
