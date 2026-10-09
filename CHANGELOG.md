@@ -10,6 +10,49 @@ and are published together.
 
 ## [Unreleased]
 
+`docora` · `create-docora`
+
+### Added
+
+- `search-docs` has a companion: the MCP server now exposes `get-toc`, which
+  returns the navigation tree so an agent can see how the docs are organised
+  before fetching pages. Takes optional `section`, `depth` and `locale`
+  arguments to keep the payload small on large sites. ([#11])
+- `create-docora` accepts `-y` / `--yes`, which takes the default for every
+  prompt so the scaffolder can run unattended in CI and Docker builds. Explicit
+  flags still win, and it never overwrites an existing directory on its own —
+  `--force` is still required. ([#10])
+- Both non-interactive paths now say which defaults they applied instead of
+  going quiet, so a scripted run no longer looks like a hang. ([#10])
+- `header.searchPosition` moves the desktop search button into the right-hand
+  controls. The default stays `'center'`, so existing sites are unchanged.
+  ([#13])
+- A test suite for the MDC normalizer, wired into `pnpm run verify`. ([#12])
+
+### Changed
+
+- `/llms-full.txt` and `/raw/[...slug]` now convert MDC directives into plain
+  GitHub Flavored Markdown before serving them. Callouts become GFM alerts,
+  cards become links, steps and tabs become headings, collapsibles become
+  `<details>`, and unknown directives degrade to their inner content rather than
+  leaking tag syntax into an agent's context. Code blocks are left untouched,
+  including ones that contain MDC examples. ([#12])
+- `/llms-full.txt` opens with a table of contents linking every page. ([#12])
+- `/raw/[...slug]` keeps the page's YAML frontmatter instead of dropping it.
+  ([#12])
+- Header navigation no longer wraps or collapses when a site has several links
+  or a long brand title; the link row scrolls on its own instead of widening the
+  page. ([#13])
+- Sidebar entries wrap onto a second line instead of being cut off with an
+  ellipsis, and the sidebar widens on larger screens. ([#13])
+- The search dialog fades and scales in and out instead of appearing abruptly,
+  and respects `prefers-reduced-motion`. ([#13])
+
+[#10]: https://github.com/StaticMania/docora/pull/10
+[#11]: https://github.com/StaticMania/docora/pull/11
+[#12]: https://github.com/StaticMania/docora/pull/12
+[#13]: https://github.com/StaticMania/docora/pull/13
+
 ## [0.0.5] - 2026-09-20
 
 `docora@0.0.5` · `create-docora@0.0.5`
