@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises'
 
 import type { DocsSource } from '../content/index'
 import type { ContentPage } from '../content/types'
+import { normalizeMdcToMarkdown } from './mdc'
 
 export function rawSlug(page: Pick<ContentPage, 'slug'>): string[] {
   if (page.slug.length === 0) return ['index.md']
@@ -34,7 +35,17 @@ export function createRawRoute(source: DocsSource) {
       const page = await source.getPage(lookup)
       if (!page) return new Response('Not found', { status: 404 })
 
-      return new Response(await readFile(page.filePath, 'utf8'), {
+      const raw = await readFile(page.filePath, 'utf8')
+      const match = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/)
+      const frontmatterBlock = match ? match[0].replace(/\r\n/g, '\n').trimEnd() : ''
+      const body = match ? raw.slice(match[0].length) : raw
+      const normalized = normalizeMdcToMarkdown(body)
+
+      const content = frontmatterBlock
+        ? `${frontmatterBlock}\n\n${normalized}\n`
+        : `${normalized}\n`
+
+      return new Response(content, {
         headers: { 'content-type': 'text/markdown; charset=utf-8' },
       })
     },

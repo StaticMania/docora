@@ -6,6 +6,7 @@ import { sectionsByPath } from '../content/navigation'
 import type { ContentPage } from '../content/types'
 import { localeFromPath } from '../i18n/paths'
 import { splitFrontmatter } from '../mdx/frontmatter'
+import { normalizeMdcToMarkdown } from './mdc'
 import { rawPath } from './raw'
 
 function absolute(config: DocsConfig, path: string): string {
@@ -67,6 +68,7 @@ export function createLlmsFullTxtRoute(source: DocsSource, config: DocsConfig) {
         pages.map(async page => {
           const raw = await readFile(page.filePath, 'utf8')
           const { body } = splitFrontmatter(raw)
+          const normalized = normalizeMdcToMarkdown(body)
 
           return [
             `# ${page.title}`,
@@ -76,7 +78,7 @@ export function createLlmsFullTxtRoute(source: DocsSource, config: DocsConfig) {
               ? [`Description: ${page.frontmatter.description}`]
               : []),
             '',
-            body.trim(),
+            normalized.trim(),
           ].join('\n')
         }),
       )
@@ -84,7 +86,14 @@ export function createLlmsFullTxtRoute(source: DocsSource, config: DocsConfig) {
       const header = [`# ${config.site.name}`, '']
       if (config.site.description) header.push(`> ${config.site.description}`, '')
 
-      return new Response([...header, sections.join('\n\n---\n\n')].join('\n'), {
+      const toc = ['## Table of Contents', '']
+      for (const page of pages) {
+        const desc = page.frontmatter.description ? `: ${page.frontmatter.description}` : ''
+        toc.push(`- [${page.title}](${absolute(config, page.path)})${desc}`)
+      }
+      toc.push('')
+
+      return new Response([...header, ...toc, sections.join('\n\n---\n\n')].join('\n'), {
         headers: { 'content-type': 'text/plain; charset=utf-8' },
       })
     },
