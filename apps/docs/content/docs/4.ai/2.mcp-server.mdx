@@ -16,6 +16,11 @@ Every page with its title, path, description and URL. The starting point when
 the exact page is unknown.
 :::
 
+:::field{name="get-toc" type="{ locale?: string, section?: string, depth?: number }"}
+The hierarchical table of contents and structure of the documentation. Supports
+optional section filtering and depth limiting to keep payloads lightweight.
+:::
+
 :::field{name="search-docs" type="{ query: string, locale?: string, limit?: number }" required}
 Searches the documentation and returns ranked matching pages with excerpts,
 titles, paths and URLs. Use to find relevant sections before fetching full pages.

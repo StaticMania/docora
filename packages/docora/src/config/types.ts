@@ -13,6 +13,8 @@ export interface NavItem {
   href?: string
   icon?: string
   children?: NavItem[]
+  hasChildren?: boolean
+  childCount?: number
 }
 
 export type SocialKey =

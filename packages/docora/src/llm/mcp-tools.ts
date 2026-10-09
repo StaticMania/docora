@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises'
 
-import type { DocsConfig } from '../config/types'
+import type { DocsConfig, NavItem } from '../config/types'
 import type { DocsSource } from '../content/index'
 import { localeFromPath } from '../i18n/paths'
 import { buildSearchIndex } from '../search/build'
@@ -23,6 +23,107 @@ const READ_ONLY = {
 
 function pageUrl(config: DocsConfig, path: string): string {
   return config.site.url ? new URL(path, config.site.url).toString() : path
+}
+
+/**
+ * Normalizes a section query or category title into a clean URL-friendly slug.
+ * Handles title casing ("Getting Started"), route paths ("/docs/getting-started/"),
+ * and raw slugs ("getting-started") uniformly.
+ *
+ * Note: Characters outside ASCII alphanumeric, hyphen, and underscore are stripped
+ * rather than transliterated; localized section queries should match the exact
+ * section title label.
+ */
+function slugifySection(text: string): string {
+  return (
+    text
+      .toLowerCase()
+      .trim()
+      // Strip leading and trailing slashes first
+      .replace(/^\/+|\/+$/g, '')
+      // Strip leading "docs/" if provided as a route path prefix
+      .replace(/^docs\//, '')
+      // Convert whitespace sequences into hyphens
+      .replace(/\s+/g, '-')
+      // Remove any remaining characters outside ASCII alphanumeric, hyphen, and underscore
+      .replace(/[^a-z0-9-_]/g, '')
+  )
+}
+
+function findSectionItem(items: NavItem[], section: string): NavItem | undefined {
+  const normalized = section.toLowerCase().replace(/^\/+|\/+$/g, '')
+  const querySlug = slugifySection(section)
+  const unslugified = normalized.replace(/[-_]+/g, ' ')
+
+  // 1. Prioritize category or exact label/slug matches at the current level
+  for (const item of items) {
+    const itemLabel = item.label.toLowerCase()
+    const itemSlug = slugifySection(item.label)
+    const itemHref = item.href ? item.href.toLowerCase().replace(/^\/+|\/+$/g, '') : ''
+
+    if (
+      itemLabel === normalized ||
+      itemLabel === unslugified ||
+      (querySlug && itemSlug === querySlug) ||
+      (itemHref && (itemHref === normalized || itemHref === querySlug))
+    ) {
+      return item
+    }
+
+    // If this item is a category, check if its children share this path prefix
+    if (item.children && querySlug) {
+      const matchesPrefix = item.children.some(child => {
+        if (!child.href) return false
+        const childPath = child.href.toLowerCase().replace(/^\/+|\/+$/g, '')
+        return (
+          childPath.startsWith(`docs/${querySlug}/`) ||
+          childPath.startsWith(`${querySlug}/`) ||
+          childPath.includes(`/${querySlug}/`)
+        )
+      })
+      if (matchesPrefix) {
+        return item
+      }
+    }
+  }
+
+  // 2. Recurse into child categories
+  for (const item of items) {
+    if (item.children) {
+      const found = findSectionItem(item.children, section)
+      if (found) return found
+    }
+  }
+
+  // 3. Fallback to path suffix / leaf link match
+  for (const item of items) {
+    const itemHref = item.href ? item.href.toLowerCase().replace(/^\/+|\/+$/g, '') : ''
+    if (itemHref && querySlug && itemHref.endsWith(`/${querySlug}`)) {
+      return item
+    }
+  }
+
+  return undefined
+}
+
+function pruneDepth(items: NavItem[], currentDepth: number, maxDepth: number): NavItem[] {
+  return items.map(item => {
+    const { children, ...rest } = item
+    if (!children || children.length === 0) {
+      return rest
+    }
+    if (currentDepth >= maxDepth) {
+      return {
+        ...rest,
+        hasChildren: true,
+        childCount: children.length,
+      }
+    }
+    return {
+      ...rest,
+      children: pruneDepth(children, currentDepth + 1, maxDepth),
+    }
+  })
 }
 
 export function createMcpTools(source: DocsSource, config: DocsConfig): McpTool[] {
@@ -64,6 +165,67 @@ export function createMcpTools(source: DocsSource, config: DocsConfig): McpTool[
               description: page.frontmatter.description ?? '',
               url: pageUrl(config, page.path),
             })),
+        }
+      },
+    },
+
+    {
+      name: 'get-toc',
+      description: [
+        'Retrieves the hierarchical table of contents and structure of the documentation.',
+        '',
+        'WHEN TO USE: when you need to understand document hierarchy, category groupings,',
+        'or reading sequence. Use this to orient yourself before querying specific pages.',
+        '',
+        'WHEN NOT TO USE: when you already know the exact path of a page (call get-page),',
+        'or when searching for a specific keyword across all pages (call search-docs).',
+        '',
+        'WORKFLOW: call get-toc to inspect the structure, choose relevant sections or pages,',
+        'then call get-page to fetch their content.',
+      ].join('\n'),
+      annotations: READ_ONLY,
+      inputSchema: {
+        type: 'object',
+        properties: {
+          locale: {
+            type: 'string',
+            description:
+              'Restrict the table of contents to one locale, e.g. "en". Omit for default locale.',
+          },
+          section: {
+            type: 'string',
+            description:
+              'Filter the table of contents to a specific category or path prefix, e.g. "getting-started".',
+          },
+          depth: {
+            type: 'number',
+            description:
+              'Maximum depth of categories to return (e.g. 1 for top-level only, 2 to include direct children). Omit for full depth.',
+          },
+        },
+        additionalProperties: false,
+      },
+      async handler({ locale, section, depth }) {
+        const wanted = typeof locale === 'string' ? locale : undefined
+        let items = await source.getNavigation(wanted)
+
+        if (typeof section === 'string' && section.trim()) {
+          const found = findSectionItem(items, section.trim())
+          if (!found) {
+            throw new Error(
+              `No section matching "${section}". Call get-toc without arguments to see all available sections.`,
+            )
+          }
+          items = [found]
+        }
+
+        if (typeof depth === 'number' && Number.isFinite(depth)) {
+          const maxDepth = Math.max(1, Math.floor(depth))
+          items = pruneDepth(items, 1, maxDepth)
+        }
+
+        return {
+          items,
         }
       },
     },
