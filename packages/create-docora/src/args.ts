@@ -7,6 +7,7 @@ export interface CliOptions {
   packageManager?: string
   gitInit?: boolean
   force: boolean
+  yes: boolean
   help: boolean
   version: boolean
 }
@@ -15,6 +16,7 @@ export const HELP = `
 Usage: create-docora [directory] [options]
 
 Options:
+  -y, --yes                   Accept default options without prompting
   -t, --template <name>       Starter to use (default, i18n)
       --pm, --package-manager Package manager: npm, pnpm, yarn or bun
       --no-install            Skip installing dependencies
@@ -26,6 +28,7 @@ Options:
 
 Examples:
   npx create-docora my-docs
+  npx create-docora my-docs -y
   npx create-docora my-docs --template i18n --pm pnpm
   npx create-docora . --no-install --no-git-init
 `
@@ -35,6 +38,7 @@ export function parseCliArgs(argv: string[]): CliOptions {
     args: argv,
     allowPositionals: true,
     options: {
+      yes: { type: 'boolean', short: 'y', default: false },
       template: { type: 'string', short: 't' },
       pm: { type: 'string' },
       'package-manager': { type: 'string' },
@@ -58,6 +62,7 @@ export function parseCliArgs(argv: string[]): CliOptions {
     packageManager: values.pm ?? values['package-manager'],
     gitInit,
     force: values.force ?? false,
+    yes: values.yes ?? false,
     help: values.help ?? false,
     version: values.version ?? false,
   }

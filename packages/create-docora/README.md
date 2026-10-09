@@ -24,9 +24,10 @@ yarn dlx create-docora my-docs
 bunx create-docora my-docs
 ```
 
-In a terminal the CLI is interactive: it asks for a directory, template, package manager, and whether to initialize git. Pass flags to skip those questions.
+In a terminal the CLI is interactive: it asks for a directory, template, package manager, and whether to initialize git. Pass `-y` or `--yes` to accept defaults without prompting, or pass specific flags to customize them:
 
 ```bash
+npx create-docora my-docs -y
 npx create-docora my-docs --template i18n --pm pnpm
 npx create-docora . --no-install --no-git-init
 ```
@@ -58,6 +59,7 @@ Open [http://localhost:3000](http://localhost:3000). If you used `--no-install`,
 Usage: create-docora [directory] [options]
 
 Options:
+  -y, --yes                   Accept default options without prompting
   -t, --template <name>       Starter to use (default, i18n)
       --pm, --package-manager Package manager: npm, pnpm, yarn or bun
       --no-install            Skip installing dependencies
