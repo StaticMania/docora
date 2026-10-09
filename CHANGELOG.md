@@ -10,6 +10,8 @@ and are published together.
 
 ## [Unreleased]
 
+## [0.0.6] - 2026-10-09
+
 `docora` · `create-docora`
 
 ### Added

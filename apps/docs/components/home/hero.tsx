@@ -66,7 +66,7 @@ export async function Hero() {
               <span className="size-1.5 rounded-full bg-primary" aria-hidden />
               New
             </span>
-            Docora 0.0.5 is out
+            Docora 0.0.6 is out
             <Icon
               name="arrow-right"
               className="size-3.5 transition-transform group-hover:translate-x-0.5"
