@@ -1,6 +1,6 @@
 {
   "name": "docora",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "private": true,
   "description": "Docora is an open-source documentation framework for Next.js and React, built with TypeScript, Tailwind CSS, and Markdown. Create fast, beautiful, SEO-friendly documentation sites with minimal configuration.",
   "license": "MIT",
@@ -21,6 +21,7 @@
     "test:mdc": "node scripts/test-mdc.mjs",
     "verify": "pnpm run test:mdc && pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run build && pnpm run check:versions",
     "check:versions": "node scripts/check-versions.mjs",
+    "bump": "node scripts/bump.mjs",
     "release:theme": "node scripts/check-versions.mjs --publishing=docora && pnpm --filter docora publish --access public",
     "release:cli": "node scripts/check-versions.mjs --publishing=create-docora && pnpm --filter create-docora publish --access public",
     "clean": "rimraf --glob \"**/node_modules\" \"**/.next\" \"**/dist\""

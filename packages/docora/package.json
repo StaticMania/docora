@@ -1,6 +1,6 @@
 {
   "name": "docora",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Docora theme for Next.js — layouts, content pipeline, MDC components, search and SEO.",
   "license": "MIT",
   "type": "module",
