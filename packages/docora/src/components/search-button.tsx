@@ -45,7 +45,7 @@ export function SearchButton({
       )}
     >
       <Search className="size-4 shrink-0 text-dimmed" />
-      <span>{messages.searchButton}</span>
+      <span className="truncate">{messages.searchButton}</span>
       <kbd className="ml-auto rounded border border-border bg-elevated px-1.5 py-0.5 font-sans text-[10px] font-medium text-dimmed">
         {modifier}
       </kbd>

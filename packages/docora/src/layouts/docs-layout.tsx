@@ -39,7 +39,7 @@ export function DocsLayout({
 
       <div className="mx-auto flex w-full max-w-8xl flex-1 gap-8 px-4 sm:px-6">
         {hasSidebar && (
-          <aside className="sticky top-16 hidden h-[calc(100svh-4rem)] w-64 shrink-0 overflow-y-auto py-8 pr-4 lg:block">
+          <aside className="sticky top-16 hidden h-[calc(100svh-4rem)] w-64 shrink-0 overflow-y-auto py-8 pr-4 lg:block xl:w-72 2xl:w-80">
             <SidebarNav items={navigation} />
           </aside>
         )}

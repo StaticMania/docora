@@ -90,6 +90,16 @@ the built-in controls stay in their usual place.
 </SiteHeader>
 ```
 
+### Search position
+
+By default, the desktop search button is centered in the header (`searchPosition: 'center'`). When your header has several navigation links or a wider brand title, you can move search into the right controls group by setting `searchPosition: 'right'`:
+
+```ts [docs.config.ts]
+header: {
+  searchPosition: 'right', // 'center' (default) | 'right'
+}
+```
+
 ### Replacing the whole header
 
 Pass `header` to `DocsLayout` or `LandingLayout` to swap the entire bar —

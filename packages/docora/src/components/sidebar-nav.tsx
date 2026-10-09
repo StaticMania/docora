@@ -14,7 +14,7 @@ export type SidebarNavProps = Readonly<{
   className?: string
 }>
 
-const ROW = 'group relative flex w-full items-center gap-1.5 px-2.5 py-1.5 text-sm'
+const ROW = 'group relative flex w-full items-start gap-1.5 px-2.5 py-1.5 text-sm'
 
 function NavTree({
   items,
@@ -57,21 +57,21 @@ function NavTree({
                   <Icon
                     name={item.icon}
                     className={cn(
-                      'size-5 shrink-0',
+                      'mt-0.5 size-5 shrink-0',
                       isActive
                         ? 'text-primary'
                         : 'text-dimmed transition-colors group-hover:text-foreground',
                     )}
                   />
                 )}
-                <span className="truncate">{item.label}</span>
+                <span className="min-w-0 flex-1 break-words leading-snug">{item.label}</span>
               </Link>
             ) : (
               <span className={cn(ROW, 'font-semibold text-highlighted')}>
                 {item.icon && (
-                  <Icon name={item.icon} className="size-5 shrink-0 text-highlighted" />
+                  <Icon name={item.icon} className="mt-0.5 size-5 shrink-0 text-highlighted" />
                 )}
-                <span className="truncate">{item.label}</span>
+                <span className="min-w-0 flex-1 break-words leading-snug">{item.label}</span>
               </span>
             )}
 

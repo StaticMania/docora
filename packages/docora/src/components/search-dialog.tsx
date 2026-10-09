@@ -216,11 +216,11 @@ export function SearchDialog({ open, onOpenChange, endpoint = '/api/search' }: S
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50 backdrop-blur-[2px]" />
+        <Dialog.Overlay className="search-dialog-overlay fixed inset-0 z-50 bg-black/50 backdrop-blur-[2px]" />
 
         <Dialog.Content
           onKeyDown={onKeyDown}
-          className="fixed top-[12vh] left-1/2 z-50 flex max-h-[70vh] w-[92vw] max-w-xl -translate-x-1/2 flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl focus:outline-none"
+          className="search-dialog-content fixed inset-x-0 top-[12vh] z-50 mx-auto flex max-h-[70vh] w-[92vw] max-w-xl flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl focus:outline-none"
         >
           <Dialog.Title className="sr-only">{messages.searchPlaceholder}</Dialog.Title>
           <Dialog.Description className="sr-only">

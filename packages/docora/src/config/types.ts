@@ -40,6 +40,7 @@ export interface DocsConfig {
     }
     links?: NavLink[]
     search?: boolean
+    searchPosition?: 'center' | 'right'
   }
 
   navigation?: NavItem[]
